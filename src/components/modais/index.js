@@ -1,0 +1,1 @@
+export { default as ModalDetalhesVeiculo } from './veiculo/ModalDetalhesVeiculo';

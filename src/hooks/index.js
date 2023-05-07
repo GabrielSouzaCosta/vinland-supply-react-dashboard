@@ -1,0 +1,1 @@
+export { default as useGetVeiculosPatio } from './patio/useGetVeiculosPatio'

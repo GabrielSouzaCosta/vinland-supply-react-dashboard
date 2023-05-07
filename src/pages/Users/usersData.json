@@ -1,0 +1,110 @@
+[
+    {
+        "avatar": "/images/vinland-characters/thors.jpeg",
+        "name": "Thors",
+        "username": "thors",
+        "phone": "(692) 3827065",
+        "email": "thors@vinland.com",
+        "address": "02 Graceland Alley",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/askeladd.jpg",
+        "name": "Askeladd",
+        "username": "askeladd",
+        "phone": "(913) 6565912",
+        "email": "askeladd@vinland.com",
+        "address": "4 Dryden Court",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/thorkell.png",
+        "name": "Thorkell",
+        "username": "thorkell",
+        "phone": "(766) 7410641",
+        "email": "thorkell@vinland.com",
+        "address": "42 Banding Junction",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/canute.jpeg",
+        "name": "Canute",
+        "username": "canute",
+        "phone": "(346) 5490165",
+        "email": "canute@vinland.com",
+        "address": "3 Glendale Pass",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/snake.jpg",
+        "name": "Snake",
+        "username": "snake",
+        "phone": "(874) 1442915",
+        "email": "snake@vinland.com",
+        "address": "8604 Westend Hill",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/einar.jpg",
+        "name": "Einar",
+        "username": "einar",
+        "phone": "(442) 7889246",
+        "email": "einar@vinland.com",
+        "address": "60 Randy Alley",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/arnheid.jpg",
+        "name": "Arnheid",
+        "username": "arnheid",
+        "phone": "(720) 1098546",
+        "email": "arnheid@vinland.com",
+        "address": "1 Alpine Terrace",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/ylva.jpeg",
+        "name": "Ylva",
+        "username": "ylva",
+        "phone": "(422) 9375730",
+        "email": "ylva@vinland.com",
+        "address": "88 Saint Paul Street",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/leif.jpeg",
+        "name": "Leif Ericson",
+        "username": "leif.ericson",
+        "phone": "(966) 6696521",
+        "email": "leifericson@vinland.com",
+        "address": "11 Donald Pass",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "/images/vinland-characters/bjorn.jpeg",
+        "name": "Bjorn",
+        "username": "bjorn",
+        "phone": "(865) 8334956",
+        "email": "bjorn@vinland.com",
+        "address": "328 Bluestem Pass",
+        "user_type": "seller"
+    },
+    {
+        "avatar": "https://i.pinimg.com/originals/d1/d3/43/d1d343e61eb866b2e3d6baf79671d305.jpg",
+        "name": "Thorfinn",
+        "username": "thorfinn",
+        "phone": "(817) 4155405",
+        "email": "thorfinn@vinland.com",
+        "address": "Apt 397",
+        "user_type": "manager"
+    },
+    {
+        "avatar": "/images/vinland-characters/ketil.jpg",
+        "name": "Ketil",
+        "username": "ketil",
+        "phone": "(279) 3215631",
+        "email": "ketil@vinland.com",
+        "address": "18th Floor",
+        "user_type": "seller"
+    }
+]
