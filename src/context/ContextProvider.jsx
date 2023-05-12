@@ -8,6 +8,7 @@ export const ContextProvider = ({ children }) => {
 
     function toggleTheme () {
         setTheme(theme === 'light' ? 'dark' : 'light');
+        localStorage.setItem('theme', theme === 'light' ? 'dark' : 'light');
     }
 
     function handleToggleSidebar() {
@@ -17,7 +18,7 @@ export const ContextProvider = ({ children }) => {
     return (
         <StateContext.Provider
             value={{
-                theme, toggleTheme,
+                theme, setTheme, toggleTheme,
                 isSidebarVisible, handleToggleSidebar
             }}
         >

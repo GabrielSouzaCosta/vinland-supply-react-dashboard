@@ -7,7 +7,7 @@ export const Card = styled.div`
     align-items: center;
     justify-content: center;
     flex-direction: column;
-    box-shadow: 1px 1px 12px rgba(10, 10, 10, 0.075);
+    box-shadow: 1px 1px 10px #45454522;
     border: 1px solid #40404011;
     border-radius: 8px;
     background-color: ${p => p.theme.colors.white};
@@ -26,9 +26,9 @@ export const CardCalloutValue = styled.p`
 `
 
 export const CardCaption = styled.p`
-    font-weight: 400;
+    font-weight: 600;
     font-size: 16px;
-    color: ${p => p.red ? p.theme.colors.danger+'ee' : '#606060'};
+    color: ${p => p.red ? p.theme.colors.danger+'ee' : p.theme.colors.gray_medium};
 `
 
 export const CardContent = styled.main`

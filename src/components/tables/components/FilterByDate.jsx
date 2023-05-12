@@ -28,7 +28,7 @@ const DateInput = styled(Input)`
 
 const VerticalLine = styled.div`
     height: 28px;
-    border: 1px solid ${p => p.theme.colors.gray};
+    border: 1px solid ${p => p.theme.colors.gray_light};
 `
 
 export default FilterByDate

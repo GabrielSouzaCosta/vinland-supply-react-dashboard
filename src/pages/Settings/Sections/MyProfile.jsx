@@ -29,7 +29,7 @@ const MyProfile = () => {
     }
         
     function handleUpdateUserDetails(data) {
-        toast.success("Informações alteradas com sucesso!", {
+        toast.success("User information changed successfully!", {
         position: toast.POSITION.BOTTOM_RIGHT
         });
         handleToggleEdition();

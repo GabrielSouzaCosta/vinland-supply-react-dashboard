@@ -62,7 +62,7 @@ const CardsContainer = () => {
             </div>
 
             <div>
-                <Circle color="primary_dark">
+                <Circle color={"blue"}>
                     <IoSwapVertical
                     size={36}
                     color={colors.gray_extra_light}

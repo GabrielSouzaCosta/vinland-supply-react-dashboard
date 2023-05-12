@@ -21,8 +21,13 @@ export const TableWrapper = styled.div`
         color: ${p => p.darkMode ? p.theme.colors.black : p.theme.colors.white_medium_light};
         position: sticky;
         z-index: 1;
-        top: 0;
+        top: -1px;
+        border: 1px solid ${p => p.darkMode ? p.theme.colors.gray_light : p.theme.colors.black_extra_light};
+        tr {
+            border: 1px solid ${p => p.darkMode ? p.theme.colors.gray_light : p.theme.colors.black_extra_light};
+        }
     }
+    
 
     th {
         svg {
@@ -30,7 +35,7 @@ export const TableWrapper = styled.div`
             vertical-align: middle;
             margin-bottom: 2px;
         }
-        
+        background-color: ${p => p.darkMode ? p.theme.colors.white_medium_light : p.theme.colors.black_extra_light};
         border: 1px solid ${p => p.darkMode ? p.theme.colors.gray_light : p.theme.colors.black_extra_light};
         border-right: 1px solid ${p => p.darkMode ? p.theme.colors.gray_light : p.theme.colors.gray_light};
         z-index: 1;
@@ -56,5 +61,12 @@ export const TableWrapper = styled.div`
     tfoot {
         background-color: ${p => p.theme.colors.gray_light_3};
     }
+`
+
+export const TableRoundedImage = styled.img`
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    object-fit: cover;
 `
 

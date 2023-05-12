@@ -11,7 +11,8 @@ import {
   Tooltip,
   Legend,
 } from 'chart.js';
-import { colors } from '@/styles/common/theme';
+import { colors } from '@/styles/common/theme'
+import { useStateContext } from '../../../../context/ContextProvider';
 
 ChartJS.register(
   CategoryScale,
@@ -25,6 +26,7 @@ ChartJS.register(
 );
 
 const BarChart = () => {
+  const { theme } = useStateContext();
 
   const labels = [
     'January', 'February', 'March', 'April', 'May', 'June', 
@@ -35,28 +37,34 @@ const BarChart = () => {
     responsive: true,
     plugins: {
         legend: {
-        position: 'bottom',
-        labels: {
-            padding: 20,
-            boxWidth: 15,
-            boxHeight: 15,
-            useBorderRadius: true,
-            borderRadius: 2,
-            font: {
-            size: 16
-            }
-        }
+          position: 'bottom',
+          labels: {
+              color: theme === 'light' ? colors.black : colors.white,
+              padding: 20,
+              boxWidth: 15,
+              boxHeight: 15,
+              useBorderRadius: true,
+              borderRadius: 2,
+              font: {
+                size: 16
+              }
+          }
         },
     },
 
     scales: {
+        x: {
+          ticks: {
+            color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+          }
+        },
         y: {
-            ticks: {
-                // Include a dollar sign in the ticks
-                callback: function(value, index, ticks) {
-                    return '$' + value;
-                }
+          ticks: {
+            color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+            callback: function(value, index, ticks) {
+                return '$' + value;
             }
+          }
         }
     }
   };
@@ -67,8 +75,8 @@ const BarChart = () => {
         {
         label: 'March/2023',
         data: [1000, 1200, 800, 700, 200, 100, 2000, 300, 450, 700, 2300, 1800],
-        borderColor: colors.gray_dark,
-        backgroundColor: colors.gray_dark+'88',
+        borderColor: theme === 'light' ? colors.black_extra_light : colors.gray_light,
+        backgroundColor: theme === 'light' ? colors.black_extra_light+'99' : colors.gray_light+'99',
         borderWidth: 3,
         lineTension: 0.8,
         cubicInterpolationMode: 'monotone'
@@ -76,8 +84,8 @@ const BarChart = () => {
         {
         label: 'April/2023',
         data: [400, 800, 1500, 450, 200, 1200, 1600, 2000, 1100, 1200, 1800, 3000],
-        borderColor: colors.primary_dark,
-        backgroundColor: colors.primary_dark+'88',
+        borderColor: theme === 'light' ? colors.primary_dark : colors.primary_light,
+        backgroundColor: theme === 'light' ? colors.primary_dark+'99' : colors.primary_light+'99',
         borderWidth: 3,
         lineTension: 0.8,
         cubicInterpolationMode: 'monotone'

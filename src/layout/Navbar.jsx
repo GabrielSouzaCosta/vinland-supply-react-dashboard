@@ -52,6 +52,7 @@ const Navbar = ({
 
           <UserDetails 
             onClick={handleShowDropdown}
+            type="button"
           >
             <P2 fw={600} mb={'4px'}>
               Thorfinn Karlsefni
@@ -69,7 +70,10 @@ const Navbar = ({
             </FlexDiv>
           </UserDetails>
 
-          <ToggleThemeButton />
+          {theme &&
+            <ToggleThemeButton />
+          }
+
 
           <AnimatePresence>
             {isDropdownVisible && (
@@ -119,7 +123,7 @@ const NavContainer = styled(Container)`
   }
 `
 
-const UserDetails = styled.div`
+const UserDetails = styled.button`
   cursor: pointer;
   > div > div {
     height: 15px;

@@ -105,9 +105,9 @@ export const InputFile = styled.div`
     input[type="file"] {
         width: 350px;
         max-width: 100%;
-        color: #444;
+        color: ${p => p.theme.colors.black_extra_light};
         padding: 5px;
-        background: #fff;
+        background: ${p => p.theme.colors.white_medium_light};
         border-radius: 10px;
         border: 1px solid #555;
         &::file-selector-button {
@@ -116,7 +116,7 @@ export const InputFile = styled.div`
             background: ${p => p.theme.colors.black_extra_light};
             padding: 10px 20px;
             border-radius: 10px;
-            color: #fff;
+            color: ${p => p.theme.colors.white_medium_light};
             cursor: pointer;
             transition: background .2s ease-in-out;
         }

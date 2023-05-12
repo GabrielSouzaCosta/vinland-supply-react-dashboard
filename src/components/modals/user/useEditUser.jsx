@@ -1,14 +1,14 @@
+import { useEffect } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function({
-    setUsers
+    users,
+    setUsers,
+    user,
+    closeModal
 }) {
-    const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm({
-        defaultValues: {
-            user_type: 'seller'
-        }
-    });
+    const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm();
       
     const user_type = useWatch({
         control,
@@ -16,14 +16,16 @@ export default function({
     })
 
     const apiManager = {
-
-        handleCreateNewUser: function(data) {
-            const newUser = data.avatar ? data : { ...data, avatar: '/images/vinland-characters/leif.jpeg' };
-            setUsers(prevState => [ ...prevState, newUser ]);
+        handleUpdateUser: function(data) {
+            let updatedUsers = [ ...users ];
+            let userIndex = users.findIndex(item => item.name === user.name);
+            updatedUsers[userIndex] = data; 
+            setUsers(updatedUsers);
             reset();
-            toast.success("User created successfully!", {
+            toast.success("User updated successfully!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
+            closeModal();
         },
 
         handleChangeUserType: function(type) {
@@ -40,8 +42,11 @@ export default function({
         
             reader.readAsDataURL(file);
         }
-
     }
+
+    useEffect(() => {
+        reset(user);
+    }, [user])
 
     return { 
         apiManager, 

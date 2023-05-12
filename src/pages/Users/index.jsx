@@ -12,6 +12,7 @@ import { IoAdd } from 'react-icons/io5'
 import { FormProvider } from 'react-hook-form'
 import useCreateUser from './useCreateUser'
 import usersData from './usersData.json'
+import StyledToastContainer from '../../components/ui/StyledToastContainer'
 
 function Users() {
   const [ users, setUsers ] = useState(usersData);
@@ -37,6 +38,7 @@ function Users() {
 
           <TableUsers 
             users={users}
+            setUsers={setUsers}
           />
 
           <H3>
@@ -124,15 +126,15 @@ function Users() {
                 <div>
                   <ToggleButton
                     type="button"
-                    toggled={user_type === 'SELLER'}
-                    onClick={() => apiManager.handleChangeUserType('SELLER')}
+                    toggled={user_type === 'seller'}
+                    onClick={() => apiManager.handleChangeUserType('seller')}
                   >
                     Seller
                   </ToggleButton>
                   <ToggleButton
                     type="button"
-                    toggled={user_type === 'MANAGER'}
-                    onClick={() => apiManager.handleChangeUserType('MANAGER')}
+                    toggled={user_type === 'manager'}
+                    onClick={() => apiManager.handleChangeUserType('manager')}
                   >
                     Manager
                   </ToggleButton>
@@ -148,10 +150,7 @@ function Users() {
           </FormProvider>
         </Content>
 
-        <ToastContainer
-          autoClose={2000}
-          hideProgressBar
-        />
+        <StyledToastContainer />
     </Layout>
   )
 }

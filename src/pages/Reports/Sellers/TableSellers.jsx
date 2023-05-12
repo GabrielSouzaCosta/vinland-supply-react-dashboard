@@ -4,7 +4,7 @@ import { sellers } from '.'
 import { Table } from '../../../components/tables'
 import styled from 'styled-components'
 import { P2 } from '../../../styles/common/texts'
-import { TableWrapper } from '../../../components/tables/styles/tableStyles'
+import { TableRoundedImage, TableWrapper } from '../../../components/tables/styles/tableStyles'
 
 const TableSellers = () => {
     const columns = [
@@ -15,7 +15,7 @@ const TableSellers = () => {
         {
             Header: <IoPersonOutline size={18} />,
             accessor: 'avatar',
-            Cell: ({value}) => <ProductImage src={value} alt="" />,
+            Cell: ({value}) => <TableRoundedImage src={value} alt="" />,
         },
         {
             Header: 'Name',
@@ -25,6 +25,11 @@ const TableSellers = () => {
             Header: 'Sales',
             accessor: 'sales',
             Cell: ({value}) => <P2> { value } sold </P2>,
+        },
+        {
+            Header: 'Profits',
+            accessor: 'profits',
+            Cell: ({value}) => <P2> { value.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) } </P2>,
         }
     ]
 
@@ -38,14 +43,6 @@ const TableSellers = () => {
         />
     )
 }
-
-
-const ProductImage = styled.img`
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-`
 
 const CustomWrapper = styled(TableWrapper)`
     margin-top: 40px;

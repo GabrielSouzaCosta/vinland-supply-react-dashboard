@@ -10,7 +10,7 @@ import Customers from '../pages/Customers'
 import Users from '../pages/Users'
 import Settings from '../pages/Settings'
 import Sales from '../pages/Reports/Sales'
-import UsersPerformance from '../pages/Reports/Users'
+import UsersPerformance from '../pages/Reports/Sellers'
 import ScrollToTop from './ScrollToTop'
 
 

@@ -4,6 +4,7 @@ import Layout from '../../layout'
 import TableOrders from './TableOrders'
 import { CardContent } from '@/styles/features/cards'
 import Cards from './Cards'
+import LastOrdersBarChart from './LastOrdersBarChart'
 
 function Orders() {
   return (
@@ -14,6 +15,7 @@ function Orders() {
 
         <CardContent>
           <Cards />
+          <LastOrdersBarChart />
           <TableOrders />
         </CardContent>
 

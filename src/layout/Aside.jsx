@@ -1,92 +1,17 @@
-import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
-import { FlexDiv } from '../styles/common/layout'
+import React from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { IoArrowForward, IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoCashOutline, IoChevronDown, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
-import { AnimatePresence, motion } from 'framer-motion'
+import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoCashOutline, IoChevronDown, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { css } from 'styled-components'
 import { useStateContext } from '../context/ContextProvider'
-
-
-const Menu = ({ title, icon, items }) => {
-    const [isOpen, setIsOpen] = useState(false);
-  
-    function toggleMenu() {
-      setIsOpen(!isOpen);
-    }
-  
-    return (
-        <>
-            <li>
-                <AsideNavItem menu>
-                    <AsideNavButton
-                        onClick={toggleMenu}
-                    >
-                        <FlexDiv fullWidth between>
-
-                            <FlexDiv gapX="15px" className='title'>
-                                <span>
-                                    { icon }
-                                </span>
-                                <AsideLinkText>
-                                    { title }
-                                </AsideLinkText>
-                            </FlexDiv>
-
-                            <motion.div
-                                animate={{
-                                    rotate: isOpen ? 180 : 0
-                                }}
-                                style={{ display: 'flex', alignItems: 'center' }}
-                            >
-                                <IoChevronDown 
-                                    size={18}
-                                />
-                            </motion.div>
-                        </FlexDiv>
-                    </AsideNavButton>
-                </AsideNavItem>
-            </li>
-            
-            <AnimatePresence>
-                {isOpen &&
-                    <motion.ul 
-                        style={{ width: '100%' }}
-                        initial={{ height: 0, opacity: 0 }}
-                        animate={{ height: 'auto', opacity: 1 }}
-                        exit={{ height: 0, opacity: 0 }}
-                    >
-                        {
-                            items.map(item => (
-                                <motion.div
-                                    whileHover={{ transform: 'translateX(10px)' }}
-                                >
-                                    <li>
-                                        <AsideNavItem menuItem>
-                                            <AsideNavLink to={item.route}>
-                                                <IoArrowForward 
-                                                    size={20}
-                                                />
-                                                <AsideLinkText menuItem>
-                                                    { item.name }
-                                                </AsideLinkText>
-                                            </AsideNavLink>
-                                        </AsideNavItem>
-                                    </li>
-                                </motion.div>
-                            ))
-                        }
-                    </motion.ul>
-                }
-            </AnimatePresence>
-        </>
-    );
-}
 
 const Aside = ({
     visible
 }) => {
     const { theme } = useStateContext();
+    const { pathname } = useLocation();
+
+    console.log(theme);
 
     return (
         <StyledAside 
@@ -100,85 +25,101 @@ const Aside = ({
                     Company
                 </CategoryTitle>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/'}
+                >
                     <Link to="/">
                         <IoBarChartOutline
                             size={24}
                         />
                         Overview
                     </Link>
-                </li>
-                <li>
+                </AsideItem>
+                <AsideItem
+                    activeLink={pathname === '/products'}
+                >
                     <Link to="/products">
                         <IoBeerOutline
                             size={24}
                         />
                         Products
                     </Link>
-                </li>
-                <li>
+                </AsideItem>
+                <AsideItem
+                    activeLink={pathname === '/orders'}
+                >
                     <Link to="/orders">
                         <IoStorefrontOutline
                             size={24}
                         />
                         Orders
                     </Link>
-                </li>
+                </AsideItem>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/customers'}
+                >
                     <Link to="/customers">
                         <IoPeopleOutline
                             size={24}
                         />
                         Customers
                     </Link>
-                </li>
+                </AsideItem>
 
                 <CategoryTitle visible={visible}>
                     <IoPieChartOutline size={18} />
                     Reports
                 </CategoryTitle>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/reports/sales'}
+                >
                     <Link to="/reports/sales">
                         <IoStatsChartOutline
                             size={24}
                         />  
                         Sales
                     </Link>
-                </li>
+                </AsideItem>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/reports/users-performance'}
+                >
                     <Link to="/reports/users-performance">
                         <IoPodiumOutline
                             size={24}
                         />  
                         Sellers Performance
                     </Link>
-                </li>
+                </AsideItem>
 
                 <CategoryTitle visible={visible}>
                     <IoBusinessOutline size={18} />
                     SYSTEM
                 </CategoryTitle>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/system/users'}
+                >
                     <Link to="/system/users">
                         <IoPersonOutline
                             size={20}
                         />
                         Users
                     </Link>
-                </li>
+                </AsideItem>
 
-                <li>
+                <AsideItem
+                    activeLink={pathname === '/system/settings'}
+                >
                     <Link to="/system/settings">
                         <IoSettingsOutline
                             size={20}
                         />
                         Settings
                     </Link>
-                </li>
+                </AsideItem>
             </Links>
 
         </StyledAside>
@@ -209,8 +150,17 @@ const Links = styled.ul`
     row-gap: 20px;
     margin: 0 auto;
     padding: 0 30px;
-    li a {
-        color: ${p => p.theme.colors.black_extra_light};
+    ${p => p.visible === false && css`
+        margin-left: 230px;
+        svg {
+            margin-right: 30px;
+        }
+    `}
+`
+
+const AsideItem = styled.li`
+    a {
+        color: ${p => p.activeLink ? p.theme.colors.primary_dark : p.theme.colors.black_extra_light};
         display: flex;
         align-items: center;
         column-gap: 10px;
@@ -220,13 +170,6 @@ const Links = styled.ul`
             color: ${p => p.theme.colors.primary_dark};
         }
     }
-
-    ${p => p.visible === false && css`
-        margin-left: 230px;
-        svg {
-            margin-right: 30px;
-        }
-    `}
 `
 
 const CategoryTitle = styled.p`

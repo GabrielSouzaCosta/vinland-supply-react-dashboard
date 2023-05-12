@@ -13,7 +13,8 @@ import {
 } from 'chart.js';
 import { colors } from '@/styles/common/theme';
 import { sellers } from '..';
-import chartPalleteColors from '../../../../styles/common/chartPalleteColors';
+import chartPalleteColors, { darkChartPalleteColors } from '../../../../styles/common/chartPalleteColors';
+import { useStateContext } from '../../../../context/ContextProvider';
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,8 @@ ChartJS.register(
 );
 
 const BarChart = () => {
+  const { theme } = useStateContext();
+  const chartColors = theme === 'dark' ? darkChartPalleteColors : chartPalleteColors;
 
   const labels = sellers.map(item => item.name);
   
@@ -37,8 +40,19 @@ const BarChart = () => {
         display: false,
       },
     },
+    scales: {
+      x: {
+        ticks: {
+          color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+        }
+      },
+      y: {
+        ticks: {
+          color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+        }
+      }
+    }
   };
-  
 
   const data = {
     labels,
@@ -46,8 +60,8 @@ const BarChart = () => {
         {
           label: 'Sales',
           data: sellers.map(item => item.sales),
-          borderColor: chartPalleteColors,
-          backgroundColor: chartPalleteColors.map(item => item+'88'),
+          borderColor: chartColors,
+          backgroundColor: chartColors.map(item => item+'88'),
           borderWidth: 3,
           lineTension: 0.8,
           cubicInterpolationMode: 'monotone'

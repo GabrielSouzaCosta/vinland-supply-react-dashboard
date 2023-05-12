@@ -22,9 +22,9 @@ export const colors = {
 };
 
 export const darkThemeColors = {
-    primary_dark: "#C68933",
+    primary_dark: "#F4D06F",
     primary_medium: "#E1B04D",
-    primary_light: "#F4D06F",
+    primary_light: "#C68933",
     gray_dark: "#F5F5F5",
     gray_medium: "#BEBEBE",
     gray_light: "#6E6E6E",

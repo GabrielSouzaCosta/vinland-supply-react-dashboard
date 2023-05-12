@@ -1,7 +1,7 @@
 import React from 'react'
 import { Table } from '../../components/tables'
 import styled from 'styled-components'
-import { TableWrapper } from '../../components/tables/styles/tableStyles'
+import { TableRoundedImage, TableWrapper } from '../../components/tables/styles/tableStyles'
 import data from './MOCK_DATA.json'
 import { FlexDiv } from '../../styles/common/layout'
 import { IoPersonOutline, IoStarSharp } from 'react-icons/io5'
@@ -18,7 +18,7 @@ const TableCustomers = () => {
         {
             Header: <IoPersonOutline size={16} />,
             accessor: 'image',
-            Cell: ({value}) => <ProductImage src={value} alt="" />,
+            Cell: ({value}) => <TableRoundedImage src={value} alt="" />,
         },
         {
             Header: 'Name',
@@ -66,14 +66,6 @@ const TableCustomers = () => {
         />
     )
 }
-
-
-const ProductImage = styled.img`
-    width: 60px;
-    height: 60px;
-    border-radius: 50%;
-    object-fit: cover;
-`
 
 const CustomWrapper = styled(TableWrapper)`
     td:first-child {

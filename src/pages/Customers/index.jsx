@@ -3,6 +3,7 @@ import { Breadcrumb } from '../../components/ui'
 import Layout from '../../layout'
 import { CardContent } from '../../styles/features/cards'
 import Cards from './Cards'
+import ChartCustomers from './ChartCustomers'
 import TableCustomers from './TableCustomers'
 
 function Customers() {
@@ -14,6 +15,7 @@ function Customers() {
 
         <CardContent>
           <Cards />
+          <ChartCustomers />
           <TableCustomers />
         </CardContent>
 

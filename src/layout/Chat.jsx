@@ -199,7 +199,7 @@ const ChatContainer = styled(motion.div)`
   flex-direction: column;
   width: 400px;
   overflow: hidden;
-  z-index: 1000;
+  z-index: 5000;
 `;
 
 const ChatHeader = styled.div`

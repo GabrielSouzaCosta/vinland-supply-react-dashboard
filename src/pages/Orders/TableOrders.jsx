@@ -1,15 +1,17 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Table } from '../../components/tables'
 import { TableWrapper } from '../../components/tables/styles/tableStyles'
 import data from './MOCK_DATA.json'
 import styled from 'styled-components'
-import { colors } from '@/styles/common/theme'
+import { useStateContext } from '../../context/ContextProvider'
+import useGetThemeColors from '@/hooks/useGetThemeColors';
 
 const TableOrders = () => {
+    const colors = useGetThemeColors();
 
-    const tableData = data.sort(function(a, b) {
-        const [dayA, monthA, yearA] = a.payment_date.split('/');
-        const [dayB, monthB, yearB] = b.payment_date.split('/');
+    const sortedByBillingDateData = data.sort(function(a, b) {
+        const [dayA, monthA, yearA] = a.billing_date.split('/');
+        const [dayB, monthB, yearB] = b.billing_date.split('/');
         const dateA = new Date(yearA, monthA - 1, dayA);
         const dateB = new Date(yearB, monthB - 1, dayB);
         return dateB - dateA;
@@ -60,7 +62,7 @@ const TableOrders = () => {
 
     return (
         <Table
-            tableData={data}
+            tableData={sortedByBillingDateData}
             tableColumns={productsTableColumns}
             CustomWrapper={CustomWrapper}
             showDateFilter

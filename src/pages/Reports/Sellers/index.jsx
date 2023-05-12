@@ -17,72 +17,84 @@ export const sellers = [
         id: 1,
         name: 'Thors',
         sales: 63900,
+        profits: 512200,
         avatar: '/images/vinland-characters/thors.jpeg'
     },
     {
         id: 2,
         name: 'Askeladd',
         sales: 55000,
+        profits: 552000,
         avatar: '/images/vinland-characters/askeladd.jpg'
     },
     {
         id: 3,
         name: 'Thorkell',
         sales: 45000,
+        profits: 320000,
         avatar: '/images/vinland-characters/thorkell.png'
     },
     {
         id: 4,
         name: 'Canute',
         sales: 57000,
+        profits: 380500,
         avatar: '/images/vinland-characters/canute.jpeg'
     },
     {
         id: 5,
         name: 'Snake',
         sales: 38000,
+        profits: 172900,
         avatar: '/images/vinland-characters/snake.jpg'
     },
     {
         id: 6,
         name: 'Einar',
         sales: 29000,
+        profits: 240480,
         avatar: '/images/vinland-characters/einar.jpg'
     },
     {
         id: 7,
         name: 'Arnheid',
         sales: 32000,
+        profits: 172000,
         avatar: '/images/vinland-characters/arnheid.jpg'
     },
     {
         id: 8,
         name: 'Ylva',
         sales: 51000,
+        profits: 152400,
         avatar: '/images/vinland-characters/ylva.jpeg'
     },
     {
         id: 9,
         name: 'Leif Ericson',
         sales: 120000,
+        profits: 460000,
         avatar: '/images/vinland-characters/leif.jpeg'
     },
     {
         id: 10,
         name: 'Bjorn',
         sales: 28000,
+        profits: 120000,
         avatar: '/images/vinland-characters/bjorn.jpeg'
     },
     {
         id: 11,
         name: 'Thorfinn',
         sales: 90000,
+        profits: 420450,
         avatar: 'https://i.pinimg.com/originals/d1/d3/43/d1d343e61eb866b2e3d6baf79671d305.jpg'
     },
     {
         id: 12,
         name: 'Ketil',
         sales: 47000,
+        profits: 204310,
         avatar: '/images/vinland-characters/ketil.jpg'
     },
 ]

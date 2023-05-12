@@ -16,7 +16,6 @@ function Products() {
           <ProductsCards />
           <TableProducts />
         </CardContent>
-
     </Layout>
   )
 }

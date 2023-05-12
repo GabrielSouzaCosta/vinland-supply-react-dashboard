@@ -9,7 +9,7 @@ import styled from 'styled-components'
 import { Div, FlexDiv } from '../../../styles/common/layout'
 import BarChart from './charts/BarChart'
 import PieChart from './charts/PieChart'
-import { ButtonExportExcel } from '../../../styles/common/buttons'
+import { ButtonExportExcel, ButtonExportPdf } from '../../../styles/common/buttons'
 
 function Sales() {
   const [ currentChart, setCurrentChart ] = useState('bar');
@@ -63,6 +63,7 @@ function Sales() {
         </P2>
         <FlexDiv gapX="10px" justify="start">
           <ButtonExportExcel />
+          <ButtonExportPdf />
         </FlexDiv>
 
         <Div>

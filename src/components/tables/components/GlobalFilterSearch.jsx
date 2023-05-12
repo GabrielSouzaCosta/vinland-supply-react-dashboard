@@ -4,6 +4,7 @@ import { useAsyncDebounce } from 'react-table'
 import { P, P2 } from '../../../styles/common/texts'
 import { useStateContext } from '../../../context/ContextProvider'
 import { css } from 'styled-components'
+import { Input } from '../../../styles/common/inputs'
 
 const GlobalFilter = ({
     preGlobalFilteredRows,
@@ -37,23 +38,13 @@ const GlobalFilter = ({
     )
 }
 
-const SearchInput = styled.input`
-    background-color: ${p => p.dark ? p.theme.colors.gray_light : p.theme.colors.gray_extra_light};
+const SearchInput = styled(Input)`
     margin-top: 4px;
     height: 40px;
     border-radius: 8px;
     padding: 4px 8px 4px 10px;
     border: 1px solid #20202040;
     box-shadow: 1px 1px 10px rgba(20, 20, 20, 0.1);
-    &:focus {
-        background-color: ${p => p.dark ? p.theme.colors.gray_light : p.theme.colors.white_medium_light};
-    }
-    ${p => p.dark && css`
-        color: ${p => p.theme.colors.gray_dark};
-        &::placeholder {
-            color: ${p => p.theme.colors.gray_dark+'cc'};
-        }
-    `}
 `
 
 export default GlobalFilter

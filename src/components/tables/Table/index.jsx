@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table'
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5'
 import { AiFillFileExcel } from 'react-icons/ai'
@@ -17,8 +17,8 @@ const Table = ({
     showDateFilter,
     exportExcel,
     showSearchFilter=true,
-    tableData=[],
-    tableColumns=[],
+    tableData,
+    tableColumns,
     pagination=true,
     footer,
     CustomWrapper
@@ -32,7 +32,7 @@ const Table = ({
 
     const columns = React.useMemo(
         () => tableColumns,
-        []
+        [tableColumns]
     )
     
     const tableInstance = useTable(
@@ -88,7 +88,7 @@ const Table = ({
                     // Apply the header cell props
                     <th {...column.getHeaderProps(column.getSortByToggleProps())}>
                         {column.render('Header')}
-                        {column.isSorted ? (column.isSortedDesc ?  <IoCaretUp /> : <IoCaretDown />) : ""}
+                        {column.isSorted ? (column.isSortedDesc ?  <IoCaretDown /> : <IoCaretUp />) : ""}
                     </th>
                 ))}
                 </tr>
@@ -96,26 +96,33 @@ const Table = ({
             </thead>
 
             <tbody {...getTableBodyProps()}>
-                {
-                    page.map(row => {
-                        // Prepare the row for display
-                        prepareRow(row)
-                        return (
-                            <tr 
-                                {...row.getRowProps()}
-                            >
-                                {
-                                    row.cells.map(cell => {
-                                        return (
-                                            <td {...cell.getCellProps()}>
-                                                {cell.render('Cell')}
-                                            </td>
-                                        )
-                                    })
-                                }
-                            </tr>
-                        )
-                    })
+                {rows?.length === 0 ? 
+                    (
+                        <tr>
+                            <td colSpan={columns.length}>No rows found</td>
+                        </tr>
+                    ) 
+                    : 
+                    (
+                        page.map(row => {
+                            prepareRow(row)
+                            return (
+                                <tr 
+                                    {...row.getRowProps()}
+                                >
+                                    {
+                                        row.cells.map(cell => {
+                                            return (
+                                                <td {...cell.getCellProps()}>
+                                                    {cell.render('Cell')}
+                                                </td>
+                                            )
+                                        })
+                                    }
+                                </tr>
+                            )
+                        })
+                    )
                 }
             </tbody>
 

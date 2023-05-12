@@ -25,13 +25,19 @@ export const Button = styled.button`
     background-color: ${p => p.theme.colors.primary_medium};
     transition: all 300ms;
 
+    ${p => p.variant === 'danger' && css`
+        background-color: ${p => p.theme.colors.danger};
+        color: #F7F7F7;
+        border: 1.5px solid ${p => p.theme.colors.danger};
+        
+    `}
     ${p => p.variant === 'danger-outline' && css`
         background-color: transparent;
         color: ${p => p.theme.colors.danger};
         border: 1.5px solid ${p => p.theme.colors.danger};
         &:hover {
             background-color: ${p => p.theme.colors.danger};
-            color: ${p => p.theme.colors.white};
+            color: #F7F7F7;
         }
     `}
     ${p => p.variant === 'success' && css`
@@ -79,15 +85,17 @@ const ButtonExcel = styled.button`
     padding: 8px 20px;
     margin-top: 4px;
     background-color: ${p => p.theme.colors.success};
-    color: ${p => p.theme.colors.white_medium_light};
+    color: #F7F7F7;
     font-size: 14px;
     display: flex;
     align-items: center;
     column-gap: 6px;
     font-weight: 600;
     transition: all 250ms;
+    border: 1px solid transparent;
     &:hover {
-        background-color: ${p => p.theme.colors.black_extra_light};
+        border: 1px solid ${p => p.theme.colors.black_extra_light};
+        background-color: #202020;
     }
 `
 
@@ -104,13 +112,14 @@ const ButtonPdf = styled.button`
     padding: 8px 20px;
     margin-top: 4px;
     background-color: ${p => p.theme.colors.warning};
-    color: ${p => p.theme.colors.black_extra_light};
+    color: #353535;
     font-size: 14px;
     display: flex;
     align-items: center;
     column-gap: 6px;
     font-weight: 600;
     transition: all 250ms;
+    border: 1px solid transparent;
     &:hover {
         color: ${p => p.theme.colors.white_medium_light};
         background-color: ${p => p.theme.colors.black_extra_light};

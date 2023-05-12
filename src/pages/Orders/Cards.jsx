@@ -118,7 +118,7 @@ const OrdersCard = styled(Card)`
     ${p => p.canceled && css`
         color: ${p => p.theme.colors.danger_variant};
     `}
-    ${p => p.reviews && css`
+    ${p => p.refunds && css`
         color: ${p => p.theme.colors.black_extra_light};
     `}
     ${p => p.problems && css`

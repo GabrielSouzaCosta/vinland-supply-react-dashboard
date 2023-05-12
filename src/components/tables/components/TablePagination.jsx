@@ -83,6 +83,7 @@ const PreviousNextButton = styled.button`
     display: flex;
     align-items: center;
     column-gap: 5px;
+    color: ${p => p.theme.colors.black};
     &:hover {
         color: ${p => p.next ? p.theme.colors.primary_medium : p.theme.colors.danger};
         transition: all 200ms;
