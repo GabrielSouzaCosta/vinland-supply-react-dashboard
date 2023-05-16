@@ -8,6 +8,7 @@ import { IoChevronDownOutline, IoChevronUpOutline, IoRibbon, IoRibbonOutline } f
 import useGetThemeColors from '@/hooks/useGetThemeColors'
 import { css } from 'styled-components'
 import { Product as ProductProps } from '@/@types/product'
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 
 const Product = ({
     product,
@@ -17,6 +18,7 @@ const Product = ({
     ranking
 } : ProductProps) => {
     const colors = useGetThemeColors();
+    const { screen_width } = useGetWindowDimensions();
 
     return (
         <TopSectionCard>
@@ -27,22 +29,22 @@ const Product = ({
                         { ranking }º
                     </P3>
                     <IoRibbon 
-                        size={40}
+                        size={screen_width < 1400 ? 30 : 40}
                     />
                 </FlexDiv>
 
-                <FlexDiv between mb="5px">
+                <Title>
                     <strong>
                         { product }
                     </strong>
-                    <p className='total'>
+                    <p>
                         { sold } sold
                     </p>
-                </FlexDiv>
+                </Title>
 
                 <Div m="0 auto" id="arrow-down">
                     <IoChevronUpOutline 
-                        size={24}
+                        size={18}
                         color={colors.gray_extra_light}
                     />
                 </Div>
@@ -255,6 +257,14 @@ const CardsContainer = styled.div`
   grid-gap: 10px;
   margin-bottom: 40px;
   margin-top: 10px;
+  @media screen and (max-width: 1400px) {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  @media screen and (max-width: 968px) {
+    display: flex;
+    overflow-x: scroll;
+    scroll-snap-type: x mandatory;
+  }
 `
 
 const TopSectionCard = styled(Card)`
@@ -265,7 +275,6 @@ const TopSectionCard = styled(Card)`
   height: 100%;
   border-radius: 8px;
   border: 1px solid #50505022;
-  margin-top: 10px;
   box-shadow: 2px 2px 12px rgba(20, 20, 20, 0.15);
   img {
     &:first-child {
@@ -287,6 +296,12 @@ const TopSectionCard = styled(Card)`
         display: none;
     }
   }
+  @media screen and (max-width: 1400px) {
+    height: 60vh;
+    width: 100%;
+    scroll-snap-align:start;
+    flex-shrink: 0;
+  }
 `
 
 const CardInner = styled.div<{ rank: number }>`
@@ -296,7 +311,7 @@ const CardInner = styled.div<{ rank: number }>`
   right: 0;
   left: 0;
   bottom: 0;
-  height: 75px;
+  height: 100px;
   width: 100%;
   border-bottom-left-radius: 8px;
   border-bottom-right-radius: 8px;
@@ -311,35 +326,23 @@ const CardInner = styled.div<{ rank: number }>`
 		width: 100%;
 	}
 	${p => p.rank === 1 && css`
-		svg, .card-header p {
-			color: ${p => '#FFC312'};
-		}
-		hr {
-			border-color: ${p => '#FFC31288'};
+		svg {
+            color: ${p => p.theme.colors.primary_light};
 		}
 	`}
 	${p => p.rank === 2 && css`
-		svg, .card-header p {
-			color: ${p => p.theme.colors.primary_light};
-		}
-		hr {
-			border-color: ${p => p.theme.colors.primary_light+'88'};
+		svg {
+			color: ${p => p.theme.colors.primary_light+'cc'};
 		}
 	`}
 	${p => p.rank === 3 && css`
-		svg, .card-header p {
+		svg {
 			color: ${p => p.theme.colors.gray_light};
-		}
-		hr {
-			border-color: ${p => p.theme.colors.gray_light+'88'};
 		}
 	`}
 	${p => p.rank === 4 && css`
-		svg, .card-header p {
+		svg {
 			color: ${p =>'#d39251'};
-		}
-		hr {
-			border-color: ${p =>'#d3925188'};
 		}
 	`}
 
@@ -355,18 +358,39 @@ const CardInner = styled.div<{ rank: number }>`
     font-weight: 500;
     font-size: 20px;
   }
-  strong, p.total {
-		color: ${p => p.theme.colors.white};
-		font-size: 24px;
-		font-weight: 600;
-		text-shadow: 2px 2px 12px ${p => p.theme.colors.white_medium_light+'32'};
-		font-weight: 600;
-  }
   hr {
     margin: 2px 0 5px 0;
     width: 100%;
     height: 1px;
   }
+  @media screen and (max-width: 1400px) {
+    height: 75px;
+    padding: 4px 15px;
+  }
+  @media screen and (max-width: 768px) {
+    p {
+        font-size: 16px;
+    }
+  }
+`
+
+const Title = styled.div`
+    display: flex;
+    justify-content: space-between;
+    flex-direction: column;
+    align-items: center;
+    strong, p {
+        color: ${p => p.theme.colors.white};
+        font-size: 24px;
+        font-weight: 600;
+        text-shadow: 2px 2px 12px ${p => p.theme.colors.white_medium_light+'32'};
+        font-weight: 600;
+    }
+    @media screen and (max-width: 1400px) {
+        strong, p {
+            font-size: 20px;
+        }
+    }
 `
 
 const CardHeader = styled.div`

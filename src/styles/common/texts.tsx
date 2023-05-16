@@ -67,6 +67,9 @@ export const H1 = styled.h1<TextProps>`
     ${p => p.center && css`
         text-align: center;
     `}
+    @media screen and (max-width: 968px) {
+        font-size: 26px;
+    }
 `;
 
 export const H2 = styled.h2<TextProps>`
@@ -79,6 +82,9 @@ export const H2 = styled.h2<TextProps>`
     ${p => p.center && css`
         text-align: center;
     `}
+    @media screen and (max-width: 968px) {
+        font-size: 20px;
+    }
 `;
 
 export const H3 = styled.h3<TextProps>`
@@ -91,6 +97,9 @@ export const H3 = styled.h3<TextProps>`
     ${p => p.center && css`
         text-align: center;
     `}
+    @media screen and (max-width: 968px) {
+        font-size: 16px;
+    }
 `;
 
 

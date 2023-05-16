@@ -5,6 +5,8 @@ import { Table } from '../../../components/tables'
 import styled from 'styled-components'
 import { P2 } from '../../../styles/common/texts'
 import { TableRoundedImage, TableWrapper } from '../../../components/tables/styles/tableStyles'
+import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
+import { Div } from '@/styles/common/layout'
 
 const TableSellers = () => {
     const columns = [
@@ -33,6 +35,40 @@ const TableSellers = () => {
         }
     ]
 
+    const MobileCardInner = ({ data, labels }) => {
+        const filter_data = Object.entries(data).filter(([ label ]) => !['avatar', 'name', 'id'].includes(label));
+        const secondary_data = filter_data.map(([label, value]) => value);
+        const filtered_labels = labels.filter((label) => !['avatar', 'name', 'id'].includes(label.accessor));
+
+        return (
+            <>
+                <CenteredRoundedImage
+                    src={data.avatar}
+                    alt=""
+                    loading="lazy"
+                />
+                <CardTitle>
+                    { data.name }
+                </CardTitle>
+                <Div center>
+                    {secondary_data.map((value, index) => (
+                            <div style={{ marginBottom: '5px' }}>
+                                <Label>
+                                    { filtered_labels[index].Header }: 
+                                    {" "}
+                                    <Value>
+                                        { value }
+                                    </Value>
+                                </Label>
+                            </div>
+                        ))
+                    }
+                </Div>
+            </>
+        )
+    }
+
+
     return (
         <Table
             tableData={sellers}
@@ -40,6 +76,7 @@ const TableSellers = () => {
             showSearchFilter={false}
             pagination={false}
             CustomWrapper={CustomWrapper}
+            MobileCardInner={MobileCardInner}
         />
     )
 }

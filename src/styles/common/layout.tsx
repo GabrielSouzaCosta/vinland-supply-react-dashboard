@@ -29,6 +29,9 @@ export const Container = styled.div<LayoutProps>`
     padding: ${p => p.padding ? p.padding : '20px'};
     max-width: 1568px;
     margin: 0 auto;
+    @media screen and (max-width: 968px) {
+        padding: 10px;
+    }
 `
 
 export const Div = styled.div<LayoutProps>`
@@ -37,6 +40,9 @@ export const Div = styled.div<LayoutProps>`
     `}
     ${(p) => p.padding && css`
         padding: ${p.padding};
+    `}
+    ${(p) => p.center && css`
+        text-align: center;
     `}
     ${(p) => p.m && css`
         margin: ${p.m};

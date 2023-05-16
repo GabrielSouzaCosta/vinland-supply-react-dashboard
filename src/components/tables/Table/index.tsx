@@ -12,8 +12,11 @@ import {
 } from '../styles/tableStyles'
 import { ButtonExportExcel } from '../../../styles/common/buttons'
 import { useStateContext } from '../../../context/ContextProvider'
+import MobileView from '../components/MobileView'
+import TableView from '../components/TableView'
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
  
-type Props = {
+export type TableProps = {
     showDateFilter: boolean,
     exportExcel?: () => void,
     showSearchFilter: boolean,
@@ -22,6 +25,7 @@ type Props = {
     pagination: boolean,
     footer?: boolean,
     CustomWrapper?: React.ReactNode,
+    MobileCardInner?: any,
 }
 
 const Table = ({ 
@@ -32,9 +36,10 @@ const Table = ({
     tableColumns,
     pagination=true,
     footer,
-    CustomWrapper
-} : Props) => {
-    const { theme } = useStateContext();
+    CustomWrapper,
+    MobileCardInner,
+} : TableProps) => {
+    const { window_width } = useGetWindowDimensions();
 
     const data = React.useMemo(
         () => tableData,
@@ -46,164 +51,24 @@ const Table = ({
         [tableColumns]
     )
     
-    const tableInstance = useTable(
-        { 
-            columns,
-            data,
-            initialState: { pageIndex: 0, pageSize: pagination ? 50 : data.length },
-            key: data.length
-        }, 
-        useGlobalFilter, 
-        useSortBy,
-        usePagination,
-    );
-    
-    const {
-        getTableProps,
-        getTableBodyProps,
-        headerGroups,
-        footerGroups,
-        rows,
-        prepareRow,
-    } = tableInstance;
-
-    // UseGlobalFilter plugin variables
-    const {
-        preGlobalFilteredRows,
-        globalFilter,
-        setGlobalFilter,
-    } = tableInstance;
-
-    // UsePagination plugin variables
-    const {
-        state: { pageIndex },
-        page,
-        pageCount,
-        pageOptions,
-        canPreviousPage,
-        canNextPage,
-        previousPage,
-        nextPage,
-        gotoPage,
-    } = tableInstance;
-
-    const TableContent = () => (    
-        <table {...getTableProps()}>
-            <thead>
-            {// Loop over the header rows
-            headerGroups.map(headerGroup => (
-                // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()}>
-                {// Loop over the headers in each row
-                headerGroup.headers.map(column => (
-                    // Apply the header cell props
-                    <th {...column.getHeaderProps(column.getSortByToggleProps())}>
-                        {column.render('Header')}
-                        {column.isSorted ? (column.isSortedDesc ?  <IoCaretDown /> : <IoCaretUp />) : ""}
-                    </th>
-                ))}
-                </tr>
-            ))}
-            </thead>
-
-            <tbody {...getTableBodyProps()}>
-                {rows?.length === 0 ? 
-                    (
-                        <tr>
-                            <td colSpan={columns.length}>No rows found</td>
-                        </tr>
-                    ) 
-                    : 
-                    (
-                        page.map(row => {
-                            prepareRow(row)
-                            return (
-                                <tr 
-                                    {...row.getRowProps()}
-                                >
-                                    {
-                                        row.cells.map(cell => {
-                                            return (
-                                                <td {...cell.getCellProps()}>
-                                                    {cell.render('Cell')}
-                                                </td>
-                                            )
-                                        })
-                                    }
-                                </tr>
-                            )
-                        })
-                    )
-                }
-            </tbody>
-
-            {footer &&
-                <tfoot>
-                    {footerGroups.map(group => (
-                    <tr {...group.getFooterGroupProps()}>
-                        {group.headers.map(column => (
-                        <td {...column.getFooterProps()}>{column.render('Footer')}</td>
-                        ))}
-                    </tr>
-                    ))}
-                </tfoot>
-            }
-
-        </table>
+    if (window_width < 968) return (
+        <MobileView 
+            data={data}
+            columns={columns}
+            CardInner={MobileCardInner}
+        />
     )
-
     return (
-        <div id="table">
-            <FlexDiv between mb="15px" alignItems="end">
-                {exportExcel &&
-                    <div>
-                        <P2>
-                            Export 
-                        </P2>
-                        <ButtonExportExcel />
-                    </div>
-                }
-
-                <FlexDiv gapX="10px">
-                    {showDateFilter &&
-                        <FilterByDate />
-                    }
-
-                    {showSearchFilter &&
-                        <GlobalFilterSearch
-                            preGlobalFilteredRows={preGlobalFilteredRows}
-                            globalFilter={globalFilter}
-                            setGlobalFilter={setGlobalFilter}
-                        />
-                    }
-                </FlexDiv>
-            </FlexDiv>
-
-            {CustomWrapper ? 
-                <CustomWrapper className='custom-scrollbar' darkMode={theme === 'dark'}>
-                    <TableContent />
-                </CustomWrapper>
-            :
-                <TableWrapper className='custom-scrollbar' darkMode={theme === 'dark'}>
-                    <TableContent />
-                </TableWrapper>
-            }
-
-
-            {pagination &&
-                <TablePagination 
-                    pageIndex={pageIndex}
-                    page={page}
-                    pageCount={pageCount}
-                    pageOptions={pageOptions}
-                    canPreviousPage={canPreviousPage}
-                    canNextPage={canNextPage}
-                    previousPage={previousPage}
-                    nextPage={nextPage}
-                    gotoPage={gotoPage}
-                />
-            }
-        </div>
+        <TableView 
+            showDateFilter={showDateFilter}
+            exportExcel={exportExcel}
+            showSearchFilter={showSearchFilter}
+            tableData={data}
+            tableColumns={columns}
+            pagination={pagination}
+            footer={footer}
+            CustomWrapper={CustomWrapper}
+        />
     )
 }
 

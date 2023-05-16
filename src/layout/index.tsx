@@ -46,6 +46,7 @@ const Content = styled(Div)`
 `
 
 const ContentWrapper = styled(FlexDiv)`
+  min-height: calc(100vh - 20px);
   position: relative;
   background-color: ${p => p.theme.colors.background};
 `

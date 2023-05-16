@@ -19,33 +19,35 @@ const ChartCustomers = () => {
 
   const options = {
     responsive: true,
-    datalabels: {
-      color: '#FCFCFC',
-      font: {
-        size: 14,
-        weight: 'bold'
-      },
-      padding: 6,
-      formatter: function(value: number, context: any) {
-        let data = context.dataset.data;
-        let total = data.reduce((accumulator: number, value: number) => accumulator + value) - value;
-        const percentage = (value / total) * 100
-        return '%'+percentage.toFixed(1);
-      }
-    },
     plugins: {
-        legend: {
-          align: 'center',
-          position: 'bottom',
-          labels: {
-            padding: 20,
-            boxWidth: 18,
-            color: colors.black,
-            font: {
-              size: 16,
-            },
-          } 
+      datalabels: {
+        color: '#FCFCFC',
+        font: {
+          size: 16,
+          weight: 'bold'
         },
+        padding: 6,
+        formatter: function(value: number, context: any) {
+          let data = context.dataset.data;
+          console.log(data)
+          let total = data.reduce((accumulator: number, value: number) => accumulator + value);
+          console.log(total);
+          const percentage = (value / total) * 100
+          return '%'+percentage.toFixed(1);
+        }
+      },
+      legend: {
+        align: 'center',
+        position: 'bottom',
+        labels: {
+          padding: 20,
+          boxWidth: 18,
+          color: colors.black,
+          font: {
+            size: 16,
+          },
+        } 
+      },
     },
   };
 
@@ -105,6 +107,7 @@ const ChartCustomers = () => {
             <Pie 
                 data={revenueSourcesData}
                 options={options}
+                plugins={[ChartDataLabels]}
             />
         </div>
     </Content>
@@ -122,6 +125,18 @@ const Content = styled.div`
         text-align: center;
         font-weight: 600;
         font-size: 1.5rem;
+    }
+    @media screen and (max-width: 968px) {
+      > div{
+        width: 100%;
+        &:first-child {
+          margin-bottom: 15px;
+        }
+      }
+      p {
+        font-size: 1.2rem;
+      }
+      flex-direction: column;
     }
 `
 

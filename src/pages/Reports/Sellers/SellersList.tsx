@@ -1,3 +1,4 @@
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 import { AnimatePresence, motion } from 'framer-motion'
 import React, { useState } from 'react'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
@@ -9,6 +10,7 @@ import { P, P2, P3 } from '../../../styles/common/texts'
 const SellersList = () => {
     const { theme } = useStateContext();
     const [ selectedSellers, setSelectedSellers ] = useState([]);
+    const { window_width } = useGetWindowDimensions();
 
     function handleSelectSeller(seller) {
         selectedSellers.some(item => item.name === seller.name) ?
@@ -50,7 +52,10 @@ const SellersList = () => {
                                     }}
                                     dark={theme === 'dark'}
                                 >
-                                    <IoAddOutline size={24} />
+                                    {window_width > 768 &&
+                                        <IoAddOutline size={24} />
+                                    }
+
                                     <img src={item.avatar} alt="" />
                                     <div>
                                         <P2>
@@ -88,7 +93,9 @@ const SellersList = () => {
                                     }}
                                     dark={theme === 'dark'}
                                 >
-                                    <IoClose size={24} />
+                                    {window_width > 768 && 
+                                        <IoClose size={24} />
+                                    }
                                     <img src={item.avatar} alt="" />
                                     <div>
                                         <P2>
@@ -112,6 +119,19 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 10px;
+    @media screen and (max-width: 1400px) {
+        grid-template-columns: repeat(4, 1fr);  
+    }
+    @media screen and (max-width: 968px) {
+        grid-template-columns: repeat(3, 1fr);  
+    }
+    @media screen and (max-width: 768px) {
+        grid-template-columns: repeat(2, 1fr);
+        max-height: 200px;
+        overflow-y: scroll;
+        scroll-snap-type: y mandatory;
+        padding: 2px 0;
+    }
 `
 
 const SellerCard = styled(motion.button)`
@@ -160,6 +180,17 @@ const SellerCard = styled(motion.button)`
         }
         p.sales {
             color: ${p => p.theme.colors.gray_dark};
+        }
+    }
+    @media screen and (max-width: 768px) {
+        flex-direction: column;
+        justify-content: center;
+        height: 100px;
+        scroll-snap-align: start;
+        flex-shrink: 0;
+        img {
+            width: 45px;
+            height: 45px;
         }
     }
 `

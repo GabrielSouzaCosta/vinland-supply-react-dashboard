@@ -5,6 +5,7 @@ import data from './MOCK_DATA.json'
 import styled from 'styled-components'
 import { useStateContext } from '../../context/ContextProvider'
 import useGetThemeColors from '@/hooks/useGetThemeColors';
+import { Label, Value } from '@/components/tables/components/MobileView/styles'
 
 const TableOrders = () => {
     const colors = useGetThemeColors();
@@ -12,9 +13,9 @@ const TableOrders = () => {
     const sortedByBillingDateData = data.sort(function(a, b) {
         const [dayA, monthA, yearA] = a.billing_date.split('/');
         const [dayB, monthB, yearB] = b.billing_date.split('/');
-        const dateA = new Date(yearA, monthA - 1, dayA);
-        const dateB = new Date(yearB, monthB - 1, dayB);
-        return dateB - dateA;
+        const dateA = new Date(Number(yearA), Number(monthA) - 1, Number(dayA));
+        const dateB = new Date(Number(yearB), Number(monthB) - 1, Number(dayB));
+        return Number(dateB) - Number(dateA);
     })
 
     const productsTableColumns = [
@@ -60,13 +61,37 @@ const TableOrders = () => {
         },
     ]
 
+    const MobileCardInner = ({ data, labels }) => {
+        const filter_data = Object.entries(data);
+        const secondary_data = filter_data.map(([label, value]) => value);
+
+        return (
+            <>
+                {secondary_data.map((value, index) => (
+                        <div style={{ marginBottom: '5px' }}>
+                            <Label>
+                                { labels[index].Header }: 
+                                {" "}
+                                <Value>
+                                    { value }
+                                </Value>
+                            </Label>
+                        </div>
+                    ))
+                }
+            </>
+        )
+    }
+
+
     return (
         <Table
             tableData={sortedByBillingDateData}
             tableColumns={productsTableColumns}
             CustomWrapper={CustomWrapper}
             showDateFilter
-            exportExcel={true}
+            exportExcel={() => {}}
+            MobileCardInner={MobileCardInner}
         />
     )
 }

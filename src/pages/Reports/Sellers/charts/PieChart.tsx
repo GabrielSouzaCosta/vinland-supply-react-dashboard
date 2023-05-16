@@ -36,7 +36,7 @@ const PieChart = () => {
         padding: 6,
         formatter: function(value, context) {
           let data = context.dataset.data;
-          let total = data.reduce((accumulator, value) => accumulator + value) - value;
+          let total = data.reduce((accumulator: number, value: number) => accumulator + value);
           const percentage = (value / total) * 100
           return '%'+percentage.toFixed(1);
         }

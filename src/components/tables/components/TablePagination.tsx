@@ -24,13 +24,13 @@ const TablePagination = ({
     return (
         <nav>
             <P mb="10px" mt="15px">
-                Página
+                Page
                 {' '}
                 <Span textColor={'primary_medium'}>
                     { pageIndex + 1 } 
                 </Span>
                 {' '}
-                de { pageCount }
+                of { pageCount }
             </P>
 
             <PaginationContainer>
@@ -38,7 +38,7 @@ const TablePagination = ({
                 {canPreviousPage && (
                     <li>
                         <PreviousNextButton onClick={previousPage}>
-                            Anterior
+                            Previous
                             <IoChevronBack />
                         </PreviousNextButton>
                     </li>
@@ -48,7 +48,10 @@ const TablePagination = ({
                     {
                         pageOptions.map((page) => (
                             <li key={page}>
-                                <PaginationLink currentPage={page === pageIndex} onClick={() => handleNavigateToPage(page)}>
+                                <PaginationLink 
+                                    currentPage={page === pageIndex} 
+                                    onClick={() => handleNavigateToPage(page)}
+                                >
                                     {page + 1}
                                 </PaginationLink>
                             </li>
@@ -61,7 +64,7 @@ const TablePagination = ({
                     <li>
                         <PreviousNextButton next onClick={nextPage}>
                             <IoChevronForward />
-                            Próxima
+                            Next
                         </PreviousNextButton>
                     </li>
                 )}
@@ -71,13 +74,13 @@ const TablePagination = ({
     )
 }
 
-const PaginationContainer = styled.ul`
+export const PaginationContainer = styled.ul`
     display: flex;
     align-items: center;
     row-gap: 15px;
 `
 
-const PreviousNextButton = styled.button`
+export const PreviousNextButton = styled.button<{ next?: boolean }>`
     font-weight: 500;
     font-size: 16px;
     display: flex;
@@ -90,7 +93,11 @@ const PreviousNextButton = styled.button`
     }
 `
 
-const PaginationLink = styled.button`
+type PaginationLinkProps = {
+    currentPage?: boolean,
+}
+
+export const PaginationLink = styled.button<PaginationLinkProps>`
     font-size: 16px;
     font-weight: 600;
     color: ${p => p.currentPage ? p.theme.colors.white : p.theme.colors.black};
@@ -100,7 +107,6 @@ const PaginationLink = styled.button`
     }
     ${p => p.currentPage && css`
         background-color: ${p.theme.colors.primary_medium};
-        margin-left: ${p.index === 0 ? '0' : '5px'};
         margin-right: 5px;
         width: 30px;
         height: 30px;

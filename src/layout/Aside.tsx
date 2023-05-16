@@ -4,6 +4,9 @@ import styled from 'styled-components'
 import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoCashOutline, IoChevronDown, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { css } from 'styled-components'
 import { useStateContext } from '../context/ContextProvider'
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
+import ToggleThemeButton from '@/components/ui/ToggleThemeButton'
+import { P, P2 } from '@/styles/common/texts'
 
 type Props = {
     visible: boolean
@@ -14,115 +17,133 @@ const Aside = ({
 }: Props) => {
     const { theme } = useStateContext();
     const { pathname } = useLocation();
+    const { window_width } = useGetWindowDimensions();
+
 
     return (
         <StyledAside 
             visible={visible} 
             className="custom-scrollbar thin-scrollbar"
         >
-            <Links visible={visible} >
-                <CategoryTitle visible={visible}>
-                    <IoHomeOutline size={18}/>
-                    Company
-                </CategoryTitle>
+            <CenterContentDiv>
+                {window_width < 968 &&
+                    <MobileMenu>
+                        <img src={`https://i.pinimg.com/originals/d1/d3/43/d1d343e61eb866b2e3d6baf79671d305.jpg`} alt="Gabriel" style={{ borderRadius: '50%' }} width={50} />
+                        <P2 fw={'600'} my={'5px'}>
+                            Thorfinn Karlsefni
+                        </P2>
+                        <P uppercase mb="10px">
+                            Manager
+                        </P>
 
-                <AsideItem
-                    activeLink={pathname === '/'}
-                >
-                    <Link to="/">
-                        <IoBarChartOutline
-                            size={24}
-                        />
-                        Overview
-                    </Link>
-                </AsideItem>
-                <AsideItem
-                    activeLink={pathname === '/products'}
-                >
-                    <Link to="/products">
-                        <IoBeerOutline
-                            size={24}
-                        />
-                        Products
-                    </Link>
-                </AsideItem>
-                <AsideItem
-                    activeLink={pathname === '/orders'}
-                >
-                    <Link to="/orders">
-                        <IoStorefrontOutline
-                            size={24}
-                        />
-                        Orders
-                    </Link>
-                </AsideItem>
+                        <ToggleThemeButton />
+                    </MobileMenu>
+                }
 
-                <AsideItem
-                    activeLink={pathname === '/customers'}
-                >
-                    <Link to="/customers">
-                        <IoPeopleOutline
-                            size={24}
-                        />
-                        Customers
-                    </Link>
-                </AsideItem>
 
-                <CategoryTitle visible={visible}>
-                    <IoPieChartOutline size={18} />
-                    Reports
-                </CategoryTitle>
+                <Links visible={visible} >
+                    <CategoryTitle visible={visible}>
+                        <IoHomeOutline size={18}/>
+                        Company
+                    </CategoryTitle>
 
-                <AsideItem
-                    activeLink={pathname === '/reports/sales'}
-                >
-                    <Link to="/reports/sales">
-                        <IoStatsChartOutline
-                            size={24}
-                        />  
-                        Sales
-                    </Link>
-                </AsideItem>
+                    <AsideItem
+                        activeLink={pathname === '/'}
+                    >
+                        <Link to="/">
+                            <IoBarChartOutline
+                                size={24}
+                            />
+                            Overview
+                        </Link>
+                    </AsideItem>
+                    <AsideItem
+                        activeLink={pathname === '/products'}
+                    >
+                        <Link to="/products">
+                            <IoBeerOutline
+                                size={24}
+                            />
+                            Products
+                        </Link>
+                    </AsideItem>
+                    <AsideItem
+                        activeLink={pathname === '/orders'}
+                    >
+                        <Link to="/orders">
+                            <IoStorefrontOutline
+                                size={24}
+                            />
+                            Orders
+                        </Link>
+                    </AsideItem>
 
-                <AsideItem
-                    activeLink={pathname === '/reports/users-performance'}
-                >
-                    <Link to="/reports/users-performance">
-                        <IoPodiumOutline
-                            size={24}
-                        />  
-                        Sellers Performance
-                    </Link>
-                </AsideItem>
+                    <AsideItem
+                        activeLink={pathname === '/customers'}
+                    >
+                        <Link to="/customers">
+                            <IoPeopleOutline
+                                size={24}
+                            />
+                            Customers
+                        </Link>
+                    </AsideItem>
 
-                <CategoryTitle visible={visible}>
-                    <IoBusinessOutline size={18} />
-                    SYSTEM
-                </CategoryTitle>
+                    <CategoryTitle visible={visible}>
+                        <IoPieChartOutline size={18} />
+                        Reports
+                    </CategoryTitle>
 
-                <AsideItem
-                    activeLink={pathname === '/system/users'}
-                >
-                    <Link to="/system/users">
-                        <IoPersonOutline
-                            size={20}
-                        />
-                        Users
-                    </Link>
-                </AsideItem>
+                    <AsideItem
+                        activeLink={pathname === '/reports/sales'}
+                    >
+                        <Link to="/reports/sales">
+                            <IoStatsChartOutline
+                                size={24}
+                            />  
+                            Sales
+                        </Link>
+                    </AsideItem>
 
-                <AsideItem
-                    activeLink={pathname === '/system/settings'}
-                >
-                    <Link to="/system/settings">
-                        <IoSettingsOutline
-                            size={20}
-                        />
-                        Settings
-                    </Link>
-                </AsideItem>
-            </Links>
+                    <AsideItem
+                        activeLink={pathname === '/reports/users-performance'}
+                    >
+                        <Link to="/reports/users-performance">
+                            <IoPodiumOutline
+                                size={24}
+                            />  
+                            Sellers Performance
+                        </Link>
+                    </AsideItem>
 
+                    <CategoryTitle visible={visible}>
+                        <IoBusinessOutline size={18} />
+                        SYSTEM
+                    </CategoryTitle>
+
+                    <AsideItem
+                        activeLink={pathname === '/system/users'}
+                    >
+                        <Link to="/system/users">
+                            <IoPersonOutline
+                                size={20}
+                            />
+                            Users
+                        </Link>
+                    </AsideItem>
+
+                    <AsideItem
+                        activeLink={pathname === '/system/settings'}
+                    >
+                        <Link to="/system/settings">
+                            <IoSettingsOutline
+                                size={20}
+                            />
+                            Settings
+                        </Link>
+                    </AsideItem>
+                </Links>
+            </CenterContentDiv>
         </StyledAside>
     )
 }
@@ -135,18 +156,28 @@ type StyledProps = {
 const StyledAside = styled.aside<StyledProps>`
     overflow-x: hidden;
     position: sticky;
-    top: 80px;
+    top: 90px;
     margin-left: ${p => p.visible ? '0' : '-245px'};
     width: 300px;
     height: calc(100vh - 90px);
     background-color: ${p => p.theme.colors.white};
-    z-index: 10;
+    z-index: 100;
     display: flex;
     flex-direction: column;
-    justify-content: center;
     transition: all 0.3s;
     box-shadow: 2px 0 12px rgba(10, 10, 10, 0.04);
     border-right: 1px solid #20202011;
+    @media screen and (max-width: 968px) {
+        position: fixed;
+        margin-left: ${p => p.visible ? '0' : '-300px'};
+    }
+    `
+
+const CenterContentDiv = styled.div`
+    margin: auto 0;
+    @media screen and (max-width: 1268px) {
+        padding: 20px 0;
+    }
 `
 
 const Links = styled.ul<StyledProps>`
@@ -187,6 +218,15 @@ const CategoryTitle = styled.p<StyledProps>`
     display: ${p => p.visible === false ? 'none' : 'flex'};
     align-items: center;
     column-gap: 10px;
+`
+
+const MobileMenu = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 15px;
+    
 `
 
 export default Aside

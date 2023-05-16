@@ -9,9 +9,10 @@ import { FlexDiv } from '../../../styles/common/layout'
 import { FormProvider, useForm } from 'react-hook-form'
 
 const Security = () => {
-    const { control, register, handleSubmit, formState: { errors } } = useForm();
+    const { control, register, handleSubmit, reset, formState: { errors } } = useForm();
   
     function handleUpdatePassword(data) {
+        reset();
         toast.success("Successfully updated password!", {
             position: toast.POSITION.BOTTOM_RIGHT
         });
@@ -94,6 +95,9 @@ const FormUpdatePassword = styled.form`
     div#header {
         color: ${p => p.theme.colors.primary_dark};
         font-size: 24px;
+    }
+    @media screen and (max-width: 968px) {
+        width: 100%;
     }
 `
 

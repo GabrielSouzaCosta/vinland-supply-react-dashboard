@@ -36,7 +36,6 @@ const Notifications = () => {
             setValue('GENERAL', !form['GENERAL'])
             
         } else {
-            console.log(form[toggle]);
             setValue(toggle, !form[toggle])
         }
     }

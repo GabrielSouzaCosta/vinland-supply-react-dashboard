@@ -73,14 +73,21 @@ export const StyledInput = styled.input<StyledInputProps>`
     ${p => p.error && css`
         border: 2px solid ${p => p.theme.colors.danger};
     `}
+    @media screen and (max-width: 968px) {
+        padding: 6px 8px 6px 8px;
+    }
 `
+
+interface InputProps extends Omit<UseControllerProps, 'name'> {
+    name?: string,
+}
 
 export const Input = ({
     name,
     rules,
     control,
     ...props
-} : UseControllerProps & InputHTMLAttributes<HTMLInputElement>) => {
+} : InputProps & InputHTMLAttributes<HTMLInputElement>) => {
     const { theme } = useStateContext();
 
     const FormInput = ({ name, rules, control } : UseControllerProps) => {

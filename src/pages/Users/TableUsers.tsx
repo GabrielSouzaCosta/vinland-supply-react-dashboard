@@ -7,6 +7,9 @@ import { P, P2, P3 } from '../../styles/common/texts'
 import { colors } from '../../styles/common/theme'
 import { ModalConfirmDecision, ModalEditUserDetails } from '../../components/modals'
 import { toast } from 'react-toastify'
+import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
+import { Button } from '@/styles/common/buttons'
+import { Div } from '@/styles/common/layout'
 
 const TableUsers = ({
     users,
@@ -96,12 +99,70 @@ const TableUsers = ({
         },
     ]
 
+    const MobileCardInner = ({ data, labels }) => {
+        const filter_data = Object.entries(data).filter(([ label ]) => !['avatar', 'name', 'id'].includes(label));
+        const secondary_data = filter_data.map(([label, value]) => value);
+        const filtered_labels = labels.filter((label) => !['avatar', 'name', 'id'].includes(label.accessor));
+
+        return (
+            <>
+                <CenteredRoundedImage
+                    src={data.avatar}
+                    alt=""
+                    loading="lazy"
+                />
+                <CardTitle>
+                    { data.name }
+                </CardTitle>
+                {secondary_data.map((value, index) => (
+                        <div style={{ marginBottom: '5px' }}>
+                            <Label>
+                                { filtered_labels[index].Header }: 
+                                {" "}
+                                <Value>
+                                    { value }
+                                </Value>
+                            </Label>
+                        </div>
+                    ))
+                }
+                <Div my="10px">
+                    <Button 
+                    iconButton
+                    fullWidth
+                    variant="black"
+                    onClick={() => handleOpenModalEditUser(data)}
+                    >
+                        <IoCreateOutline
+                            size={25}
+                            color={colors.blue} 
+                        />
+                        Update User
+                    </Button>
+                </Div>
+                <Button 
+                   iconButton
+                   fullWidth
+                   variant="danger"
+                   onClick={() => handleOpenModalDeleteUser(data)}
+                >
+                    <IoTrashOutline
+                        size={25}
+                        color={colors.white} 
+                    />
+                    Delete User
+                </Button>
+            </>
+        )
+    }
+
     return (
         <>
             <Table
                 tableData={users}
                 tableColumns={productsTableColumns}
                 CustomWrapper={CustomWrapper}
+                MobileCardInner={MobileCardInner}
             />
             <ModalEditUserDetails 
                 user={currUser}

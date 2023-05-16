@@ -1,3 +1,4 @@
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 import React from 'react'
 import { AiFillFileExcel, AiFillFilePdf } from 'react-icons/ai'
 import styled from 'styled-components'
@@ -62,6 +63,11 @@ export const Button = styled.button<ButtonProps>`
             color: ${p => p.theme.colors.white_medium_light};
         }
     `}
+
+    @media screen and (max-width: 968px) {
+        font-size: 14px;
+        padding: 4px 10px;
+    }
 `
 
 export const ToggleButton = styled(Button)`
@@ -78,12 +84,19 @@ export const ToggleButton = styled(Button)`
     }
 `
 
-export const ButtonExportExcel = () => (
-    <ButtonExcel>
-        <AiFillFileExcel size={16} />
-        Excel
-    </ButtonExcel>
-)
+export const ButtonExportExcel = () => {
+    const { window_width } = useGetWindowDimensions();
+    
+    return (
+        <ButtonExcel>
+            <AiFillFileExcel 
+                size={window_width < 968 ? 12 : 16} 
+            />
+            Excel
+        </ButtonExcel>
+    )
+}
+
 
 const ButtonExcel = styled.button`
     border-radius: 4px;
@@ -103,14 +116,25 @@ const ButtonExcel = styled.button`
         border: 1px solid ${p => p.theme.colors.black_extra_light};
         background-color: #202020;
     }
+    @media screen and (max-width: 968px) {
+        padding: 4px 8px;
+        font-size: 12px;
+    }
 `
 
-export const ButtonExportPdf = () => (
-    <ButtonPdf>
-        <AiFillFilePdf size={16} />
-        PDF
-    </ButtonPdf>
-)
+export const ButtonExportPdf = () => {
+    const { window_width } = useGetWindowDimensions();
+
+    return (
+        <ButtonPdf>
+            <AiFillFilePdf 
+                size={window_width < 968 ? 12 : 16} 
+            />
+            PDF
+        </ButtonPdf>
+    )
+}
+
 
 const ButtonPdf = styled.button`
     border-radius: 4px;
@@ -129,5 +153,9 @@ const ButtonPdf = styled.button`
     &:hover {
         color: ${p => p.theme.colors.white_medium_light};
         background-color: ${p => p.theme.colors.black_extra_light};
+    }
+    @media screen and (max-width: 968px) {
+        padding: 5px 10px;
+        font-size: 12px;
     }
 `

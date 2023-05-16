@@ -12,10 +12,9 @@ function App() {
   const { theme, setTheme } = useStateContext();
 
   useLayoutEffect(() => {
-    savedThemePreference ?
-      setTheme(savedThemePreference)
-    :
-      setTheme('dark');
+    if (savedThemePreference) {
+      setTheme(savedThemePreference);
+    }
   }, [])
 
   return (

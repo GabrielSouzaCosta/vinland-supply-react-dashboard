@@ -18,7 +18,6 @@ function Login() {
     const navigate = useNavigate();
 
     function handleLogin<SubmitHandler>({ username, password }: LoginCredentials) {
-        console.log(username, password);
         navigate('/');
     }
 
@@ -26,6 +25,11 @@ function Login() {
         <Main>
             <div>
                 <form onSubmit={handleSubmit(handleLogin)}>
+                    <img 
+                        src="/images/Logo.png"
+                        alt='Vinland Supply co.'
+                    />
+
                     <h1>
                         LOGIN
                     </h1>
@@ -134,11 +138,44 @@ const Main = styled.main`
             }
         }
         #forgot-password {
-            color: ${p => p.theme.colors.danger};
+            color: #353535;
             margin-top: 20px;
             font-weight: 600;
-        } 
+        }
+        img {
+            display: none;
+        }
+        @media screen and (max-width: 968px) {
+            background-color: #202020;
+            img {
+                display: block;
+                max-width: 40%;
+                object-fit: cover;
+            }   
+            > form {
+                max-width: 90%;
+                color: #F7F7F7;
+                h1 {
+                    color: #F2F2F2;
+                    font-size: 24px;
+                    margin-top: 15px;
+                    margin-bottom: 15px;
+                }
+                .input-container label {
+                    color: #F7F7F7;
+                }
+            }
+            button {
+                color: #303030;
+                background-color: ${colors.primary_medium};
+                border: 1px solid ${colors.primary_medium};
+            }
+            #forgot-password {
+                color: #aaa;
+            }
+        }
     }
+
     > div:nth-child(2) {
         max-width: 50%;
         width: 100%;
@@ -161,6 +198,9 @@ const Main = styled.main`
             font-size: 11px;
             color: #F7F7F7;
             margin-top: -12px;
+        }
+        @media screen and (max-width: 968px) {
+            display: none;   
         }
     }
 `
@@ -194,6 +234,12 @@ const KeepLoggedInBox = styled.div`
     label {
         color: #202020;
         font-weight: 500;
+    }
+    @media screen and (max-width: 968px) {
+        input, label {
+            accent-color: #F7F7F7;
+            color: #F7F7F7;
+        } 
     }
 `
 

@@ -10,6 +10,7 @@ import { useStateContext } from '../context/ContextProvider'
 import { AnimatePresence, motion } from 'framer-motion'
 import { IoChevronDown, IoExitOutline } from 'react-icons/io5'
 import ToggleThemeButton from '../components/ui/ToggleThemeButton'
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions';
 
 type Props = {
   isSidebarVisible: boolean,
@@ -23,6 +24,7 @@ const Navbar = ({
 
   const { theme } = useStateContext();
   const navigate = useNavigate();
+  const { window_width, window_height } = useGetWindowDimensions();
 
   const [ isDropdownVisible, setIsDropdownVisible ] = useState(false);
 
@@ -37,71 +39,72 @@ const Navbar = ({
   return (
     <>
       <Nav>
-        <FlexDiv>
+        <FlexDiv between={window_width < 968 ? true : false} fullWidth={window_width < 968 ? true : false}>
           <div>
             <Hamburger 
               toggled={isSidebarVisible} 
               toggle={handleToggleSidebar}
               color={theme === 'light' ? colors.black_extra_light : colors.white_medium_light}
+              size={30}
             />
           </div>
           <NavContainer>
-            <img src="/images/Logo.png" alt="Vinland Supply Co." style={{ height: '75px' }} />
+            <img src="/images/Logo.png" alt="Vinland Supply Co." />
           </NavContainer>
         </FlexDiv>
 
-        <FlexDiv 
-          gapX={'10px'} 
-        >
-          <img src={`https://i.pinimg.com/originals/d1/d3/43/d1d343e61eb866b2e3d6baf79671d305.jpg`} alt="Gabriel" style={{ borderRadius: '50%' }} width={50} />
-
-          <UserDetails 
-            onClick={handleShowDropdown}
-            type="button"
+        {window_width > 968 &&
+          <FlexDiv 
+            gapX={'10px'} 
           >
-            <P2 fw={600} mb={'4px'}>
-              Thorfinn Karlsefni
-            </P2>
-            <FlexDiv between>
-              <P uppercase>
-                Manager
-              </P>
-              <motion.div
-                animate={{ rotate: isDropdownVisible ? '180deg' : '0deg' }}
-                transition={{ type: "timing", duration: 0.2 }}
-              >
-                <IoChevronDown />
-              </motion.div>
-            </FlexDiv>
-          </UserDetails>
+            <img src={`https://i.pinimg.com/originals/d1/d3/43/d1d343e61eb866b2e3d6baf79671d305.jpg`} alt="Gabriel" style={{ borderRadius: '50%' }} width={50} />
 
-          {theme &&
-            <ToggleThemeButton />
-          }
-
-
-          <AnimatePresence>
-            {isDropdownVisible && (
-              <NavbarMenu
-                initial={{ y: -20, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                exit={{ y: -20, opacity: 0 }}
-                transition={{ duration: 0.3 }}
-              >
-                <NavbarMenuItem 
-                  onClick={handleLogout}
-                  whileHover={{ color: colors.danger }} 
-                  style={{ fontSize: '16px' }}
+            <UserDetails 
+              onClick={handleShowDropdown}
+              type="button"
+            >
+              <P2 fw={'600'} mb={'4px'}>
+                Thorfinn Karlsefni
+              </P2>
+              <FlexDiv between>
+                <P uppercase>
+                  Manager
+                </P>
+                <motion.div
+                  animate={{ rotate: isDropdownVisible ? '180deg' : '0deg' }}
+                  transition={{ type: "timing", duration: 0.2 }}
                 >
-                  <IoExitOutline />
-                  Logout
-                </NavbarMenuItem>
-              </NavbarMenu>
-            )}
-          </AnimatePresence>
-        </FlexDiv>
+                  <IoChevronDown />
+                </motion.div>
+              </FlexDiv>
+            </UserDetails>
+
+            {theme &&
+              <ToggleThemeButton />
+            }
 
 
+            <AnimatePresence>
+              {isDropdownVisible && (
+                <NavbarMenu
+                  initial={{ y: -20, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -20, opacity: 0 }}
+                  transition={{ duration: 0.3 }}
+                >
+                  <NavbarMenuItem 
+                    onClick={handleLogout}
+                    whileHover={{ color: colors.danger }} 
+                    style={{ fontSize: '16px' }}
+                  >
+                    <IoExitOutline />
+                    Logout
+                  </NavbarMenuItem>
+                </NavbarMenu>
+              )}
+            </AnimatePresence>
+          </FlexDiv>
+        }
       </Nav>
     </>
   )
@@ -115,6 +118,7 @@ const Nav = styled.nav`
   justify-content: space-between;
   background-color: ${p => p.theme.colors.navbar};
   padding: 0 20px;
+  margin: 0 auto;
   box-shadow: 0 2px 10px rgba(10, 10, 10, 0.02);
   height: 90px;
   z-index: 100;
@@ -123,8 +127,19 @@ const Nav = styled.nav`
 
 const NavContainer = styled(Container)`
   margin: 0;
+  margin-left: 10px;
+  padding: 0;
   h3 {
     color: ${p => p.theme.colors.primary_medium};
+  }
+  img {
+    height: 75px;
+  }
+  @media screen and (max-width: 968px) {
+    margin-left: 10px;
+    img {
+      height: 60px;
+    }
   }
 `
 

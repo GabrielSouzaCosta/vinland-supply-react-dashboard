@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Card = styled.div`
-    padding: 4px 20px 4px 20px;
+    padding: 4px 20px;
     height: 90px;
     display: flex;
     align-items: center;
@@ -11,6 +11,9 @@ export const Card = styled.div`
     border: 1px solid #40404011;
     border-radius: 8px;
     background-color: ${p => p.theme.colors.white};
+    @media screen and (max-width: 968px) {
+        padding: 2px 10px;
+    }
 `
 
 export const CardCalloutValue = styled.p`
@@ -23,12 +26,21 @@ export const CardCalloutValue = styled.p`
         font-size: 16px;
         margin-left: 6px;
     }
+    @media screen and (max-width: 968px) {
+        font-size: 24px;
+        span {
+            font-size: 12px;
+        }
+    }
 `
 
-export const CardCaption = styled.p`
+export const CardCaption = styled.p<{ red?: boolean }>`
     font-weight: 600;
     font-size: 16px;
     color: ${p => p.red ? p.theme.colors.danger+'ee' : p.theme.colors.gray_medium};
+    @media screen and (max-width: 968px) {
+        font-size: 12px;
+    }
 `
 
 export const CardContent = styled.main`

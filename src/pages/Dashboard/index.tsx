@@ -31,7 +31,6 @@ const Content = styled.div`
   padding: 20px;
   box-shadow: 1px 1px 12px rgba(30, 30, 30, 0.075);
   section div#chart {
-    height: 70vh;
     position: relative;
     display: flex;
     justify-content: center;

@@ -114,6 +114,21 @@ const FlexContainer = styled.div`
     padding-left: 20px;
     flex: 1;
   }
+  @media screen and (max-width: 968px) {
+    flex-direction: column;
+    nav ul {
+      flex-direction: row;
+      li button {
+        width: fit-content;
+        text-wrap: nowrap;
+      }
+    }
+    section {
+      border-left: none;
+      margin-top: 10px;
+      padding: 0 10px;
+    }
+  }
 `
 
 export default Settings

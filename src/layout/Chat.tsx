@@ -181,7 +181,7 @@ const ButtonOpenChat = styled(motion.button)`
     width: 50px;
     height: 50px;
     border-radius: 50%;
-    background-color: ${p => p.theme.colors.primary_light};
+    background-color: ${colors.primary_light};
     position: fixed;
     right: 10px;
     bottom: 5px;
@@ -200,6 +200,10 @@ const ChatContainer = styled(motion.div)`
   width: 400px;
   overflow: hidden;
   z-index: 5000;
+  @media screen and (max-width: 768px) {
+    width: 300px;
+    right: 5px;
+  } 
 `;
 
 const ChatHeader = styled.div`

@@ -226,8 +226,8 @@ const UserDetails = styled.div`
   }
   button {
     grid-column: 1 / 2; 
-    max-width: 200px;
-    width: 100%;
+    width: fit-content;
+    text-wrap: nowrap;
     margin-bottom: 10px;
     margin-top: 15px;
     transition: transform 200ms;

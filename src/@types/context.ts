@@ -3,5 +3,6 @@ export interface Context {
     setTheme: React.Dispatch<React.SetStateAction<string>>, 
     toggleTheme: () => void,
     isSidebarVisible: boolean, 
-    handleToggleSidebar: () => void
+    setIsSidebarVisible: React.Dispatch<React.SetStateAction<boolean>>, 
+    handleToggleSidebar: () => void,
 }

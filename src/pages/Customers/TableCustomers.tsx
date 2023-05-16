@@ -1,12 +1,13 @@
 import React from 'react'
-import { Table } from '../../components/tables'
 import styled from 'styled-components'
 import { TableRoundedImage, TableWrapper } from '../../components/tables/styles/tableStyles'
 import data from './MOCK_DATA.json'
 import { FlexDiv } from '../../styles/common/layout'
 import { IoPersonOutline, IoStarSharp } from 'react-icons/io5'
 import { colors } from '@/styles/common/theme'
-import { P } from '../../styles/common/texts'
+import { P, P2 } from '../../styles/common/texts'
+import { Table } from '@/components/tables'
+import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
 
 const TableCustomers = () => {
 
@@ -57,12 +58,44 @@ const TableCustomers = () => {
         },
     ]
 
+    const MobileCardInner = ({ data, labels }) => {
+        const filter_data = Object.entries(data).filter(([ label ]) => !['image', 'name', 'id'].includes(label));
+        const secondary_data = filter_data.map(([label, value]) => value);
+        const filtered_labels = labels.filter((label) => !['image', 'name', 'id'].includes(label.accessor));
+
+        return (
+            <>
+                <CenteredRoundedImage 
+                    src={data.image}
+                    alt=""
+                    loading="lazy"
+                />
+                <CardTitle>
+                    { data.name }
+                </CardTitle>
+                {secondary_data.map((value, index) => (
+                        <div style={{ marginBottom: '5px' }}>
+                            <Label>
+                                { filtered_labels[index].Header }: 
+                                {" "}
+                                <Value>
+                                    { value }
+                                </Value>
+                            </Label>
+                        </div>
+                    ))
+                }
+            </>
+        )
+    }
+
     return (
         <Table
             tableData={data}
             tableColumns={productsTableColumns}
-            exportExcel={true}
+            exportExcel={() => {}}
             CustomWrapper={CustomWrapper}
+            MobileCardInner={MobileCardInner}
         />
     )
 }
