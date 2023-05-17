@@ -2,6 +2,14 @@ import React from 'react'
 import { Button } from '../../styles/common/buttons'
 import ModalBase from './ModalBase'
 import styled from 'styled-components'
+import { ModalProps } from '@/@types/modal'
+
+type Props  = {
+    message: string | JSX.Element,
+    handleConfirm: () => void,
+    confirmText?: string,
+    confirmButtonVariant?: string
+} & ModalProps
 
 const ModalConfirmDecision = ({
   title,
@@ -11,7 +19,7 @@ const ModalConfirmDecision = ({
   confirmButtonVariant,
   isOpen,
   closeModal,
-}) => {
+} : Props) => {
   return (
     <ModalBase
         isOpen={isOpen}

@@ -1,5 +1,5 @@
 import React, { InputHTMLAttributes } from 'react';
-import { FieldValues, RegisterOptions, useController, UseControllerProps, useFormContext, UseFormProps, UseFormRegister, UseFormReturn, ValidationRule } from 'react-hook-form';
+import { Control, FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
 import { IoAlertCircleOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { css } from 'styled-components';
@@ -18,7 +18,7 @@ const InputLabel = styled.label`
     display: block;
 `;
 
-type InputContainerProps = {
+interface InputContainerProps extends React.HTMLAttributes<HTMLDivElement> {
     label: string,
     children: React.ReactNode,
 }
@@ -78,65 +78,78 @@ export const StyledInput = styled.input<StyledInputProps>`
     }
 `
 
-interface InputProps extends Omit<UseControllerProps, 'name'> {
-    name?: string,
-}
+type TextInputProps<
+  TFieldValues extends FieldValues,
+  TName extends FieldPath<TFieldValues>
+> = {
+  
+} & UseControllerProps<TFieldValues, TName> & InputHTMLAttributes<HTMLInputElement>
 
-export const Input = ({
+export const ControlledInput = <
+    TFieldValues extends FieldValues,
+    TName extends FieldPath<TFieldValues>
+>({
     name,
     rules,
     control,
     ...props
-} : InputProps & InputHTMLAttributes<HTMLInputElement>) => {
+} : TextInputProps<TFieldValues, TName>) => {
     const { theme } = useStateContext();
 
-    const FormInput = ({ name, rules, control } : UseControllerProps) => {
-        const { 
-            field: { 
-                value,
-                onChange,
-            },
-            fieldState: {
-                error
-            }
-        } = useController({
-            name,
-            control,
-            rules,
-        });
-
-        return (
-            <>
-                {error &&
-                    <AlertIconDiv>
-                        <IoAlertCircleOutline color={colors.danger} size={20} />
-                    </AlertIconDiv>
-                }
-                <StyledInput
-                    value={value}
-                    onChange={onChange}
-                    error={!!error}
-                    dark={theme === 'dark'}
-                    { ...props }
-                />
-            </>
-        )
-    }
+    const { 
+        field: { 
+            value,
+            onChange,
+        },
+        fieldState: {
+            error
+        }
+    } = useController({
+        name,
+        control,
+        rules,
+    });
 
     return (
         <InputRelativeDiv>
-            {name ?
-                <FormInput 
-                    name={name}
-                    rules={rules}
-                    control={control}
-                />
-            :
-                <StyledInput 
-                    dark={theme === 'dark'}
-                    { ...props }
-                />
+            {error &&
+                <AlertIconDiv>
+                    <IoAlertCircleOutline color={colors.danger} size={20} />
+                </AlertIconDiv>
             }
+            <StyledInput
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                dark={theme === 'dark'}
+                { ...props }
+            />
+        </InputRelativeDiv>
+    )
+}
+
+interface InputProps {
+    error?: boolean
+}
+
+export const Input = ({
+    error,
+    ...props
+} : InputProps & InputHTMLAttributes<HTMLInputElement>) => {
+    const { theme } = useStateContext();
+
+    return (
+        <InputRelativeDiv>
+            {error &&
+                <AlertIconDiv>
+                    <IoAlertCircleOutline color={colors.danger} size={20} />
+                </AlertIconDiv>
+            }
+            <StyledInput
+                error={!!error}
+                dark={theme === 'dark'}
+                { ...props }
+            />
         </InputRelativeDiv>
     )
 }
@@ -164,5 +177,4 @@ export const InputFile = styled.div`
             background: ${p => p.theme.colors.black_extra_light+'cc'};
         }
     }
-    input[type="file"]
 `

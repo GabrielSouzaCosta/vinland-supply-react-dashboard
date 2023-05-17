@@ -12,7 +12,7 @@ import {
   Legend,
 } from 'chart.js';
 import { colors } from '@/styles/common/theme'
-import { useStateContext } from '../../../../context/ContextProvider';
+import { useStateContext } from '@/context/ContextProvider';
 
 ChartJS.register(
   CategoryScale,
@@ -33,7 +33,7 @@ const BarChart = () => {
     'July', 'August', 'September', 'October', 'November', 'December'
   ];
   
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
         legend: {
@@ -61,7 +61,7 @@ const BarChart = () => {
         y: {
           ticks: {
             color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
-            callback: function(value, index, ticks) {
+            callback: function(value: number) {
                 return '$' + value;
             }
           }

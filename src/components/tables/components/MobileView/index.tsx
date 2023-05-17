@@ -1,10 +1,9 @@
 import useGetThemeColors from '@/hooks/useGetThemeColors'
-import { ButtonExportExcel } from '@/styles/common/buttons'
 import { Input } from '@/styles/common/inputs'
-import { FlexDiv } from '@/styles/common/layout'
-import { P, P3 } from '@/styles/common/texts'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
+import { P3 } from '@/styles/common/texts'
+import React, { useEffect, useRef, useState } from 'react'
 import { IoSearchOutline } from 'react-icons/io5'
+import { Column } from 'react-table'
 import styled from 'styled-components'
 import Pagination from './Pagination'
 import useMobilePagination from './useMobilePagination'
@@ -15,17 +14,17 @@ const ListItem = ({ children } : { children: React.ReactNode }) => (
     </Item>
 )
 
-type Props = {
-    data: any[],
-    columns: any[],
-    CardInner?: any
+interface Props<T extends object> {
+    data: T[];
+    columns: Column<T>[];
+    CardInner?: ({data, labels} : { data: T; labels: Column<T>[]}) => JSX.Element;
 }
 
-const MobileView = ({
+const MobileView = <T extends object>({
     data,
     columns,
     CardInner,
-} : Props) => {
+} : Props<T>) => {
     const colors = useGetThemeColors();
     
     const [ search, setSearch ] = useState('');
@@ -45,7 +44,7 @@ const MobileView = ({
 
     const slicedData = filteredData.slice((pageIndex * 10),  (pageIndex * 10) + 10);
 
-    const scrollRef = useRef();
+    const scrollRef = useRef<HTMLUListElement>(null);
 
     function getSearchItems() {
         if (search) {
@@ -53,10 +52,13 @@ const MobileView = ({
 
             const filteredArray = data.filter((item) => {
                 for (const field of fields) {
-                    const value = item[field].toString();
-
-                    if (value.toLowerCase().includes(search.toLowerCase())) {
-                        return true;
+                    if (typeof field === 'object' && field && item) {
+                        const value = item[field as keyof typeof item];
+                        const formattedValue = String(value);
+    
+                        if (formattedValue.toLowerCase().includes(search.toLowerCase())) {
+                            return true;
+                        }
                     }
                 }
                 return false;
@@ -92,7 +94,7 @@ const MobileView = ({
 
             {slicedData.length > 0 ?
                 <List className='custom-scrollbar' ref={scrollRef}>
-                    {slicedData.map((item, index) => (
+                    {slicedData.map((item, index: number) => (
                             <ListItem key={index}>
                                 { CardInner && <CardInner data={item} labels={columns} />}
                             </ListItem>
@@ -139,7 +141,7 @@ const Search = styled.div`
     }
 `
 
-const List = styled.ul`
+const List = styled.ul<React.HTMLAttributes<HTMLDivElement>>`
     display: flex;
     flex-wrap: wrap;
     row-gap: 10px;

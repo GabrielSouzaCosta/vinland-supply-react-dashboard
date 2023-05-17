@@ -1,17 +1,23 @@
 import React from 'react'
-import { Button } from '../../../styles/common/buttons'
-import { Input, InputContainer } from '../../../styles/common/inputs'
-import { H3, P, P2, P3 } from '../../../styles/common/texts'
+import { Button } from '@/styles/common/buttons'
+import { ControlledInput, InputContainer } from '@/styles/common/inputs'
+import { H3, P, P2 } from '@/styles/common/texts'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
 import { IoCheckmark, IoLockClosed } from 'react-icons/io5'
-import { FlexDiv } from '../../../styles/common/layout'
-import { FormProvider, useForm } from 'react-hook-form'
+import { FlexDiv } from '@/styles/common/layout'
+import { useForm } from 'react-hook-form'
+
+type FormValues = {
+    current_password: string,
+    new_password: string,
+    repeat_password: string
+}
 
 const Security = () => {
-    const { control, register, handleSubmit, reset, formState: { errors } } = useForm();
+    const { control, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
   
-    function handleUpdatePassword(data) {
+    function handleUpdatePassword(data: FormValues) {
         reset();
         toast.success("Successfully updated password!", {
             position: toast.POSITION.BOTTOM_RIGHT
@@ -33,7 +39,7 @@ const Security = () => {
                 </FlexDiv>
 
                 <InputContainer label="Current Password">
-                    <Input 
+                    <ControlledInput 
                         type="password"
                         placeholder="Password"
                         name="current_password"
@@ -47,7 +53,7 @@ const Security = () => {
                     }
                 </InputContainer>
                 <InputContainer label="New Password">
-                    <Input 
+                    <ControlledInput 
                         type="password"
                         placeholder="New password"
                         name="new_password"
@@ -61,7 +67,7 @@ const Security = () => {
                     }
                 </InputContainer>
                 <InputContainer label="Repeat New Password">
-                    <Input 
+                    <ControlledInput 
                         type="password"
                         placeholder="Repeat password"
                         name="repeat_password"

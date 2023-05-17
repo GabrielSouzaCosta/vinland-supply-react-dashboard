@@ -1,5 +1,4 @@
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
-import React from 'react'
 import { AiFillFileExcel, AiFillFilePdf } from 'react-icons/ai'
 import styled from 'styled-components'
 import { css } from 'styled-components'
@@ -56,7 +55,7 @@ export const Button = styled.button<ButtonProps>`
 
     ${p => p.variant === 'black' && css`
         background-color: ${p => p.theme.colors.black_extra_light};
-        color: ${p => p.theme.colors.white_medium};
+        color: ${p => p.theme.colors.white_medium_light};
         border: 1px solid ${p => p.theme.colors.black_extra_light};
         &:hover {
             border: 1px solid ${p => p.theme.colors.primary_medium};

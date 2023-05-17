@@ -1,17 +1,18 @@
 import React from 'react'
 import styled from 'styled-components'
-import { TableRoundedImage, TableWrapper } from '../../components/tables/styles/tableStyles'
+import { TableRoundedImage, TableWrapper } from '@/components/tables/styles/tableStyles'
 import data from './MOCK_DATA.json'
-import { FlexDiv } from '../../styles/common/layout'
+import { FlexDiv } from '@/styles/common/layout'
 import { IoPersonOutline, IoStarSharp } from 'react-icons/io5'
 import { colors } from '@/styles/common/theme'
-import { P, P2 } from '../../styles/common/texts'
 import { Table } from '@/components/tables'
 import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
+import { Column } from 'react-table'
+import { Customer } from '@/@types/customer'
 
 const TableCustomers = () => {
 
-    const productsTableColumns = [
+    const productsTableColumns: Column<Customer>[] = [
         {
             Header: 'ID',
             accessor: 'id',
@@ -44,7 +45,10 @@ const TableCustomers = () => {
         {
             Header: 'Purchase Total',
             accessor: 'purchase_total',
-            Cell: ({ value }) => `$${ value.toFixed(2) }`,
+            Cell: ({value}) => 
+                <>
+                    {'$'+ value.toFixed(2)}
+                </>,
         },
         {
             Header: 'Review',
@@ -56,12 +60,20 @@ const TableCustomers = () => {
                 </p>
             </FlexDiv>,
         },
-    ]
+    ] as Column<Customer>[];
 
-    const MobileCardInner = ({ data, labels }) => {
+    interface MobileCardProps {
+        data: Customer
+        labels: Column<Customer>[];
+    }
+
+    const MobileCardInner = ({ data, labels }: MobileCardProps) => {
         const filter_data = Object.entries(data).filter(([ label ]) => !['image', 'name', 'id'].includes(label));
         const secondary_data = filter_data.map(([label, value]) => value);
-        const filtered_labels = labels.filter((label) => !['image', 'name', 'id'].includes(label.accessor));
+        const filtered_labels = labels?.filter((label) => {
+            const accessor = String(label?.accessor);
+            return accessor && !['image', 'name', 'id'].includes(accessor);
+        });
 
         return (
             <>
@@ -76,7 +88,7 @@ const TableCustomers = () => {
                 {secondary_data.map((value, index) => (
                         <div style={{ marginBottom: '5px' }}>
                             <Label>
-                                { filtered_labels[index].Header }: 
+                                { String(filtered_labels[index].Header) }: 
                                 {" "}
                                 <Value>
                                     { value }

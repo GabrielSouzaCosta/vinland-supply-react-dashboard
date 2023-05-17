@@ -1,9 +1,8 @@
 import React from 'react'
 import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
-import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoCashOutline, IoChevronDown, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
+import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { css } from 'styled-components'
-import { useStateContext } from '../context/ContextProvider'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 import ToggleThemeButton from '@/components/ui/ToggleThemeButton'
 import { P, P2 } from '@/styles/common/texts'
@@ -15,10 +14,8 @@ type Props = {
 const Aside = ({
     visible
 }: Props) => {
-    const { theme } = useStateContext();
     const { pathname } = useLocation();
     const { window_width } = useGetWindowDimensions();
-
 
     return (
         <StyledAside 

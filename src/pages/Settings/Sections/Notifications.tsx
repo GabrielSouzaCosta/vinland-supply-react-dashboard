@@ -10,7 +10,12 @@ import { useForm, useWatch } from 'react-hook-form'
 
 const Notifications = () => {
     const [ formChanged ,setFormChanged ] = useState(false);
-    const { control, setValue, handleSubmit } = useForm({
+    type FormValues = {
+        GENERAL: boolean,
+        DAILY: boolean,
+        ORDERS: boolean,
+    }
+    const { control, setValue, handleSubmit } = useForm<FormValues>({
         defaultValues: {
             'GENERAL': false,
             'DAILY': false,
@@ -21,7 +26,7 @@ const Notifications = () => {
         control
     })
 
-    function handleToggle(toggle) {
+    function handleToggle(toggle: 'GENERAL' | 'DAILY' | 'ORDERS') {
         if (!formChanged) {
             setFormChanged(true);
         }
@@ -40,7 +45,7 @@ const Notifications = () => {
         }
     }
 
-    function handleUpdateNotificationPreferences(data) {
+    function handleUpdateNotificationPreferences(data: FormValues) {
         setFormChanged(false);
         toast.success("Notification preferences updated!", {
             position: toast.POSITION.BOTTOM_RIGHT

@@ -1,8 +1,8 @@
 import React from 'react'
-import { IoCheckmarkCircleOutline, IoCloseCircleOutline, IoCloseOutline, IoReload, IoReloadOutline, IoSwapHorizontalOutline, IoThumbsDownOutline, IoThumbsUpOutline } from 'react-icons/io5'
+import { IoCheckmarkCircleOutline, IoCloseOutline, IoReloadOutline, IoSwapHorizontalOutline, IoThumbsDownOutline } from 'react-icons/io5'
 import { MdOutlineLocalShipping } from 'react-icons/md';
 import { css } from 'styled-components';
-import { FlexDiv } from '../../styles/common/layout'
+import { FlexDiv } from '@/styles/common/layout'
 import { Card, CardCalloutValue, CardCaption } from '@/styles/features/cards'
 import styled from 'styled-components'
 

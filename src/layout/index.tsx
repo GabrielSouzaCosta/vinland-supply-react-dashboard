@@ -1,10 +1,10 @@
-import React, { useRef, useState } from 'react'
+import React from 'react'
 import { Container, Div, FlexDiv } from '../styles/common/layout'
 import Aside from './Aside'
 import Navbar from './Navbar'
 import styled from 'styled-components'
 import { useStateContext } from '../context/ContextProvider'
-import Chat from './Chat'
+import Chat from './Chat/Chat'
 
 type Props = {
   container: boolean,

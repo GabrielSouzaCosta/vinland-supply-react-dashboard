@@ -13,8 +13,8 @@ import {
 } from 'chart.js';
 import { colors } from '@/styles/common/theme';
 import { sellers } from '..';
-import chartPalleteColors, { darkChartPalleteColors } from '../../../../styles/common/chartPalleteColors';
-import { useStateContext } from '../../../../context/ContextProvider';
+import chartPalleteColors, { darkChartPalleteColors } from '@/styles/common/chartPalleteColors';
+import { useStateContext } from '@/context/ContextProvider';
 
 ChartJS.register(
   CategoryScale,

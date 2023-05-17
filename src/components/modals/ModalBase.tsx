@@ -27,7 +27,7 @@ const ModalBase = ({
             right: 0,
             bottom: 0,
             backgroundColor: 'rgba(240, 240, 240, 0.75)',
-            zIndex: 99999999
+            zIndex: 99999999,
         },
         content: {
             top: '50%',
@@ -35,7 +35,7 @@ const ModalBase = ({
             right: 'auto',
             bottom: 'auto',
             marginRight: '-50%',
-            transform: 'translate(-50%, -50%)',
+            transform: 'translate(-50%, -50%) scale(0.97)',
             maxWidth: '768px',
             position: 'relative',
             width: '100%',
@@ -54,7 +54,8 @@ const ModalBase = ({
             isOpen={isOpen}
             onRequestClose={closeModal}
             contentLabel={contentLabel}
-            style={{ ...styles, background: '#404040' }}
+            // @ts-ignore
+            style={styles}
             closeTimeoutMS={200}
         >
             <Content>

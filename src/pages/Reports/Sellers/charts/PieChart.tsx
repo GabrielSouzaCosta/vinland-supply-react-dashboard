@@ -1,6 +1,6 @@
 import React from 'react'
 import { Pie } from 'react-chartjs-2'
-import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend, ChartOptions } from 'chart.js';
 import chartPalleteColors, { darkChartPalleteColors } from '../../../../styles/common/chartPalleteColors';
 import { sellers } from '..';
 import { useStateContext } from '../../../../context/ContextProvider';
@@ -25,7 +25,7 @@ const PieChart = () => {
     ]
   };
 
-  const options = {
+  const options: any = {
     plugins: {
       datalabels: {
         color: '#F7F7F7',
@@ -34,7 +34,7 @@ const PieChart = () => {
           weight: 'bold'
         },
         padding: 6,
-        formatter: function(value, context) {
+        formatter: function(value: number, context: any) {
           let data = context.dataset.data;
           let total = data.reduce((accumulator: number, value: number) => accumulator + value);
           const percentage = (value / total) * 100
@@ -61,6 +61,7 @@ const PieChart = () => {
       <Pie 
         data={data}
         options={options}
+        // @ts-ignore
         plugins={[ChartDataLabels]}
       />
     </div>

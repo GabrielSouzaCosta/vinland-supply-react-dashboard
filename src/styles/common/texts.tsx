@@ -124,8 +124,8 @@ export const P3 = styled(StyledText)`
     }
 `;
 
-export const Span = styled.span`
-    color: ${p => p.theme.colors.dark};
+export const Span = styled.span<TextProps>`
+    color: ${p => p.color ? p.theme.colors[p.color] : p.theme.colors.black};
     font-size: 14px;
     @media screen and (max-width: 1400px) {
         font-size: 12px

@@ -1,15 +1,14 @@
-import { color } from 'framer-motion'
 import React from 'react'
 import Select, { Props as SelectProps } from 'react-select'
-import { colors as lightThemeColors, darkThemeColors } from '@/styles/common/theme'
 import { useStateContext } from '@/context/ContextProvider';
+import useGetThemeColors from '@/hooks/useGetThemeColors';
 
 const SelectInput = ({
   options,
   ...props
 } : SelectProps) => {
   const { theme } = useStateContext();
-  const colors = theme === 'dark' ? darkThemeColors : lightThemeColors;
+  const colors = useGetThemeColors();
 
   return (
     <Select
@@ -29,11 +28,11 @@ const SelectInput = ({
             backgroundColor: colors.white_medium_light,
           }
         }),
-        singleValue: (baseStyles, state) => ({
+        singleValue: (baseStyles) => ({
           ...baseStyles,
           color: colors.black+'cc',
         }),
-        menu: (baseStyles, state) => ({
+        menu: (baseStyles) => ({
           ...baseStyles,
           backgroundColor: colors.white_medium_light,
         }),

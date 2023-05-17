@@ -5,7 +5,7 @@ import { FlexDiv } from '../../../styles/common/layout'
 import { Button } from '../../../styles/common/buttons'
 import { IoCheckmark, IoClose, IoCreateOutline } from 'react-icons/io5'
 import { toast } from 'react-toastify'
-import { InputContainer, Input } from '@/styles/common/inputs'
+import { InputContainer, Input, ControlledInput } from '@/styles/common/inputs'
 import { useForm, useWatch } from 'react-hook-form'
 import { User } from '@/@types/user'
 
@@ -61,7 +61,7 @@ const MyProfile = () => {
             {editDetails ?
                 <FormUpdateUserDetails onSubmit={handleSubmit(handleUpdateUserDetails)}>
                   <InputContainer label="Name">
-                      <Input 
+                      <ControlledInput 
                         placeholder="Thorfinn"
                         name="name"
                         rules={{ required: true }}
@@ -75,7 +75,7 @@ const MyProfile = () => {
                   </InputContainer>
 
                   <InputContainer label="Username">
-                      <Input 
+                      <ControlledInput 
                         placeholder="thorfinn"
                         name="username"
                         rules={{ required: true }}
@@ -89,7 +89,7 @@ const MyProfile = () => {
                   </InputContainer>
 
                   <InputContainer label="Phone">
-                      <Input 
+                      <ControlledInput 
                         placeholder="(99) 99999-9999"
                         name="phone"
                         rules={{ required: true }}
@@ -103,7 +103,7 @@ const MyProfile = () => {
                   </InputContainer>
 
                   <InputContainer label="Email">
-                      <Input 
+                      <ControlledInput 
                         placeholder="thorfinn@vinland.com"
                         name="email"
                         rules={{ required: true }}
@@ -117,7 +117,7 @@ const MyProfile = () => {
                   </InputContainer>
 
                   <InputContainer label="Address">
-                      <Input 
+                      <ControlledInput
                         placeholder="380 Vinland Street"
                         name="address"
                         rules={{ required: true }}
@@ -237,6 +237,9 @@ const UserDetails = styled.div`
     &:active {
       transform: scale(105%);
     }
+  }
+  @media screen and (max-width: 768px) {
+    grid-template-columns: 1fr 1fr;
   }
 `
 

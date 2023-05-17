@@ -22,23 +22,20 @@ const DonutChart = () => {
         ]
     };
 
-    const config = {
-        data: data,
-        options: {
-          responsive: true,
-          plugins: {
-            legend: {
-              position: 'bottom',
-            },
-          }
+    const options: any = {
+      responsive: true,
+      plugins: {
+        legend: {
+          position: 'bottom',
         },
+      }
     };
 
     return (
         <div style={{ width: '600px', height: '600px' }}>
             <Doughnut 
-                data={config.data}
-                options={config.options}
+                data={data}
+                options={options}
             />  
         </div>
     )

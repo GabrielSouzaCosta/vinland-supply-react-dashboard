@@ -2,7 +2,7 @@ import React from 'react'
 import { P2 } from '@/styles/common/texts'
 import styled from 'styled-components'
 import { FlexDiv } from '@/styles/common/layout'
-import { Input } from '../../../styles/common/inputs'
+import { Input } from '@/styles/common/inputs'
 
 const FilterByDate = () => {
   return (

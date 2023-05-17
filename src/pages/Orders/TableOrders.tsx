@@ -1,24 +1,31 @@
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { Table } from '../../components/tables'
 import { TableWrapper } from '../../components/tables/styles/tableStyles'
 import data from './MOCK_DATA.json'
 import styled from 'styled-components'
-import { useStateContext } from '../../context/ContextProvider'
 import useGetThemeColors from '@/hooks/useGetThemeColors';
 import { Label, Value } from '@/components/tables/components/MobileView/styles'
+import { Column } from 'react-table'
+import { Order } from '@/@types/order'
 
 const TableOrders = () => {
     const colors = useGetThemeColors();
 
-    const sortedByBillingDateData = data.sort(function(a, b) {
+    const sortedByBillingDateData: Order[] = data.sort(function(a, b) {
         const [dayA, monthA, yearA] = a.billing_date.split('/');
         const [dayB, monthB, yearB] = b.billing_date.split('/');
         const dateA = new Date(Number(yearA), Number(monthA) - 1, Number(dayA));
         const dateB = new Date(Number(yearB), Number(monthB) - 1, Number(dayB));
         return Number(dateB) - Number(dateA);
-    })
+    }) as Order[];
 
-    const productsTableColumns = [
+    interface RowProps {
+        row: {
+            values: Order;
+        }
+    }
+
+    const productsTableColumns: Column<Order>[] = [
         {
             Header: 'Order Nº',
             accessor: 'id',
@@ -39,7 +46,7 @@ const TableOrders = () => {
         },
         {
             Header: 'Total',
-            Cell: ({ row }) => <p> ${ (row.values.unit_price * row.values.quantity).toFixed(2) } </p>,
+            Cell: ({ row }: RowProps) => <p> ${ (row.values.unit_price * row.values.quantity).toFixed(2) } </p>,
         },
         {
             Header: 'Payment Method',
@@ -59,9 +66,14 @@ const TableOrders = () => {
             accessor: 'payment_date',
             Cell: ({value}) => <p> { value ? value : '-' } </p>,
         },
-    ]
+    ] as Column<Order>[];
 
-    const MobileCardInner = ({ data, labels }) => {
+    interface MobileCardProps {
+        data: Order;
+        labels: Column<Order>[];
+    }
+
+    const MobileCardInner = ({ data, labels }: MobileCardProps) => {
         const filter_data = Object.entries(data);
         const secondary_data = filter_data.map(([label, value]) => value);
 
@@ -70,7 +82,7 @@ const TableOrders = () => {
                 {secondary_data.map((value, index) => (
                         <div style={{ marginBottom: '5px' }}>
                             <Label>
-                                { labels[index].Header }: 
+                                { String(labels[index].Header) }: 
                                 {" "}
                                 <Value>
                                     { value }

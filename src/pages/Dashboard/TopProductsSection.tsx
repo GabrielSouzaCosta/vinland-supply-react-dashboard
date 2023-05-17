@@ -4,6 +4,7 @@ import styled from 'styled-components'
 import { Div } from '@/styles/common/layout'
 import { TableRoundedImage, TableWrapper } from '@/components/tables/styles/tableStyles'
 import Table from '@/components/tables/Table'
+import { Column } from 'react-table'
 
 const productsData = [
     {
@@ -35,11 +36,11 @@ const productsData = [
 const TopProductsSection = () => {
 
 
-    const productsTableColumns = [
+    const productsTableColumns: Column[] = [
         {
             Header: '',
             accessor: 'image',
-            Cell: ({value}) => <TableRoundedImage src={value} alt="" />,
+            Cell: ({value}: {value: string}) => <TableRoundedImage src={value} alt="" />,
         },
         {
             Header: 'Product',

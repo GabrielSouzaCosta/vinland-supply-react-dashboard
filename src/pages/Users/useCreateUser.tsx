@@ -1,12 +1,19 @@
+import { User } from "@/@types/user";
+import React, { SetStateAction } from "react";
 import { useForm, useWatch } from "react-hook-form";
 import { toast } from "react-toastify";
 
 export default function({
     setUsers
-}) {
-    const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm({
+} : { setUsers: React.Dispatch<SetStateAction<User[]>> }) {
+    const { control, register, handleSubmit, setValue, reset, watch, formState: { errors } } = useForm<User>({
         defaultValues: {
-            user_type: 'seller'
+            avatar: '',
+            name: '',
+            username: '',
+            email: '',
+            address: '',
+            user_type: 'seller',
         }
     });
       
@@ -17,28 +24,32 @@ export default function({
 
     const apiManager = {
 
-        handleCreateNewUser: function(data) {
-            const newUser = data.avatar ? data : { ...data, avatar: '/images/vinland-characters/leif.jpeg' };
-            setUsers(prevState => [ ...prevState, newUser ]);
+        handleCreateNewUser: function(data: User) {
+            const newUser: User = data.avatar ? data : { ...data, avatar: '/images/vinland-characters/leif.jpeg' };
+            setUsers((prevState: User[]) => [ ...prevState, newUser ]);
             reset();
             toast.success("User created successfully!", {
                 position: toast.POSITION.BOTTOM_RIGHT
             });
         },
 
-        handleChangeUserType: function(type) {
+        handleChangeUserType: function(type: string) {
             setValue('user_type', type);
         },
 
-        handleUploadPicture: function(e) {
-            const file = e.target.files[0];
-            const reader = new FileReader();
-        
-            reader.onload = () => {
-                setValue('avatar', reader.result);
-            };
-        
-            reader.readAsDataURL(file);
+        handleUploadPicture: function(e: React.ChangeEvent<HTMLInputElement>) {
+            if (e.target.files) {
+                const file = e.target.files[0];
+                const reader = new FileReader();
+            
+                reader.onload = () => {
+                    if (typeof(reader.result) === 'string') {
+                        setValue('avatar', reader.result);
+                    }
+                };
+            
+                reader.readAsDataURL(file);
+            }
         }
 
     }

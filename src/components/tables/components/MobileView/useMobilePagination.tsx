@@ -1,6 +1,26 @@
-import { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer } from "react";
 
-export default function({ data, search }) {
+interface Props<T extends object> {
+    search?: string;
+    data: T[];
+}
+
+type StateType = {
+    pageIndex: number;
+    pageCount: number;
+    canPreviousPage: boolean;
+    pageOptions: number[];
+    canNextPage: boolean;
+};
+
+type NextPage = { type: 'next_page'; };
+type PreviousPage = { type: 'previous_page'; };
+type FilterItems = { type: 'filter_items'; };
+type NavigateToPage = { type: 'navigate_to_page'; page: number };
+
+type AppActions = NextPage | PreviousPage | FilterItems | NavigateToPage;
+
+export default function<T extends object>({ data, search }: Props<T>) {
 
     const arrayRange = (start: number, stop: number, step: number) =>
         Array.from(
@@ -8,7 +28,7 @@ export default function({ data, search }) {
             (value, index) => start + index * step
         );
 
-    const initialState = {
+    const initialState: StateType = {
         pageIndex: 0,
         pageCount: data.length / 10,
         canPreviousPage: false,
@@ -16,15 +36,14 @@ export default function({ data, search }) {
         canNextPage: data.length / 10 > 1,
     }
 
-    function reducer(state, action) {
-        let newState;
+    function reducer(state: StateType, action: AppActions) {
         let canPreviousPage: boolean;
         let canNextPage: boolean;
 
         switch (action.type) {
           case 'next_page':
             canNextPage = state.pageIndex + 1 < state.pageCount - 1;
-            newState = {  
+            return {  
                 ...state, 
                 pageIndex: state.pageIndex + 1,
                 canPreviousPage: true,
@@ -33,7 +52,7 @@ export default function({ data, search }) {
             break;
           case 'previous_page':
             canPreviousPage = state.pageIndex - 1 > 0;
-            newState = { 
+            return { 
                 ...state, 
                 pageIndex: state.pageIndex - 1,
                 canNextPage: true,
@@ -41,18 +60,19 @@ export default function({ data, search }) {
             };
             break;
           case 'navigate_to_page':
-            canPreviousPage = action.page > 0;
-            canNextPage = action.page < state.pageCount;
-
-            newState = { 
+            const page = action.page;
+            canPreviousPage = page > 0;
+            canNextPage = page < state.pageCount;
+    
+            return { 
                 ...state, 
-                pageIndex: action.page,
+                pageIndex: action?.page,
                 canPreviousPage,
                 canNextPage,
             };
             break;
           case 'filter_items':
-            newState = {
+            return {
                 pageIndex: 0,
                 pageCount: data.length / 10,
                 canPreviousPage: false,
@@ -60,8 +80,9 @@ export default function({ data, search }) {
                 canNextPage: data.length / 10 > 1,
             }
             break;
+          default:
+            return state;
         }
-        return newState;
     }
 
     const [state, dispatch] = useReducer(reducer, initialState);
@@ -79,7 +100,6 @@ export default function({ data, search }) {
     }
 
     function handleNavigateToPage (page: number)  {
-        console.log(page)
         dispatch({
             type: 'navigate_to_page',
             page

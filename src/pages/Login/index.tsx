@@ -1,9 +1,8 @@
 import React from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
-import { FlexDiv } from '../../styles/common/layout';
 import { P } from '../../styles/common/texts';
-import { FormProvider, useForm, SubmitHandler } from 'react-hook-form';
+import { useForm } from 'react-hook-form';
 import { InputContainer } from '../../styles/common/inputs';
 import { Button } from '../../styles/common/buttons';
 import { colors } from '../../styles/common/theme';

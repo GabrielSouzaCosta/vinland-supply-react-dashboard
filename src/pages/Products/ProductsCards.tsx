@@ -1,41 +1,40 @@
 import React from 'react'
 import styled from 'styled-components'
-import { H1, H2, P3 } from '../../styles/common/texts'
-import { Div, FlexDiv } from '../../styles/common/layout'
-import { motion } from 'framer-motion'
-import { Card } from '../../styles/features/cards'
-import { IoChevronDownOutline, IoChevronUpOutline, IoRibbon, IoRibbonOutline } from 'react-icons/io5'
+import { H2, P3 } from '@/styles/common/texts'
+import { Div, FlexDiv } from '@/styles/common/layout'
+import { Card } from '@/styles/features/cards'
+import { IoChevronUpOutline, IoRibbon, IoRibbonOutline } from 'react-icons/io5'
 import useGetThemeColors from '@/hooks/useGetThemeColors'
 import { css } from 'styled-components'
 import { Product as ProductProps } from '@/@types/product'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 
 const Product = ({
-    product,
-    img,
+    name,
+    image,
     sold,
     data,
     ranking
 } : ProductProps) => {
     const colors = useGetThemeColors();
-    const { screen_width } = useGetWindowDimensions();
+    const { window_width } = useGetWindowDimensions();
 
     return (
         <TopSectionCard>
-            <img src={img} alt="" />
+            <img src={image} alt="" />
             <CardInner rank={ranking}>
                 <FlexDiv gapX="5px" className="rank">
                     <P3>
                         { ranking }º
                     </P3>
                     <IoRibbon 
-                        size={screen_width < 1400 ? 30 : 40}
+                        size={window_width < 1400 ? 30 : 40}
                     />
                 </FlexDiv>
 
                 <Title>
                     <strong>
-                        { product }
+                        { name }
                     </strong>
                     <p>
                         { sold } sold
@@ -58,7 +57,7 @@ const Product = ({
                     </p>
                 </CardHeader>
                 <hr />
-                {data.map((item, index) => (
+                {data?.map((item, index) => (
                         <FlexDiv key={index} between mb="5px" className='profit-item'>
                             <p>
                                 { item.date }
@@ -74,7 +73,7 @@ const Product = ({
                         Last 6 months
                     </p>
                     <p>
-                        { data.map(item => item.profits).reduce((accumulator, value) => accumulator + value).toLocaleString() }
+                        { data?.map(item => item.profits).reduce((accumulator, value) => accumulator + value).toLocaleString() }
                     </p>
                 </FlexDiv>
             </CardInner>
@@ -83,14 +82,13 @@ const Product = ({
 } 
 
 
-
 const ProductsCards = () => {
 
     const products = [
         {
-            img: "https://images.unsplash.com/photo-1630369160812-26c7604cbd8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
-            product: "Wine",
-            sold: "60,400",
+            image: "https://images.unsplash.com/photo-1630369160812-26c7604cbd8c?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=688&q=80",
+            name: "Wine",
+            sold: 60400,
             data: [
                 {
                     date: 'April/2023',
@@ -119,9 +117,9 @@ const ProductsCards = () => {
             ]
         },
         {
-            img: "https://images.unsplash.com/photo-1452195100486-9cc805987862?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
-            product: "Gorgonzola",
-            sold: "29,100",
+            image: "https://images.unsplash.com/photo-1452195100486-9cc805987862?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1169&q=80",
+            name: "Gorgonzola",
+            sold: 29100,
             data: [
                 {
                     date: 'April/2023',
@@ -150,9 +148,9 @@ const ProductsCards = () => {
             ]
         },
         {
-            img: "https://images.unsplash.com/photo-1536534028025-68598ea8af44?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=744&q=80",
-            product: "Artesanal Bread",
-            sold: "28,400",
+            image: "https://images.unsplash.com/photo-1536534028025-68598ea8af44?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=744&q=80",
+            name: "Artesanal Bread",
+            sold: 28400,
             data: [
                 {
                     date: 'April/2023',
@@ -181,9 +179,9 @@ const ProductsCards = () => {
             ]
         },
         {
-            img: "https://images.unsplash.com/photo-1597822738124-151fb72dcb79?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
-            product: "Craft Beer",
-            sold: "25,000",
+            image: "https://images.unsplash.com/photo-1597822738124-151fb72dcb79?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1170&q=80",
+            name: "Craft Beer",
+            sold: 25000,
             data: [
                 {
                     date: 'April/2023',
@@ -227,8 +225,8 @@ const ProductsCards = () => {
                 {products.map((item, index) => (
                         <Product
                             key={index}
-                            img={item.img}
-                            product={item.product}
+                            image={item.image}
+                            name={item.name}
                             sold={item.sold}
                             data={item.data}
                             ranking={index+1}
@@ -304,7 +302,7 @@ const TopSectionCard = styled(Card)`
   }
 `
 
-const CardInner = styled.div<{ rank: number }>`
+const CardInner = styled.div<{ rank?: number }>`
   background-color: ${p => p.theme.colors.gray_dark+'DE'};
   position: absolute;
   overflow: hidden;

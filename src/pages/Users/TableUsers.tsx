@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { SetStateAction, useState } from 'react'
 import { Table } from '../../components/tables'
 import styled from 'styled-components'
 import { IoCreateOutline, IoPencilOutline, IoPersonOutline, IoTrashOutline } from 'react-icons/io5'
@@ -10,26 +10,37 @@ import { toast } from 'react-toastify'
 import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
 import { Button } from '@/styles/common/buttons'
 import { Div } from '@/styles/common/layout'
+import { User } from '@/@types/user'
+import { CellProps, Column, ColumnInterface } from 'react-table'
+
+type Props = {
+    users: User[],
+    setUsers: React.Dispatch<SetStateAction<User[]>>
+}
 
 const TableUsers = ({
     users,
     setUsers
-}) => {
-    const [ currModalOpen, setCurrModalOpen ] = useState(false);
-    const [ currUser, setCurrUser ] = useState('');
+}: Props) => {
+    const [ currModalOpen, setCurrModalOpen ] = useState('');
+    const [ currUser, setCurrUser ] = useState<User | null>(null);
     
     function handleDeleteUser() {
-        setUsers(prevState => [ ...prevState.filter(user => user.name !== currUser.name) ]);
-        toast.success(`User ${currUser.name} deleted successfully!`);
-        handleCloseModal();
+        if (currUser) {
+            setUsers(prevState => [ ...prevState.filter(user => user.name !== currUser.name) ]);
+            toast.success(`User ${currUser.name} deleted successfully!`, {
+                position: toast.POSITION.BOTTOM_RIGHT
+            });
+            handleCloseModal();
+        }
     }
 
-    function handleOpenModalEditUser(user) {
+    function handleOpenModalEditUser(user: User) {
         setCurrUser(user);
         setCurrModalOpen('EDIT');
     }
 
-    function handleOpenModalDeleteUser(user) {
+    function handleOpenModalDeleteUser(user: User) {
         setCurrUser(user);
         setCurrModalOpen('DELETE');
     }
@@ -38,11 +49,17 @@ const TableUsers = ({
         setCurrModalOpen('');
     }
 
-    const productsTableColumns = [
+    interface RowProps {
+        row: {
+            values: User;
+        }
+    }
+
+    const productsTableColumns: Column<User>[] = [
         {
             Header: <IoPersonOutline />,
             accessor: 'avatar',
-            Cell: ({value}) => <TableRoundedImage src={value} alt="" />,
+            Cell: ({ value }) => <TableRoundedImage src={value} alt="" />,
         },
         {
             Header: 'Name',
@@ -71,7 +88,7 @@ const TableUsers = ({
         },
         {
             Header: 'Edit',
-            Cell: ({ row }) => (
+            Cell: ({ row }: RowProps) => (
                 <button
                     onClick={() => handleOpenModalEditUser(row.values)}
                     type="button"
@@ -85,7 +102,7 @@ const TableUsers = ({
         },
         {
             Header: 'Delete',
-            Cell: ({ row }) => (
+            Cell: ({ row }: RowProps) => (
                 <button
                     onClick={() => handleOpenModalDeleteUser(row.values)}
                     type="button"
@@ -97,12 +114,20 @@ const TableUsers = ({
                 </button>
             )
         },
-    ]
+    ] as Column<User>[];
 
-    const MobileCardInner = ({ data, labels }) => {
+    interface MobileCardProps {
+        data: User;
+        labels: Column<User>[];
+    }
+
+    const MobileCardInner = ({ data, labels }: MobileCardProps) => {
         const filter_data = Object.entries(data).filter(([ label ]) => !['avatar', 'name', 'id'].includes(label));
         const secondary_data = filter_data.map(([label, value]) => value);
-        const filtered_labels = labels.filter((label) => !['avatar', 'name', 'id'].includes(label.accessor));
+        const filtered_labels = labels?.filter((label) => {
+            const accessor = String(label?.accessor);
+            return accessor && !['avatar', 'name', 'id'].includes(accessor);
+        });
 
         return (
             <>
@@ -117,7 +142,7 @@ const TableUsers = ({
                 {secondary_data.map((value, index) => (
                         <div style={{ marginBottom: '5px' }}>
                             <Label>
-                                { filtered_labels[index].Header }: 
+                                { String(filtered_labels[index].Header) }: 
                                 {" "}
                                 <Value>
                                     { value }
@@ -174,13 +199,13 @@ const TableUsers = ({
             <ModalConfirmDecision 
                 isOpen={currModalOpen === 'DELETE'}
                 closeModal={handleCloseModal}
-                title={'Delete User '+currUser.name}
+                title={'Delete User '+currUser?.name}
                 confirmButtonVariant="danger"
                 confirmText={"Delete user"}
                 handleConfirm={handleDeleteUser}
                 message={
                     <P3>
-                        Are you sure you want to delete the user {currUser.name}?
+                        Are you sure you want to delete the user {currUser?.name}?
                     </P3>
                 }
             />

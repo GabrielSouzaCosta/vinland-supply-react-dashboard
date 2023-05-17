@@ -1,15 +1,12 @@
 import React from 'react'
-import Layout from '../layout'
 import styled from 'styled-components'
-import { H1, P3 } from '../styles/common/texts'
-import { Button } from '../styles/common/buttons'
+import { H1, P3 } from '@/styles/common/texts'
+import { Button } from '@/styles/common/buttons'
 import { Link } from 'react-router-dom'
 
 
 function NotFound() {
   return (
-    <Layout container>
-
       <Content>
         <img 
           src="/images/404.png"
@@ -31,8 +28,6 @@ function NotFound() {
         </Link>
 
       </Content>
-
-    </Layout>
   )
 }
 
@@ -42,7 +37,8 @@ const Content = styled.section`
   align-items: center;
   justify-content: center;
   width: 100%;
-  min-height: calc(100vh - 200px);
+  background-color: ${p => p.theme.colors.background};
+  min-height: 100vh;
   a {
     font-size: 11px;
     color: ${p => p.theme.colors.primary_dark};

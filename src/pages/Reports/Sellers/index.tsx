@@ -1,17 +1,18 @@
 import React, { useState } from 'react'
-import { Breadcrumb, SelectInput } from '../../../components/ui'
-import Layout from '../../../layout'
-import { CardContent } from '../../../styles/features/cards'
+import { Breadcrumb, SelectInput } from '@/components/ui'
+import Layout from '@/layout'
+import { CardContent } from '@/styles/features/cards'
 import styled from 'styled-components'
-import { Input, InputContainer } from '../../../styles/common/inputs'
-import { Div, FlexDiv } from '../../../styles/common/layout'
-import { ButtonExportExcel, ButtonExportPdf } from '../../../styles/common/buttons'
-import { P2 } from '../../../styles/common/texts'
+import { ControlledInput, Input, InputContainer } from '@/styles/common/inputs'
+import { Div, FlexDiv } from '@/styles/common/layout'
+import { ButtonExportExcel, ButtonExportPdf } from '@/styles/common/buttons'
+import { P2 } from '@/styles/common/texts'
 import BarChart from './charts/BarChart'
 import PieChart from './charts/PieChart'
 import SellersList from './SellersList'
 import TableSellers from './TableSellers'
 import { useForm } from 'react-hook-form'
+import { ActionMeta, OnChangeValue } from 'react-select'
 
 export const sellers = [
     {
@@ -101,6 +102,10 @@ export const sellers = [
 ]
 
 type Chart = 'bar' | 'pie';
+type ChartOption = {
+  label: Chart;
+  value: Chart;
+}
 
 function UsersPerformance() {
   const { control } = useForm();
@@ -119,8 +124,10 @@ function UsersPerformance() {
     },
   ]
 
-  function handleChangeChartType(option) {
-    setCurrentChart(option.value);
+  const handleChangeChartType = (option: OnChangeValue<ChartOption, false>) => {
+    if (option) {
+      setCurrentChart(option.value);
+    }
   }
 
   return (
@@ -130,18 +137,20 @@ function UsersPerformance() {
       />
 
       <Content>
-        <InputContainer label={"Reporting Period"}>
+        <InputContainer label={"Reporting Period"}>s
           <FlexDiv justify="start">
-            <Input 
+            <ControlledInput 
               type="date"
               name="initial_date"
               control={control}
+              placeholder="Initial Date"
             />
             <Divider />
-            <Input 
+            <ControlledInput 
               type="date"
               name="final_date"
               control={control}
+              placeholder="Final Date"
             />
           </FlexDiv>
         </InputContainer>
@@ -149,7 +158,7 @@ function UsersPerformance() {
         <InputContainer label={"Visualization Type"}>
           <SelectInput
             options={charts}
-            onChange={handleChangeChartType}
+            onChange={option => handleChangeChartType(option as ChartOption)}
             defaultValue={charts.find(item => item.value === currentChart)}
           />
         </InputContainer>

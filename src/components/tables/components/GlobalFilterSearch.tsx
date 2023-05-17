@@ -1,16 +1,19 @@
-import React, { useState } from 'react'
+import React, { ChangeEvent, useState } from 'react'
 import styled from 'styled-components'
-import { useAsyncDebounce } from 'react-table'
-import { P, P2 } from '../../../styles/common/texts'
-import { useStateContext } from '../../../context/ContextProvider'
-import { css } from 'styled-components'
-import { Input } from '../../../styles/common/inputs'
+import { FilterProps, Row, useAsyncDebounce } from 'react-table'
+import { P2 } from '@/styles/common/texts'
+import { useStateContext } from '@/context/ContextProvider'
+import { Input } from '@/styles/common/inputs'
 
-const GlobalFilter = ({
+interface GlobalFilterProps<T extends object> extends Omit<FilterProps<T>, 'preGlobalFilteredRows'> {
+    preGlobalFilteredRows: Row<T>[];
+}
+
+const GlobalFilter = <T extends object>({
     preGlobalFilteredRows,
     globalFilter,
     setGlobalFilter
-}) => {
+}: GlobalFilterProps<T>) => {
     const { theme } = useStateContext();
     const [ search, setSearch ] = useState(globalFilter);
 
@@ -18,7 +21,7 @@ const GlobalFilter = ({
         setGlobalFilter(value || undefined);
     }, 250)
 
-    function handleChangeSearch(e) {
+    function handleChangeSearch(e: ChangeEvent<HTMLInputElement>) {
         setSearch(e.target.value);
         onChange(e.target.value);
     }
@@ -32,7 +35,6 @@ const GlobalFilter = ({
                 value={search || ""}
                 onChange={handleChangeSearch}
                 placeholder="Search the table"
-                dark={theme === 'dark'}
             />
         </div>
     )

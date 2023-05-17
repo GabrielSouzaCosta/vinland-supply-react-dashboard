@@ -2,18 +2,30 @@ import { FlexDiv } from '@/styles/common/layout'
 import { P, Span } from '@/styles/common/texts'
 import React from 'react'
 import { IoChevronBack, IoChevronForward } from 'react-icons/io5'
+import { UsePaginationInstanceProps } from 'react-table'
 import { PaginationContainer, PaginationLink, PreviousNextButton } from '../TablePagination'
+
+interface PaginationProps {
+    pageIndex: number;
+    pageCount: number;
+    pageOptions: number[];
+    canPreviousPage: boolean;
+    canNextPage: boolean;
+    previousPage: () => void;
+    nextPage: () => void;
+    handleNavigateToPage: (page: number) => void;
+}
 
 const Pagination = ({
     pageIndex,
     pageCount,
-    canPreviousPage,
     previousPage,
     pageOptions,
+    canPreviousPage,
     canNextPage,
     nextPage,
     handleNavigateToPage,
-}) => {
+}: PaginationProps) => {
 
   return (
     <nav>

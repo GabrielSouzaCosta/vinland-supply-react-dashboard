@@ -1,34 +1,23 @@
 import React, { useEffect } from 'react'
-import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table'
-import { IoCaretDown, IoCaretUp } from 'react-icons/io5'
-import { AiFillFileExcel } from 'react-icons/ai'
-import { FlexDiv } from '@/styles/common/layout'
-import { P2 } from '@/styles/common/texts'
-import GlobalFilterSearch from '../components/GlobalFilterSearch'
-import TablePagination from '../components/TablePagination'
-import FilterByDate from '../components/FilterByDate'
-import {
-    TableWrapper,
-} from '../styles/tableStyles'
-import { ButtonExportExcel } from '../../../styles/common/buttons'
-import { useStateContext } from '../../../context/ContextProvider'
 import MobileView from '../components/MobileView'
 import TableView from '../components/TableView'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
+import { Column } from 'react-table'
  
-export type TableProps = {
-    showDateFilter: boolean,
-    exportExcel?: () => void,
-    showSearchFilter: boolean,
-    tableData: any[],
-    tableColumns: [],
-    pagination: boolean,
-    footer?: boolean,
-    CustomWrapper?: React.ReactNode,
-    MobileCardInner?: any,
+
+export interface TableProps<T extends object>  {
+    showDateFilter?: boolean;
+    exportExcel?: () => void;
+    showSearchFilter?: boolean;
+    tableData: T[];
+    tableColumns: Column<T>[];
+    pagination?: boolean;
+    footer?: boolean;
+    CustomWrapper?: any;
+    MobileCardInner?: ({data, labels} : { data: T; labels: Column<T>[]}) => JSX.Element;
 }
 
-const Table = ({ 
+const Table = <T extends object>({ 
     showDateFilter=false,
     exportExcel,
     showSearchFilter=true,
@@ -38,7 +27,7 @@ const Table = ({
     footer,
     CustomWrapper,
     MobileCardInner,
-} : TableProps) => {
+} : TableProps<T>) => {
     const { window_width } = useGetWindowDimensions();
 
     const data = React.useMemo(

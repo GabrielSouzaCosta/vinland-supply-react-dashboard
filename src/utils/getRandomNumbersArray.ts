@@ -1,4 +1,4 @@
-export default function (min, max, count) {
+export default function (min: number, max: number, count: number) {
     const randomNumbersArr = [];
     
     for (let i = 0; i < count; i++) {

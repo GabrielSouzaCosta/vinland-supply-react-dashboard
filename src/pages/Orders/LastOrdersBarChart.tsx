@@ -13,7 +13,7 @@ import {
 } from 'chart.js';
 import { colors } from '@/styles/common/theme';
 import { useStateContext } from '@/context/ContextProvider';
-import { H2 } from '../../styles/common/texts';
+import { H2 } from '@/styles/common/texts';
 import styled from 'styled-components';
 import getHoursUntilCurrentTime from '@/utils/getHoursUntilCurrentTime';
 import getRandomNumbersArray from '@/utils/getRandomNumbersArray';
@@ -35,7 +35,7 @@ const LastOrdersBarChart = () => {
   const labels = getHoursUntilCurrentTime();
   const ordersData = getRandomNumbersArray(1, 16, labels.length);
   
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
         legend: {

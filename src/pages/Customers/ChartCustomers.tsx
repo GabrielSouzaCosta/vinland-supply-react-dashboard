@@ -24,21 +24,19 @@ const ChartCustomers = () => {
         color: '#FCFCFC',
         font: {
           size: 16,
-          weight: 'bold'
+          weight: 'bold' as const 
         },
         padding: 6,
         formatter: function(value: number, context: any) {
           let data = context.dataset.data;
-          console.log(data)
           let total = data.reduce((accumulator: number, value: number) => accumulator + value);
-          console.log(total);
           const percentage = (value / total) * 100
           return '%'+percentage.toFixed(1);
         }
       },
       legend: {
-        align: 'center',
-        position: 'bottom',
+        align: 'center' as const,
+        position: 'bottom' as const,
         labels: {
           padding: 20,
           boxWidth: 18,
@@ -91,6 +89,7 @@ const ChartCustomers = () => {
             <Pie 
                 data={countriesData}
                 options={options}
+                // @ts-ignore
                 plugins={[ChartDataLabels]}
             />
         </div>
@@ -104,9 +103,10 @@ const ChartCustomers = () => {
                     Revenue by source(%)
                 </P3>
             </FlexDiv>
-            <Pie 
+            <Pie
                 data={revenueSourcesData}
                 options={options}
+                // @ts-ignore
                 plugins={[ChartDataLabels]}
             />
         </div>

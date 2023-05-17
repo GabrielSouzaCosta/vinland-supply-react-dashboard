@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { Table } from '../../components/tables'
 import styled from 'styled-components'
 import { Div, FlexDiv } from '../../styles/common/layout'
@@ -6,6 +6,8 @@ import useGetThemeColors from '@/hooks/useGetThemeColors'
 import { IoStarSharp } from 'react-icons/io5'
 import { TableRoundedImage, TableWrapper } from '../../components/tables/styles/tableStyles'
 import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
+import { Accessor, Column } from 'react-table'
+import { Product } from '@/@types/product'
 
 const productsData = [
     {
@@ -49,7 +51,7 @@ const productsData = [
 const TableProducts = () => {
     const colors = useGetThemeColors();
 
-    const productsTableColumns = [
+    const productsTableColumns: Column<Product>[] = [
         {
             Header: '',
             accessor: 'image',
@@ -70,29 +72,37 @@ const TableProducts = () => {
         {
             Header: 'Total Revenue',
             accessor: 'total_revenue',
-            Cell: ({ value }) => `$${value.toFixed(2)}` 
+            Cell: ({ value }) => <>${value?.toFixed(2)}</>
         },
         {
             Header: 'Total Profit',
             accessor: 'total_profit',
-            Cell: ({ value }) => `$${value.toFixed(2)}` 
+            Cell: ({ value }) => <>${value?.toFixed(2)}</>
         },
         {
             Header: 'Rating',
             accessor: 'rating',
-            Cell: ({ value }) => <FlexDiv gapX="10px" style={{ color: value < 4 ? value >= 3.5 ? colors.warning : colors.danger : colors.success }}>
+            Cell: ({ value }) => value && <FlexDiv gapX="10px" style={{ color: value < 4 ? value >= 3.5 ? colors.warning : colors.danger : colors.success }}>
                 <IoStarSharp />
                 <p>
                     { value }
                 </p>
             </FlexDiv>
         },
-    ]
+    ] as Column<Product>[];
 
-    const MobileCardInner = ({ data, labels }) => {
+    interface MobileCardProps {
+        data: Product,
+        labels: Column<Product>[];
+    }
+
+    const MobileCardInner = ({ data, labels }: MobileCardProps) => {
         const filter_data = Object.entries(data).filter(([ label ]) => !['image', 'name', 'id'].includes(label));
         const secondary_data = filter_data.map(([label, value]) => value);
-        const filtered_labels = labels.filter((label) => !['image', 'name', 'id'].includes(label.accessor));
+        const filtered_labels = labels?.filter((label) => {
+            const accessor = String(label?.accessor);
+            return accessor && !['image', 'name', 'id'].includes(accessor);
+        });
 
         return (
             <>
@@ -108,7 +118,7 @@ const TableProducts = () => {
                     {secondary_data.map((value, index) => (
                             <div style={{ marginBottom: '5px' }}>
                                 <Label>
-                                    { filtered_labels[index].Header }: 
+                                    { String(filtered_labels[index].Header) }: 
                                     {" "}
                                     <Value>
                                         { value }

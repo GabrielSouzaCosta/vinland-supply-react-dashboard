@@ -11,6 +11,7 @@ interface LayoutProps {
     mb?: string,
     ml?: string,
     mr?: string,
+    center?: boolean,
     alignItems?: string,
     between?: boolean,
     justify?: string,

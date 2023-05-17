@@ -1,7 +1,6 @@
 import React from 'react'
 import { useTable, useGlobalFilter, useSortBy, usePagination } from 'react-table'
 import { IoCaretDown, IoCaretUp } from 'react-icons/io5'
-import { AiFillFileExcel } from 'react-icons/ai'
 import { FlexDiv } from '@/styles/common/layout'
 import { P2 } from '@/styles/common/texts'
 import GlobalFilterSearch from '../GlobalFilterSearch'
@@ -12,9 +11,9 @@ import {
 } from '../../styles/tableStyles'
 import { ButtonExportExcel } from '@/styles/common/buttons'
 import { useStateContext } from '@/context/ContextProvider'
-import { TableProps } from '../../Table';
+import { TableProps } from '../../Table'
 
-const TableView = ({
+const TableView = <T extends object>({
     showDateFilter=false,
     exportExcel,
     showSearchFilter=true,
@@ -23,7 +22,7 @@ const TableView = ({
     pagination=true,
     footer,
     CustomWrapper
-} : TableProps) => {
+} : TableProps<T>) => {
 
     const data = React.useMemo(
         () => tableData,
@@ -184,7 +183,6 @@ const TableView = ({
             {pagination &&
                 <TablePagination 
                     pageIndex={pageIndex}
-                    page={page}
                     pageCount={pageCount}
                     pageOptions={pageOptions}
                     canPreviousPage={canPreviousPage}

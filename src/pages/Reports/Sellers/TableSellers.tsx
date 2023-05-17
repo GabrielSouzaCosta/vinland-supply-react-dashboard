@@ -1,15 +1,17 @@
 import React from 'react'
 import { IoPersonOutline } from 'react-icons/io5'
 import { sellers } from '.'
-import { Table } from '../../../components/tables'
+import { Table } from '@/components/tables'
 import styled from 'styled-components'
-import { P2 } from '../../../styles/common/texts'
-import { TableRoundedImage, TableWrapper } from '../../../components/tables/styles/tableStyles'
+import { P2 } from '@/styles/common/texts'
+import { TableRoundedImage, TableWrapper } from '@/components/tables/styles/tableStyles'
 import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
 import { Div } from '@/styles/common/layout'
+import { Column } from 'react-table'
+import { User } from '@/@types/user'
 
 const TableSellers = () => {
-    const columns = [
+    const columns: Column<User>[] = [
         {
             Header: 'ID',
             accessor: 'id',
@@ -31,14 +33,22 @@ const TableSellers = () => {
         {
             Header: 'Profits',
             accessor: 'profits',
-            Cell: ({value}) => <P2> { value.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) } </P2>,
+            Cell: ({value}) => value && <P2> { value.toLocaleString('en-US', { style: 'currency', currency: 'USD' }) } </P2>,
         }
-    ]
+    ] as Column<User>[];
 
-    const MobileCardInner = ({ data, labels }) => {
+    interface MobileCardProps {
+        data: User;
+        labels: Column<User>[];
+    }
+
+    const MobileCardInner = ({ data, labels }: MobileCardProps) => {
         const filter_data = Object.entries(data).filter(([ label ]) => !['avatar', 'name', 'id'].includes(label));
         const secondary_data = filter_data.map(([label, value]) => value);
-        const filtered_labels = labels.filter((label) => !['avatar', 'name', 'id'].includes(label.accessor));
+        const filtered_labels = labels?.filter((label) => {
+            const accessor = String(label?.accessor);
+            return accessor && !['avatar', 'name', 'id'].includes(accessor);
+        });
 
         return (
             <>
@@ -54,7 +64,7 @@ const TableSellers = () => {
                     {secondary_data.map((value, index) => (
                             <div style={{ marginBottom: '5px' }}>
                                 <Label>
-                                    { filtered_labels[index].Header }: 
+                                    { String(filtered_labels[index].Header) }: 
                                     {" "}
                                     <Value>
                                         { value }

@@ -1,16 +1,16 @@
 import React from 'react'
 import { Pie } from 'react-chartjs-2'
 import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
-import chartPalleteColors from '../../../../styles/common/chartPalleteColors';
-import { useStateContext } from '../../../../context/ContextProvider';
-import { colors } from '../../../../styles/common/theme';
+import chartPalleteColors from '@/styles/common/chartPalleteColors';
+import { useStateContext } from '@/context/ContextProvider';
+import { colors } from '@/styles/common/theme';
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart = () => {
   const { theme } = useStateContext();
 
-  const options = {
+  const options: any = {
     responsive: true,
     plugins: {
         legend: {

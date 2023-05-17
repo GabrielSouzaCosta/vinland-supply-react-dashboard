@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 
-export const TableWrapper = styled.div`
+interface InputContainerProps extends React.HTMLAttributes<HTMLDivElement> {
+   darkMode: boolean,
+}
+
+export const TableWrapper = styled.div<InputContainerProps>`
     position: relative;
     overflow: auto;
     max-width: 100%;

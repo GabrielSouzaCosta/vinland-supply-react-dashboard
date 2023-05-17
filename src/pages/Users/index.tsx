@@ -3,24 +3,22 @@ import { Breadcrumb } from '../../components/ui'
 import Layout from '../../layout'
 import { H2, H3, P } from '../../styles/common/texts'
 import { CardContent } from '../../styles/features/cards'
-import { InputContainer, Input, InputFile } from '../../styles/common/inputs'
+import { InputContainer, InputFile, ControlledInput } from '../../styles/common/inputs'
 import TableUsers from './TableUsers'
 import styled from 'styled-components'
 import { Button, ToggleButton } from '../../styles/common/buttons'
-import { ToastContainer } from 'react-toastify'
 import { IoAdd } from 'react-icons/io5'
-import { FormProvider } from 'react-hook-form'
 import useCreateUser from './useCreateUser'
 import usersData from './usersData.json'
 import StyledToastContainer from '../../components/ui/StyledToastContainer'
+import { User } from '@/@types/user'
 
 function Users() {
-  const [ users, setUsers ] = useState(usersData);
+  const [ users, setUsers ] = useState<User[]>(usersData);
   const { 
     apiManager,
     control,
     user_type, 
-    register,
     watch,
     handleSubmit,
     errors,
@@ -46,109 +44,107 @@ function Users() {
             Create New User
           </H3>
 
-          <FormProvider register={register}>
-            <FormCreateUser onSubmit={handleSubmit(apiManager.handleCreateNewUser)}>
-              <InputContainer label="Profile picture">
-                {watch().avatar &&
-                  <img src={watch().avatar} alt="" />
-                }
-                <InputFile>
-                  <input type="file" accept="image/*" onChange={apiManager.handleUploadPicture}/>
-                </InputFile>
-              </InputContainer>
+          <FormCreateUser onSubmit={handleSubmit(apiManager.handleCreateNewUser)}>
+            <InputContainer label="Profile picture">
+              {watch().avatar &&
+                <img src={watch().avatar} alt="" />
+              }
+              <InputFile>
+                <input type="file" accept="image/*" onChange={apiManager.handleUploadPicture}/>
+              </InputFile>
+            </InputContainer>
 
-              <InputContainer label="Name">
-                <Input
-                  placeholder="Thorkell"
-                  name="name"
-                  rules={{ required: true }}
-                  control={control}
-                />
-                {errors.name && 
-                  <P color={'danger'} fw={'600'} mt="4px">
-                      Please enter a name to proceed.
-                  </P>
-                }
-              </InputContainer>
-              <InputContainer label="Username">
-                <Input
-                  placeholder="thorkell"
-                  name="username"
-                  rules={{ required: true }}
-                  control={control}
-                />
-                {errors.username && 
-                  <P color={'danger'} fw={'600'} mt="4px">
-                      Please enter an username to proceed.
-                  </P>
-                }
-              </InputContainer>
-              <InputContainer label="Phone">
-                <Input
-                  placeholder="(999) 9999999"
-                  name="phone"
-                  rules={{ required: true }}
-                  control={control}
-                />
-                {errors.phone && 
-                  <P color={'danger'} fw={'600'} mt="4px">
-                      Please enter a phone to proceed.
-                  </P>
-                }
-              </InputContainer>
-              <InputContainer label="Email">
-                <Input
-                  placeholder="thorkell@vinland.com"
-                  name="email"
-                  rules={{ required: true }}
-                  control={control}
-                />
-                {errors.email && 
-                  <P color={'danger'} fw={'600'} mt="4px">
-                      Please enter an email to proceed.
-                  </P>
-                }
-              </InputContainer>
-              <InputContainer label="Address">
-                <Input
-                  placeholder="3902 Vinland Street"
-                  name="address"
-                  rules={{ required: true }}
-                  control={control}
-                />
-                {errors.address && 
-                  <P color={'danger'} fw={'600'} mt="4px">
-                      Please enter an address to proceed.
-                  </P>
-                }
-              </InputContainer>
+            <InputContainer label="Name">
+              <ControlledInput
+                placeholder="Thorkell"
+                name="name"
+                rules={{ required: true }}
+                control={control}
+              />
+              {errors.name && 
+                <P color={'danger'} fw={'600'} mt="4px">
+                    Please enter a name to proceed.
+                </P>
+              }
+            </InputContainer>
+            <InputContainer label="Username">
+              <ControlledInput
+                placeholder="thorkell"
+                name="username"
+                rules={{ required: true }}
+                control={control}
+              />
+              {errors.username && 
+                <P color={'danger'} fw={'600'} mt="4px">
+                    Please enter an username to proceed.
+                </P>
+              }
+            </InputContainer>
+            <InputContainer label="Phone">
+              <ControlledInput
+                placeholder="(999) 9999999"
+                name="phone"
+                rules={{ required: true }}
+                control={control}
+              />
+              {errors.phone && 
+                <P color={'danger'} fw={'600'} mt="4px">
+                    Please enter a phone to proceed.
+                </P>
+              }
+            </InputContainer>
+            <InputContainer label="Email">
+              <ControlledInput
+                placeholder="thorkell@vinland.com"
+                name="email"
+                rules={{ required: true }}
+                control={control}
+              />
+              {errors.email && 
+                <P color={'danger'} fw={'600'} mt="4px">
+                    Please enter an email to proceed.
+                </P>
+              }
+            </InputContainer>
+            <InputContainer label="Address">
+              <ControlledInput
+                placeholder="3902 Vinland Street"
+                name="address"
+                rules={{ required: true }}
+                control={control}
+              />
+              {errors.address && 
+                <P color={'danger'} fw={'600'} mt="4px">
+                    Please enter an address to proceed.
+                </P>
+              }
+            </InputContainer>
 
-              <InputContainer label="User Type" id="user-type">
-                <div>
-                  <ToggleButton
-                    type="button"
-                    toggled={user_type === 'seller'}
-                    onClick={() => apiManager.handleChangeUserType('seller')}
-                  >
-                    Seller
-                  </ToggleButton>
-                  <ToggleButton
-                    type="button"
-                    toggled={user_type === 'manager'}
-                    onClick={() => apiManager.handleChangeUserType('manager')}
-                  >
-                    Manager
-                  </ToggleButton>
-                </div>
-              </InputContainer>
+            <InputContainer label="User Type" id="user-type">
+              <div>
+                <ToggleButton
+                  type="button"
+                  toggled={user_type === 'seller'}
+                  onClick={() => apiManager.handleChangeUserType('seller')}
+                >
+                  Seller
+                </ToggleButton>
+                <ToggleButton
+                  type="button"
+                  toggled={user_type === 'manager'}
+                  onClick={() => apiManager.handleChangeUserType('manager')}
+                >
+                  Manager
+                </ToggleButton>
+              </div>
+            </InputContainer>
 
-              <Button type="submit" iconButton>
-                <IoAdd size={24} />
-                Create New User
-              </Button>
+            <Button type="submit" iconButton>
+              <IoAdd size={24} />
+              Create New User
+            </Button>
 
-            </FormCreateUser>
-          </FormProvider>
+          </FormCreateUser>
         </Content>
 
         <StyledToastContainer />

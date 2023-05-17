@@ -6,7 +6,7 @@ import { useStateContext } from '../../../context/ContextProvider';
 import { colors } from '../../../styles/common/theme';
 
 type Props = {
-    isToggled: boolean,
+    isToggled: boolean | undefined,
     handleToggle: (value: boolean) => void
 }
 

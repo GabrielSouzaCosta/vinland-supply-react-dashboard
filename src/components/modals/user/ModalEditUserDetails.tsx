@@ -1,12 +1,19 @@
-import React from 'react'
-import { FormProvider } from 'react-hook-form'
+import React, { SetStateAction } from 'react'
 import ModalBase from '../ModalBase'
-import { InputContainer, Input, InputFile } from '@/styles/common/inputs'
+import { InputContainer, InputFile, ControlledInput } from '@/styles/common/inputs'
 import { Button, ToggleButton } from '../../../styles/common/buttons'
 import { IoCheckmark } from 'react-icons/io5'
 import useEditUser from './useEditUser'
 import styled from 'styled-components'
 import { P } from '../../../styles/common/texts'
+import { ChildrenModalProps } from '@/@types/modal'
+import { User } from '@/@types/user'
+
+export interface ModalEditUserProps extends ChildrenModalProps {
+  user: User | null,
+  users: User[],
+  setUsers: React.Dispatch<SetStateAction<User[]>>
+}
 
 const ModalEditUserDetails = ({
   user,
@@ -14,13 +21,12 @@ const ModalEditUserDetails = ({
   closeModal,
   users,
   setUsers,
-}) => {
+} : ModalEditUserProps) => {
 
   const { 
     apiManager, 
     user_type,
     control, 
-    register,
     watch,
     handleSubmit,
     errors,
@@ -30,7 +36,7 @@ const ModalEditUserDetails = ({
     <ModalBase
       isOpen={isOpen}
       closeModal={closeModal}
-      title={'Edit User - '+user.name}
+      title={'Edit User - '+user?.name}
       contentLabel="Modal edit user information"
     >
       <FormEditUser onSubmit={handleSubmit(apiManager.handleUpdateUser)}>
@@ -44,7 +50,7 @@ const ModalEditUserDetails = ({
         </InputContainer>
 
         <InputContainer label="Name">
-          <Input
+          <ControlledInput
             placeholder="Thorkell"
             control={control}
             name="name"
@@ -57,7 +63,7 @@ const ModalEditUserDetails = ({
           }
         </InputContainer>
         <InputContainer label="Username">
-          <Input
+          <ControlledInput
             placeholder="thorkell"
             name="username"
             rules={{ required: true }}
@@ -70,7 +76,7 @@ const ModalEditUserDetails = ({
           }
         </InputContainer>
         <InputContainer label="Phone">
-          <Input
+          <ControlledInput
             placeholder="(999) 9999999"
             name="phone"
             rules={{ required: true }}
@@ -83,7 +89,7 @@ const ModalEditUserDetails = ({
           }
         </InputContainer>
         <InputContainer label="Email">
-          <Input
+          <ControlledInput
             placeholder="thorkell@vinland.com"
             name="email"
             rules={{ required: true }}
@@ -96,7 +102,7 @@ const ModalEditUserDetails = ({
           }
         </InputContainer>
         <InputContainer label="Address">
-          <Input
+          <ControlledInput
             placeholder="3902 Vinland Street"
             name="address"
             control={control}

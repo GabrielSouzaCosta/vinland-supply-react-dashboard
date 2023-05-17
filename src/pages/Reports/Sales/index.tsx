@@ -1,18 +1,22 @@
 import React, { useState } from 'react'
-import Select from 'react-select'
-import { Breadcrumb, SelectInput } from '../../../components/ui'
-import Layout from '../../../layout'
-import { Input, InputContainer } from '../../../styles/common/inputs'
-import { H1, H2, P, P2, P3 } from '../../../styles/common/texts'
-import { CardContent } from '../../../styles/features/cards'
+import { Breadcrumb, SelectInput } from '@/components/ui'
+import Layout from '@/layout'
+import { ControlledInput, InputContainer } from '@/styles/common/inputs'
+import { H2, P2 } from '@/styles/common/texts'
+import { CardContent } from '@/styles/features/cards'
 import styled from 'styled-components'
-import { Div, FlexDiv } from '../../../styles/common/layout'
+import { Div, FlexDiv } from '@/styles/common/layout'
 import BarChart from './charts/BarChart'
 import PieChart from './charts/PieChart'
-import { ButtonExportExcel, ButtonExportPdf } from '../../../styles/common/buttons'
+import { ButtonExportExcel, ButtonExportPdf } from '@/styles/common/buttons'
 import { useForm } from 'react-hook-form'
+import { OnChangeValue } from 'react-select'
 
 type Chart = 'bar' | 'pie';
+type ChartOption = {
+  label: Chart;
+  value: Chart;
+}
 
 function Sales() {
   const { control } = useForm();
@@ -31,8 +35,10 @@ function Sales() {
     },
   ]
 
-  function handleChangeChartType(option) {
-    setCurrentChart(option.value);
+  function handleChangeChartType(option: OnChangeValue<ChartOption, false>) {
+    if (option) {
+      setCurrentChart(option.value);
+    }
   }
 
   return (
@@ -44,13 +50,13 @@ function Sales() {
       <Content>
         <InputContainer label={"Reporting Period"}>
           <FlexDiv justify="start">
-            <Input 
+            <ControlledInput
               type="date"
               name="initial_date"
               control={control}
             />
             <Divider />
-            <Input 
+            <ControlledInput
               type="date"
               name="final_date"
               control={control}
@@ -61,7 +67,7 @@ function Sales() {
         <InputContainer label={"Visualization Type"}>
           <SelectInput
             options={charts}
-            onChange={handleChangeChartType}
+            onChange={option => handleChangeChartType(option as ChartOption)}
             defaultValue={charts.find(item => item.value === currentChart)}
           />
         </InputContainer>

@@ -1,25 +1,26 @@
+import React, { useState } from 'react'
+import { User } from '@/@types/user'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 import { AnimatePresence, motion } from 'framer-motion'
-import React, { useState } from 'react'
 import { IoAddOutline, IoClose } from 'react-icons/io5'
 import styled from 'styled-components'
 import { sellers } from '.'
-import { useStateContext } from '../../../context/ContextProvider'
-import { P, P2, P3 } from '../../../styles/common/texts'
+import { useStateContext } from '@/context/ContextProvider'
+import { P, P2, P3 } from '@/styles/common/texts'
 
 const SellersList = () => {
     const { theme } = useStateContext();
-    const [ selectedSellers, setSelectedSellers ] = useState([]);
+    const [ selectedSellers, setSelectedSellers ] = useState<User[]>([]);
     const { window_width } = useGetWindowDimensions();
 
-    function handleSelectSeller(seller) {
+    function handleSelectSeller(seller: User) {
         selectedSellers.some(item => item.name === seller.name) ?
             setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
         :
             setSelectedSellers(prevState => [ ...prevState, seller ])
     }
 
-    function handleDeleteSeller(seller) {
+    function handleDeleteSeller(seller: User) {
         setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
     }
 
@@ -38,7 +39,7 @@ const SellersList = () => {
                     {
                         sellers
                             .filter(item => !selectedSellers.map(selected => selected.name).includes(item.name))
-                            .map(item => (
+                            .map((item: User) => (
                                 <SellerCard
                                     key={item.name}
                                     type="button"
@@ -134,7 +135,12 @@ const Grid = styled.div`
     }
 `
 
-const SellerCard = styled(motion.button)`
+type SellerCardProps = {
+    dark: boolean,
+    selected?: boolean,
+}
+
+const SellerCard = styled(motion.button)<SellerCardProps>`
     display: flex;
     align-items: center;
     column-gap: 10px;

@@ -1,23 +1,33 @@
 import React from 'react'
-import { P, Span } from '../../../styles/common/texts'
-import { FlexDiv } from '../../../styles/common/layout'
+import { P, Span } from '@/styles/common/texts'
+import { FlexDiv } from '@/styles/common/layout'
 import styled from 'styled-components'
 import { css } from 'styled-components';
-import { IoArrowBack, IoArrowForward, IoChevronBack, IoChevronForward } from 'react-icons/io5';
+import { IoChevronBack, IoChevronForward } from 'react-icons/io5';
+
+interface TablePaginationProps {
+    pageIndex: number;
+    pageCount: number;
+    pageOptions: number[];
+    canPreviousPage: boolean;
+    canNextPage: boolean;
+    previousPage: () => void;
+    nextPage: () => void;
+    gotoPage: (page: number) => void;
+}
 
 const TablePagination = ({
     pageIndex,
     pageCount,
     pageOptions,
-    page,
     canPreviousPage,
     canNextPage,
     previousPage,
     nextPage,
     gotoPage,
-}) => {
+}: TablePaginationProps) => {
 
-    function handleNavigateToPage(page) {
+    function handleNavigateToPage(page: number) {
         gotoPage(page);
     }
     
@@ -26,7 +36,7 @@ const TablePagination = ({
             <P mb="10px" mt="15px">
                 Page
                 {' '}
-                <Span textColor={'primary_medium'}>
+                <Span color={'primary_medium'}>
                     { pageIndex + 1 } 
                 </Span>
                 {' '}
