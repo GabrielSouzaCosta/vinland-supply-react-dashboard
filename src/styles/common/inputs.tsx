@@ -1,6 +1,7 @@
-import React, { InputHTMLAttributes } from 'react';
+import useGetThemeColors from '@/hooks/useGetThemeColors';
+import React, { InputHTMLAttributes, useState } from 'react';
 import { Control, FieldPath, FieldValues, useController, UseControllerProps } from 'react-hook-form';
-import { IoAlertCircleOutline } from 'react-icons/io5';
+import { IoAlertCircleOutline, IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 import { css } from 'styled-components';
 import { useStateContext } from '../../context/ContextProvider';
@@ -124,6 +125,75 @@ export const ControlledInput = <
                 dark={theme === 'dark'}
                 { ...props }
             />
+        </InputRelativeDiv>
+    )
+}
+
+const PasswordButton = styled.button`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+`
+
+export const PasswordControlledInput = <
+    TFieldValues extends FieldValues,
+    TName extends FieldPath<TFieldValues>
+>({
+    name,
+    rules,
+    control,
+    ...props
+} : TextInputProps<TFieldValues, TName>) => {
+    const { theme } = useStateContext();
+    const themeColors = useGetThemeColors();
+    const [ isPasswordVisible, setIsPasswordVisible ] = useState(false);
+
+    function handleTogglePasswordVisibility() {
+        setIsPasswordVisible(!isPasswordVisible)
+    }
+
+    const { 
+        field: { 
+            value,
+            onChange,
+        },
+        fieldState: {
+            error
+        }
+    } = useController({
+        name,
+        control,
+        rules,
+    });
+
+    return (
+        <InputRelativeDiv>
+            <StyledInput
+                value={value}
+                onChange={onChange}
+                error={!!error}
+                dark={theme === 'dark'}
+                type={isPasswordVisible ? "text" : "password"}
+                { ...props }
+            />
+            <PasswordButton 
+                onClick={handleTogglePasswordVisibility} 
+                type="button"
+            >
+                {isPasswordVisible ?
+                    <IoEyeOutline 
+                        color={themeColors.black}
+                    />
+                    :
+                    <IoEyeOffOutline 
+                        color={themeColors.black}
+                    />
+                }
+            </PasswordButton>
+            
         </InputRelativeDiv>
     )
 }

@@ -12,9 +12,11 @@ import {
   Legend,
 } from 'chart.js';
 import { colors } from '@/styles/common/theme';
-import { sellers } from '..';
 import chartPalleteColors, { darkChartPalleteColors } from '@/styles/common/chartPalleteColors';
 import { useStateContext } from '@/context/ContextProvider';
+import { User } from '@/@types/user';
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions';
+import { Div } from '@/styles/common/layout';
 
 ChartJS.register(
   CategoryScale,
@@ -27,11 +29,17 @@ ChartJS.register(
   Legend
 );
 
-const BarChart = () => {
+type Props = {
+  selectedSellers: User[];
+}
+
+const BarChart = ({ selectedSellers } : Props) => {
   const { theme } = useStateContext();
+  const { window_width } = useGetWindowDimensions();
+
   const chartColors = theme === 'dark' ? darkChartPalleteColors : chartPalleteColors;
 
-  const labels = sellers.map(item => item.name);
+  const labels = selectedSellers.map(item => item.name);
   
   const options = {
     responsive: true,
@@ -44,6 +52,9 @@ const BarChart = () => {
       x: {
         ticks: {
           color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+          font: {
+            size: window_width < 768 ? 11 : 14
+          }
         }
       },
       y: {
@@ -59,7 +70,7 @@ const BarChart = () => {
     datasets: [
         {
           label: 'Sales',
-          data: sellers.map(item => item.sales),
+          data: selectedSellers.map(item => item.sales),
           borderColor: chartColors,
           backgroundColor: chartColors.map(item => item+'88'),
           borderWidth: 3,
@@ -70,12 +81,12 @@ const BarChart = () => {
   };
 
   return (
-    <div>
+    <Div mb="15px">
       <Bar
         options={options}
         data={data}
       />
-    </div>
+    </Div>
   )
 
 }

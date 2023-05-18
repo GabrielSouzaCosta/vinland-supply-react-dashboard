@@ -11,6 +11,7 @@ export default function({
             avatar: '',
             name: '',
             username: '',
+            phone: '',
             email: '',
             address: '',
             user_type: 'seller',

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { useNavigate } from 'react-router-dom';
 import { P } from '../../styles/common/texts';
@@ -6,6 +6,8 @@ import { useForm } from 'react-hook-form';
 import { InputContainer } from '../../styles/common/inputs';
 import { Button } from '../../styles/common/buttons';
 import { colors } from '../../styles/common/theme';
+import { Div } from '@/styles/common/layout';
+import { IoEyeOffOutline, IoEyeOutline } from 'react-icons/io5';
 
 type LoginCredentials = {
     username: string,
@@ -13,12 +15,18 @@ type LoginCredentials = {
 }
 
 function Login() {
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginCredentials>();
     const navigate = useNavigate();
+    const { register, handleSubmit, formState: { errors } } = useForm<LoginCredentials>();
+    const [ isPasswordVisible, setIsPasswordVisible ] = useState(false);
 
     function handleLogin<SubmitHandler>({ username, password }: LoginCredentials) {
         navigate('/');
     }
+
+    function handleTogglePasswordVisibility() {
+        setIsPasswordVisible(!isPasswordVisible)
+    }
+    
 
     return (
         <Main>
@@ -47,12 +55,24 @@ function Login() {
                     </InputContainer>
 
                     <InputContainer label="Password">
-                        <Input 
-                            type="password"
-                            placeholder='SuperSecretPassword'
-                            invalid={!!errors.password}
-                            { ...register('password', { required: true }) }
-                        />
+                        <Div relative>
+                            <Input 
+                                type={isPasswordVisible ? "text" : "password"}
+                                placeholder='SuperSecretPassword'
+                                invalid={!!errors.password}
+                                { ...register('password', { required: true }) }
+                            />
+                            <PasswordButton 
+                                onClick={handleTogglePasswordVisibility} 
+                                type="button"
+                            >
+                                {isPasswordVisible ?
+                                    <IoEyeOutline />
+                                    :
+                                    <IoEyeOffOutline />
+                                }
+                            </PasswordButton>
+                        </Div>
                         {errors.password && 
                             <P color={'danger'} fw={'600'} mt="4px">
                                 Please enter your password to proceed.
@@ -116,7 +136,7 @@ const Main = styled.main`
             font-size: 36px;
             margin-bottom: 40px;
         }
-         div.input-container, div.input-container input, button {
+         div.input-container, div.input-container input, button[type="submit"] {
             width: 100%;
         }
         .input-container {
@@ -127,7 +147,7 @@ const Main = styled.main`
                 font-weight: 600;
             }
         }
-        button {
+        button[type="submit"] {
             margin-top: 10px;
             background-color: #303030;
             border: 1px solid #303030;
@@ -164,7 +184,7 @@ const Main = styled.main`
                     color: #F7F7F7;
                 }
             }
-            button {
+            button[type="submit"] {
                 color: #303030;
                 background-color: ${colors.primary_medium};
                 border: 1px solid ${colors.primary_medium};
@@ -202,6 +222,15 @@ const Main = styled.main`
             display: none;   
         }
     }
+`
+
+const PasswordButton = styled.button`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
 `
 
 type InputProps = {

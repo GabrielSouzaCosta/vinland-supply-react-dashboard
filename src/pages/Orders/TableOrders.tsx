@@ -80,7 +80,10 @@ const TableOrders = () => {
         return (
             <>
                 {secondary_data.map((value, index) => (
-                        <div style={{ marginBottom: '5px' }}>
+                        <div
+                        style={{ marginBottom: '5px' }}
+                        key={index}
+                        >
                             <Label>
                                 { String(labels[index].Header) }: 
                                 {" "}

@@ -49,7 +49,6 @@ export default function<T extends object>({ data, search }: Props<T>) {
                 canPreviousPage: true,
                 canNextPage,
             };
-            break;
           case 'previous_page':
             canPreviousPage = state.pageIndex - 1 > 0;
             return { 
@@ -58,11 +57,10 @@ export default function<T extends object>({ data, search }: Props<T>) {
                 canNextPage: true,
                 canPreviousPage,
             };
-            break;
           case 'navigate_to_page':
             const page = action.page;
             canPreviousPage = page > 0;
-            canNextPage = page < state.pageCount;
+            canNextPage = page < state.pageCount - 1;
     
             return { 
                 ...state, 
@@ -70,7 +68,6 @@ export default function<T extends object>({ data, search }: Props<T>) {
                 canPreviousPage,
                 canNextPage,
             };
-            break;
           case 'filter_items':
             return {
                 pageIndex: 0,
@@ -79,7 +76,6 @@ export default function<T extends object>({ data, search }: Props<T>) {
                 pageOptions: arrayRange(0, Math.ceil(data.length / 10) -1, 1),
                 canNextPage: data.length / 10 > 1,
             }
-            break;
           default:
             return state;
         }

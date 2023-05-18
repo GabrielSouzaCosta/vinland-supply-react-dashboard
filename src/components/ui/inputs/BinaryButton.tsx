@@ -70,7 +70,7 @@ const BinaryButtonContainer = styled.div<ContainerProps>`
 `
 
 const Inner = styled.div`
-    z-index: 100;
+    z-index: 10;
     display: flex;
     align-items: center;
     justify-content: center;

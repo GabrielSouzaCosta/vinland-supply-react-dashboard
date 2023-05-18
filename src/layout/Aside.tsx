@@ -1,11 +1,12 @@
 import React from 'react'
-import { Link, useLocation } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
+import { IoBarChartOutline, IoBeerOutline, IoBusinessOutline, IoExitOutline, IoHomeOutline, IoPeopleOutline, IoPersonOutline, IoPieChartOutline, IoPodiumOutline, IoSettingsOutline, IoStatsChartOutline, IoStorefrontOutline } from 'react-icons/io5'
 import { css } from 'styled-components'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
 import ToggleThemeButton from '@/components/ui/ToggleThemeButton'
 import { P, P2 } from '@/styles/common/texts'
+import { Button } from '@/styles/common/buttons'
 
 type Props = {
     visible: boolean
@@ -15,7 +16,12 @@ const Aside = ({
     visible
 }: Props) => {
     const { pathname } = useLocation();
+    const navigate = useNavigate();
     const { window_width } = useGetWindowDimensions();
+
+    function handleLogout() {
+        navigate('/login')
+    }
 
     return (
         <StyledAside 
@@ -36,7 +42,6 @@ const Aside = ({
                         <ToggleThemeButton />
                     </MobileMenu>
                 }
-
 
                 <Links visible={visible} >
                     <CategoryTitle visible={visible}>
@@ -140,6 +145,15 @@ const Aside = ({
                         </Link>
                     </AsideItem>
                 </Links>
+
+                {window_width < 968 &&
+                    <ButtonLogout
+                        onClick={handleLogout}
+                    >
+                        <IoExitOutline size={18} />
+                        Logout
+                    </ButtonLogout>
+                }
             </CenterContentDiv>
         </StyledAside>
     )
@@ -223,7 +237,16 @@ const MobileMenu = styled.div`
     align-items: center;
     justify-content: center;
     margin-bottom: 15px;
-    
+`
+
+const ButtonLogout = styled.button`
+    display: flex;
+    align-items: center;
+    font-size: 18px;
+    color: ${p => p.theme.colors.danger};
+    margin-left: 25px;
+    margin-top: 30px;
+    column-gap: 5px;
 `
 
 export default Aside

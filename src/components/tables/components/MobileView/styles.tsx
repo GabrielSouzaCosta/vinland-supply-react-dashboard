@@ -24,7 +24,8 @@ export const Label = styled.p`
     color: ${p => p.theme.colors.gray_medium};
 `
 
-export const Value = styled.p`
+export const Value = styled.span`
+    display: block;
     font-size: 14px;
     font-weight: 600;
     color: ${p => p.theme.colors.black};

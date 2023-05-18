@@ -10,11 +10,10 @@ import {
     Title,
     Tooltip,
     Legend,
-    ChartOptions,
-    ChartData,
 } from 'chart.js';
-import { H2 } from '../../styles/common/texts';
+import { P } from '@/styles/common/texts';
 import useGetThemeColors from '@/hooks/useGetThemeColors';
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions';
 
 ChartJS.register(
     CategoryScale,
@@ -27,8 +26,9 @@ ChartJS.register(
     Legend
 );
 
-const TotalSales = () => {
+const TotalSalesBarChart = () => {
     const colors = useGetThemeColors();
+    const { window_width } = useGetWindowDimensions();
 
     const labels = [
         'January', 'February', 'March', 'April', 'May', 'June', 
@@ -58,6 +58,9 @@ const TotalSales = () => {
             y: {
                 ticks: {
                     color: colors.black_extra_light,
+                    font: {
+                        size: window_width < 768 ? 11 : 14
+                    },
                     callback: function(value: string) {
                         return '$' + value;
                     }
@@ -66,6 +69,9 @@ const TotalSales = () => {
             x: {
                 ticks: {
                     color: colors.black_extra_light,
+                    font: {
+                        size: window_width < 768 ? 11 : 14
+                    }
                 }
             }
         }
@@ -97,11 +103,11 @@ const TotalSales = () => {
 
     return (
         <section>
-          <H2>
+          <P>
             Total Sales($)
-          </H2>
+          </P>
 
-          <div id="chart">
+          <div>
             <Bar
               options={options}
               data={data}
@@ -112,4 +118,4 @@ const TotalSales = () => {
     )
 }
 
-export default TotalSales
+export default TotalSalesBarChart

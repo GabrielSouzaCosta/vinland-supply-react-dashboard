@@ -8,21 +8,19 @@ import { sellers } from '.'
 import { useStateContext } from '@/context/ContextProvider'
 import { P, P2, P3 } from '@/styles/common/texts'
 
-const SellersList = () => {
+type Props = {
+    selectedSellers: User[];
+    handleSelectSeller: (user: User) => void;
+    handleDeleteSeller: (user: User) => void;
+}
+
+const SellersList = ({
+    selectedSellers,
+    handleSelectSeller,
+    handleDeleteSeller,
+}: Props) => {
     const { theme } = useStateContext();
-    const [ selectedSellers, setSelectedSellers ] = useState<User[]>([]);
     const { window_width } = useGetWindowDimensions();
-
-    function handleSelectSeller(seller: User) {
-        selectedSellers.some(item => item.name === seller.name) ?
-            setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
-        :
-            setSelectedSellers(prevState => [ ...prevState, seller ])
-    }
-
-    function handleDeleteSeller(seller: User) {
-        setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
-    }
 
     return (
         <>
@@ -39,9 +37,9 @@ const SellersList = () => {
                     {
                         sellers
                             .filter(item => !selectedSellers.map(selected => selected.name).includes(item.name))
-                            .map((item: User) => (
+                            .map((item: User, index) => (
                                 <SellerCard
-                                    key={item.name}
+                                    key={index}
                                     type="button"
                                     onClick={() => handleSelectSeller(item)}
                                     initial={{ opacity: 0 }}
@@ -53,12 +51,16 @@ const SellersList = () => {
                                     }}
                                     dark={theme === 'dark'}
                                 >
+                                    <IoAddOutline size={24} />
+                                    
                                     {window_width > 768 &&
-                                        <IoAddOutline size={24} />
+                                        <img src={item.avatar} alt="" />
                                     }
 
-                                    <img src={item.avatar} alt="" />
                                     <div>
+                                        {window_width < 768 &&
+                                            <img src={item.avatar} alt="" />
+                                        }
                                         <P2>
                                             { item.name }
                                         </P2>
@@ -80,7 +82,7 @@ const SellersList = () => {
                     <Grid>
                         {
                             selectedSellers.map(item => (
-                                <SellerCard 
+                                <SellerCard
                                     selected
                                     key={item.name}
                                     type="button"
@@ -94,11 +96,16 @@ const SellersList = () => {
                                     }}
                                     dark={theme === 'dark'}
                                 >
-                                    {window_width > 768 && 
-                                        <IoClose size={24} />
+                                    <IoClose size={24} />
+                                    
+                                    {window_width > 768 &&
+                                        <img src={item.avatar} alt="" />
                                     }
-                                    <img src={item.avatar} alt="" />
+
                                     <div>
+                                        {window_width < 768 &&
+                                            <img src={item.avatar} alt="" />
+                                        }
                                         <P2>
                                             { item.name }
                                         </P2>
@@ -120,6 +127,7 @@ const Grid = styled.div`
     display: grid;
     grid-template-columns: repeat(6, 1fr);
     grid-gap: 10px;
+    margin-bottom: 15px;
     @media screen and (max-width: 1400px) {
         grid-template-columns: repeat(4, 1fr);  
     }
@@ -189,8 +197,6 @@ const SellerCard = styled(motion.button)<SellerCardProps>`
         }
     }
     @media screen and (max-width: 768px) {
-        flex-direction: column;
-        justify-content: center;
         height: 100px;
         scroll-snap-align: start;
         flex-shrink: 0;

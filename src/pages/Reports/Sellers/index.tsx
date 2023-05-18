@@ -12,7 +12,8 @@ import PieChart from './charts/PieChart'
 import SellersList from './SellersList'
 import TableSellers from './TableSellers'
 import { useForm } from 'react-hook-form'
-import { ActionMeta, OnChangeValue } from 'react-select'
+import { OnChangeValue } from 'react-select'
+import { User } from '@/@types/user'
 
 export const sellers = [
     {
@@ -109,18 +110,21 @@ type ChartOption = {
 
 function UsersPerformance() {
   const { control } = useForm();
+  const [ selectedSellers, setSelectedSellers ] = useState<User[]>([]);
+  const availableSellers = sellers.filter(seller => selectedSellers?.map(item => item.id).includes(seller.id));
+
   const [ currentChart, setCurrentChart ] = useState<Chart>('bar');
 
   const charts = [
     {
       label: 'Bar', 
       value: 'bar',
-      chart: () => <BarChart />
+      chart: () => <BarChart selectedSellers={selectedSellers} />
     },
     {
       label: 'Pie', 
       value: 'pie',
-      chart: () => <PieChart />
+      chart: () => <PieChart selectedSellers={selectedSellers} />
     },
   ]
 
@@ -130,6 +134,17 @@ function UsersPerformance() {
     }
   }
 
+  function handleSelectSeller(seller: User) {
+    selectedSellers.some(item => item.name === seller.name) ?
+        setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
+    :
+        setSelectedSellers(prevState => [ ...prevState, seller ])
+}
+
+  function handleDeleteSeller(seller: User) {
+    setSelectedSellers(prevState => prevState.filter(item => item.name !== seller.name))
+  }
+
   return (
     <Layout container>
       <Breadcrumb 
@@ -137,7 +152,7 @@ function UsersPerformance() {
       />
 
       <Content>
-        <InputContainer label={"Reporting Period"}>s
+        <InputContainer label={"Reporting Period"}>
           <FlexDiv justify="start">
             <ControlledInput 
               type="date"
@@ -163,21 +178,29 @@ function UsersPerformance() {
           />
         </InputContainer>
 
-        <SellersList />
+        <SellersList 
+          selectedSellers={selectedSellers}
+          handleSelectSeller={handleSelectSeller}
+          handleDeleteSeller={handleDeleteSeller}
+        />
 
-        <P2 mb="2px" mt="15px">
-          Export Report
-        </P2>
-
-        <FlexDiv gapX="10px" justify="start">
-          <ButtonExportExcel />
-          <ButtonExportPdf />
-        </FlexDiv>
-        
-        <Div mt="20px">
-          { charts.find(item => item.value === currentChart)?.chart() }
-        </Div>
-
+        {selectedSellers.length > 0 &&
+          <>
+          <P2 mb="2px" mt="15px">
+            Export Report
+          </P2>
+  
+          <FlexDiv gapX="10px" justify="start">
+            <ButtonExportExcel />
+            <ButtonExportPdf />
+          </FlexDiv>
+          
+          <Div mt="20px">
+            { charts.find(item => item.value === currentChart)?.chart() }
+          </Div>
+  
+          </>
+        }
         <TableSellers />
 
       </Content>

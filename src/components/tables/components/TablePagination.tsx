@@ -118,8 +118,8 @@ export const PaginationLink = styled.button<PaginationLinkProps>`
     ${p => p.currentPage && css`
         background-color: ${p.theme.colors.primary_medium};
         margin-right: 5px;
-        width: 30px;
-        height: 30px;
+        width: 35px;
+        height: 35px;
         border-radius: 100%;
     `}
 `

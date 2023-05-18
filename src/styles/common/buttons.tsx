@@ -65,7 +65,7 @@ export const Button = styled.button<ButtonProps>`
 
     @media screen and (max-width: 968px) {
         font-size: 14px;
-        padding: 4px 10px;
+        padding: 6px 10px;
     }
 `
 

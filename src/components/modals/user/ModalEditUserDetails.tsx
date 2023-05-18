@@ -156,6 +156,7 @@ const FormEditUser = styled.form`
     height: 100px;
     border-radius: 50%;
     margin-right: 15px;
+    object-fit: cover;
   }
   input, button, .input-container {
     width: 100%;

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button } from '@/styles/common/buttons'
-import { ControlledInput, InputContainer } from '@/styles/common/inputs'
+import { ControlledInput, InputContainer, PasswordControlledInput } from '@/styles/common/inputs'
 import { H3, P, P2 } from '@/styles/common/texts'
 import styled from 'styled-components'
 import { toast } from 'react-toastify'
@@ -15,7 +15,13 @@ type FormValues = {
 }
 
 const Security = () => {
-    const { control, handleSubmit, reset, formState: { errors } } = useForm<FormValues>();
+    const { control, handleSubmit, reset, formState: { errors } } = useForm<FormValues>({
+        defaultValues: {
+            current_password: '',
+            new_password: '',
+            repeat_password: '',
+        }
+    });
   
     function handleUpdatePassword(data: FormValues) {
         reset();
@@ -39,8 +45,7 @@ const Security = () => {
                 </FlexDiv>
 
                 <InputContainer label="Current Password">
-                    <ControlledInput 
-                        type="password"
+                    <PasswordControlledInput
                         placeholder="Password"
                         name="current_password"
                         rules={{ required: true }}
@@ -53,8 +58,7 @@ const Security = () => {
                     }
                 </InputContainer>
                 <InputContainer label="New Password">
-                    <ControlledInput 
-                        type="password"
+                    <PasswordControlledInput
                         placeholder="New password"
                         name="new_password"
                         rules={{ required: true }}
@@ -67,8 +71,7 @@ const Security = () => {
                     }
                 </InputContainer>
                 <InputContainer label="Repeat New Password">
-                    <ControlledInput 
-                        type="password"
+                    <PasswordControlledInput
                         placeholder="Repeat password"
                         name="repeat_password"
                         rules={{ required: true }}
@@ -92,10 +95,10 @@ const Security = () => {
 
 const FormUpdatePassword = styled.form`
     width: 35%;
-    > div, input, button {
+    > div, input, button[type="submit"] {
         width: 100%;
     }
-    button {
+    button[type="submit"] {
         margin-top: 15px;
     }
     div#header {

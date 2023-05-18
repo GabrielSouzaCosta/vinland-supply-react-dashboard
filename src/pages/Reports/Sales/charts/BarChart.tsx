@@ -13,6 +13,7 @@ import {
 } from 'chart.js';
 import { colors } from '@/styles/common/theme'
 import { useStateContext } from '@/context/ContextProvider';
+import useGetWindowDimensions from '@/hooks/useGetWindowDimensions';
 
 ChartJS.register(
   CategoryScale,
@@ -27,6 +28,7 @@ ChartJS.register(
 
 const BarChart = () => {
   const { theme } = useStateContext();
+  const { window_width } = useGetWindowDimensions();
 
   const labels = [
     'January', 'February', 'March', 'April', 'May', 'June', 
@@ -56,6 +58,9 @@ const BarChart = () => {
         x: {
           ticks: {
             color: theme === 'light' ? colors.gray_dark : colors.gray_extra_light,
+            font: {
+              size: window_width < 768 ? 10 : 14
+            }
           }
         },
         y: {

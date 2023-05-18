@@ -1,25 +1,27 @@
+import { relative } from 'node:path/win32'
 import styled from 'styled-components'
 import { css } from 'styled-components'
 
 interface LayoutProps {
-    padding?: string,
-    fullWidth?: boolean,
-    m?: string,
-    mx?: string,
-    my?: string,
-    mt?: string,
-    mb?: string,
-    ml?: string,
-    mr?: string,
-    center?: boolean,
-    alignItems?: string,
-    between?: boolean,
-    justify?: string,
-    column?: boolean,
-    flexwrap?: boolean,
-    gap?: string,
-    gapX?: string,
-    gapY?: string,
+    padding?: string;
+    fullWidth?: boolean;
+    m?: string;
+    mx?: string;
+    my?: string;
+    mt?: string;
+    mb?: string;
+    ml?: string;
+    mr?: string;
+    relative?: boolean;
+    center?: boolean;
+    alignItems?: string;
+    between?: boolean;
+    justify?: string;
+    column?: boolean;
+    flexwrap?: boolean;
+    gap?: string;
+    gapX?: string;
+    gapY?: string;
 }
 
 export const Main = styled.main`
@@ -36,6 +38,9 @@ export const Container = styled.div<LayoutProps>`
 `
 
 export const Div = styled.div<LayoutProps>`
+    ${p => p.relative && css`
+        position: relative;
+    `}
     ${p => p.fullWidth && css`
         width: 100%;
     `}

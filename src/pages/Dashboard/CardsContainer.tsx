@@ -15,7 +15,7 @@ const CardsContainer = () => {
             <div>
             <Circle color={'success'}>
                 <IoCashOutline
-                    size={window_width > 968 ? 36 : 24}
+                    size={window_width > 1400 ? 36 : 24}
                     color={colors.gray_extra_light}
                 />
             </Circle>
@@ -32,7 +32,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color="black">
                     <IoCartOutline
-                        size={window_width > 968 ? 36 : 24}
+                        size={window_width > 1400 ? 36 : 24}
                         color={theme === 'light' ? colors.gray_extra_light : colors.black_extra_light}
                     />
                 </Circle>
@@ -49,7 +49,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color={"blue"}>
                     <IoSwapVertical
-                    size={window_width > 968 ? 36 : 24}
+                    size={window_width > 1400 ? 36 : 24}
                     color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -66,7 +66,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color='primary_medium'>
                     <IoPeopleOutline
-                        size={window_width > 968 ? 36 : 24}
+                        size={window_width > 1400 ? 36 : 24}
                         color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -84,7 +84,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color="success_variant">
                     <IoHappyOutline
-                        size={window_width > 968 ? 36 : 24}
+                        size={window_width > 1400 ? 36 : 24}
                         color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -106,15 +106,15 @@ const Container = styled.div`
     flex-direction: row;
     justify-content: space-between;
     flex-wrap: wrap;
-    row-gap: 15px;
-    margin-bottom: 20px;
+    row-gap: 10px;
+    margin-bottom: 10px;
     > div {
         display: flex;
         align-items: center;
         justify-content: center;
-        column-gap: 20px;
+        column-gap: 15px;
         height: 120px;
-        width: 19%;
+        width: 19.5%;
         border-radius: 8px;
         background-color: ${p => p.theme.colors.white};
         padding: 4px;
@@ -131,6 +131,23 @@ const Container = styled.div`
             justify-content: center;
         }
     }
+    @media screen and (max-width: 1400px) {
+        justify-content: space-between;
+        > div {
+            text-align: center;
+            flex-direction: column;
+            p:first-child {
+                font-size: 18px;
+                margin-top: 8px;
+            }
+            p:nth-child(2) {
+                color: ${p => p.theme.colors.gray_dark};
+                line-height: 18px;
+                font-size: 20px;
+            }
+        }
+    }
+
     @media screen and (max-width: 968px) {
         justify-content: space-between;
         row-gap: 5px;
@@ -164,7 +181,7 @@ const Circle = styled.div<CircleProps>`
     align-items: center;
     border-radius: 50%;
     box-shadow: 1px 1px 12px rgba(30, 30, 30, 0.04);
-    @media screen and (max-width: 968px) {
+    @media screen and (max-width: 1400px) {
         width: 40px;
         height: 40px;
     }

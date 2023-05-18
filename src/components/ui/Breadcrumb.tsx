@@ -39,6 +39,9 @@ const StyledBreadcrumb = styled.div<BreadcrumbProps>`
     h2 {
         color: ${p => p.theme.colors.dark_extra_light};
     }
+    @media screen and (max-width: 968px) {
+        margin-bottom: 15px;
+    }
 `
 
 export default Breadcrumb

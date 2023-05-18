@@ -56,7 +56,8 @@ const ChartCustomers = () => {
       {
         label: "Customers by Country",
         data: [1200, 1800, 500, 900, 1100, 750, 950],
-        backgroundColor: theme === 'dark' ? darkChartPalleteColors : chartPalleteColors
+        backgroundColor: theme === 'dark' ? darkChartPalleteColors : chartPalleteColors,
+        borderColor: colors.white_light+'77',
       }
     ]
   };
@@ -68,7 +69,8 @@ const ChartCustomers = () => {
       {
         label: "Revenue by source",
         data: [70, 20, 10],
-        backgroundColor: [colors.success, colors.warning, colors.danger] 
+        backgroundColor: [colors.success, colors.warning, colors.danger],
+        borderColor: colors.white_light+'77',
       }
     ]
   };

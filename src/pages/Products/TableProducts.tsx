@@ -1,12 +1,12 @@
 import React from 'react'
-import { Table } from '../../components/tables'
+import { Table } from '@/components/tables'
 import styled from 'styled-components'
-import { Div, FlexDiv } from '../../styles/common/layout'
+import { Div, FlexDiv } from '@/styles/common/layout'
 import useGetThemeColors from '@/hooks/useGetThemeColors'
 import { IoStarSharp } from 'react-icons/io5'
-import { TableRoundedImage, TableWrapper } from '../../components/tables/styles/tableStyles'
+import { TableRoundedImage, TableWrapper } from '@/components/tables/styles/tableStyles'
 import { CardTitle, CenteredRoundedImage, Label, Value } from '@/components/tables/components/MobileView/styles'
-import { Accessor, Column } from 'react-table'
+import { Column } from 'react-table'
 import { Product } from '@/@types/product'
 
 const productsData = [
@@ -116,7 +116,10 @@ const TableProducts = () => {
                 </CardTitle>
                 <Div center>
                     {secondary_data.map((value, index) => (
-                            <div style={{ marginBottom: '5px' }}>
+                            <div 
+                                key={index}
+                                style={{ marginBottom: '5px' }}
+                            >
                                 <Label>
                                     { String(filtered_labels[index].Header) }: 
                                     {" "}

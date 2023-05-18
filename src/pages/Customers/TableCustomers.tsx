@@ -86,7 +86,10 @@ const TableCustomers = () => {
                     { data.name }
                 </CardTitle>
                 {secondary_data.map((value, index) => (
-                        <div style={{ marginBottom: '5px' }}>
+                        <div 
+                            style={{ marginBottom: '5px' }}
+                            key={index}
+                        >
                             <Label>
                                 { String(filtered_labels[index].Header) }: 
                                 {" "}
