@@ -295,7 +295,7 @@ const TopSectionCard = styled(Card)`
     }
   }
   @media screen and (max-width: 1400px) {
-    height: 60vh;
+    height: 70vh;
     width: 100%;
     scroll-snap-align:start;
     flex-shrink: 0;
