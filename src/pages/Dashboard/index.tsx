@@ -16,9 +16,9 @@ function Dashboard() {
         currentLink={'Dashboard'}
       />
 
-      <CardsContainer />
 
       <Content>
+        <CardsContainer />
         <Charts>
           <TotalSalesBarChart />  
           <SourcePieChart />
@@ -31,14 +31,14 @@ function Dashboard() {
 }
 
 const Content = styled.main`
-  width: 100%;
+  
 `
 
 const Charts = styled.div`
   display: grid;
-  grid-template-columns: 65% 35%;
+  grid-template-columns: 65% 34.5%;
   justify-content: space-between;
-  gap: 10px;
+  row-gap: 10px;
   > section {
     border-radius: 8px;
     background-color: ${p => p.theme.colors.white};

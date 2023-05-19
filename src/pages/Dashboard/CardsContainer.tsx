@@ -1,7 +1,7 @@
 import React from 'react'
 import { CardCalloutValue } from '@/styles/features/cards'
 import styled from 'styled-components'
-import { IoCartOutline, IoCashOutline, IoHappyOutline, IoPeopleOutline, IoSwapVertical } from 'react-icons/io5'
+import { IoCartOutline, IoCashOutline, IoHappyOutline, IoPeopleOutline, IoSwapVertical, IoThumbsDownOutline } from 'react-icons/io5'
 import { colors } from '@/styles/common/theme'
 import { useStateContext } from '@/context/ContextProvider'
 import useGetWindowDimensions from '@/hooks/useGetWindowDimensions'
@@ -15,7 +15,7 @@ const CardsContainer = () => {
             <div>
             <Circle color={'success'}>
                 <IoCashOutline
-                    size={window_width > 1400 ? 36 : 24}
+                    size={window_width > 1400 ? 30 : 24}
                     color={colors.gray_extra_light}
                 />
             </Circle>
@@ -32,13 +32,13 @@ const CardsContainer = () => {
             <div>
                 <Circle color="black">
                     <IoCartOutline
-                        size={window_width > 1400 ? 36 : 24}
+                        size={window_width > 1400 ? 30 : 24}
                         color={theme === 'light' ? colors.gray_extra_light : colors.black_extra_light}
                     />
                 </Circle>
                 <div>
                     <p>
-                        Sales
+                        Last Orders
                     </p>
                     <CardCalloutValue>
                         1200
@@ -49,7 +49,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color={"blue"}>
                     <IoSwapVertical
-                    size={window_width > 1400 ? 36 : 24}
+                    size={window_width > 1400 ? 30 : 24}
                     color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -66,7 +66,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color='primary_medium'>
                     <IoPeopleOutline
-                        size={window_width > 1400 ? 36 : 24}
+                        size={window_width > 1400 ? 30 : 24}
                         color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -84,7 +84,7 @@ const CardsContainer = () => {
             <div>
                 <Circle color="success_variant">
                     <IoHappyOutline
-                        size={window_width > 1400 ? 36 : 24}
+                        size={window_width > 1400 ? 30 : 24}
                         color={colors.gray_extra_light}
                     />
                 </Circle>
@@ -97,16 +97,31 @@ const CardsContainer = () => {
                     </CardCalloutValue>
                 </div>
             </div>
+
+            <div>
+            <Circle color={'danger'}>
+                <IoThumbsDownOutline
+                    size={window_width > 1400 ? 25 : 20}
+                    color={colors.gray_extra_light}
+                />
+            </Circle>
+            <div>
+                <p>
+                    Customer Complaints
+                </p>
+                <CardCalloutValue>
+                10
+                </CardCalloutValue>
+            </div>
+            </div>
         </Container>
     )
 }
 
 const Container = styled.div`
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    row-gap: 10px;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
     margin-bottom: 10px;
     > div {
         display: flex;
@@ -114,7 +129,7 @@ const Container = styled.div`
         justify-content: center;
         column-gap: 15px;
         height: 120px;
-        width: 19.5%;
+        width: 100%;
         border-radius: 8px;
         background-color: ${p => p.theme.colors.white};
         padding: 4px;
@@ -122,7 +137,7 @@ const Container = styled.div`
         p:first-child {
             color: ${p => p.theme.colors.gray_medium};
             margin-bottom: 4px;
-            font-size: 20px;
+            font-size: 18px;
         }
 
         > div {
@@ -132,37 +147,24 @@ const Container = styled.div`
         }
     }
     @media screen and (max-width: 1400px) {
-        justify-content: space-between;
-        > div {
-            text-align: center;
-            flex-direction: column;
-            p:first-child {
-                font-size: 18px;
-                margin-top: 8px;
-            }
-            p:nth-child(2) {
-                color: ${p => p.theme.colors.gray_dark};
-                line-height: 18px;
-                font-size: 20px;
-            }
-        }
+        grid-template-columns: repeat(3, 1fr);
     }
 
     @media screen and (max-width: 968px) {
+        grid-template-columns: repeat(2, 1fr);
         justify-content: space-between;
         row-gap: 5px;
         > div {
             text-align: center;
-            width: 49%;
             flex-direction: column;
             p:first-child {
-                font-size: 16px;
+                font-size: 14px;
                 margin-top: 8px;
             }
             p:nth-child(2) {
                 color: ${p => p.theme.colors.gray_dark};
                 line-height: 18px;
-                font-size: 12px;
+                font-size: 16px;
             }
         }
     }
@@ -173,15 +175,15 @@ type CircleProps = {
 }
 
 const Circle = styled.div<CircleProps>`
-    width: 60px;
-    height: 60px;
+    width: 50px;
+    height: 50px;
     background-color: ${(p) => p.theme.colors[p.color]};
     display: flex;
     justify-content: center;
     align-items: center;
     border-radius: 50%;
     box-shadow: 1px 1px 12px rgba(30, 30, 30, 0.04);
-    @media screen and (max-width: 1400px) {
+    @media screen and (max-width: 968px) {
         width: 40px;
         height: 40px;
     }

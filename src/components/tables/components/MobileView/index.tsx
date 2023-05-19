@@ -52,7 +52,8 @@ const MobileView = <T extends object>({
 
             const filteredArray = data.filter((item) => {
                 for (const field of fields) {
-                    if (typeof field === 'object' && field && item) {
+                    console.log('teste', item, field)
+                    if (field && item) {
                         const value = item[field as keyof typeof item];
                         const formattedValue = String(value);
     
