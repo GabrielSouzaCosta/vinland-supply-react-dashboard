@@ -57,7 +57,7 @@ const Chat = () => {
     };
 
     useEffect(() => {
-        if (messages[messages.length-1]?.sender === 'thorfinn' && window_width > 968) {
+        if (messages[messages.length-1]?.sender === 'thorfinn') {
             const currentTime = getCurrentTime();
 
             const einarMsg = { message: einarMessages[Math.floor(Math.random() * einarMessages.length)], sender: 'einar', time: currentTime };
@@ -69,7 +69,7 @@ const Chat = () => {
     }, [messages])
 
     useEffect(() => {
-        if (isChatOpen) {
+        if (isChatOpen && window_width > 968) {
             inputRef.current?.focus();
         }
     }, [isChatOpen])
