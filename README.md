@@ -1,6 +1,6 @@
 # Vinland Supply Co.
 
-Vinland Supply is a dashbnoard for a fictional company based on the anime Vinland Saga, which I like a lot.
+Dashboard for a fictional company based on the Vinland Saga anime.
 Link: https://vinland-supply-react-dashboard.vercel.app/
 
 ## Install Instructions
